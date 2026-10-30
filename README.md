@@ -32,3 +32,13 @@ python3 code/render.py --orient V --lang en --out exports/supercasa_spec_EN_1080
 - Voices: Kokoro v1.0 (Apache-2.0); Piper pt_PT-dii-high (CC BY-NC-SA 4.0 — non-commercial use only).
 - Music and SFX: synthesised in `code/audio.py` (original).
 - Names, prices and listings on screen are fictional.
+
+## PT voice v2 (ElevenLabs via Higgsfield, voice "Ines")
+The Piper PT voice was too flat, so the PT narration was regenerated with ElevenLabs (Higgsfield `text2speech_v2`,
+preset voice "Ines"). The Higgsfield file host is blocked from this cloud session, so the re-voicing was mixed in
+the Higgsfield sandbox from `audio/bed/music.wav` + `audio/bed/sfx.wav` (music ducked under the voice, −14.8 LUFS / −1 dBTP)
+and muxed onto the PT exports. Line placement (start s · filter):
+0.45 "Cada casa começa com uma história." · 3.2 "Compre ou arrende... de norte a sul do país!" (atempo 1.08) ·
+7.0 "Explore o mapa, ou o que está mesmo perto de si." (atempo 1.12) · 10.45 "Guarde as que mais gosta." ·
+12.5 "E receba alertas, mal surja uma casa nova!" (atempo 1.08) · 15.35 "SUPERCASA." (trim 1.4 s) ·
+16.75 "O seu próximo capítulo... começa aqui." (pause shortened 0.3 s, atempo 1.05).
