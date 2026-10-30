@@ -217,8 +217,8 @@ def spread1(c, t, L, TX):  # story + house
 
 def spread2(c, t, L, TX):  # search
     ax, ay = L["A"]; bx, by = L["B"]; PW, PH = L["PW"], L["PH"]
+    sz = min(fit(TX[k], 80, "serif", PW - 110) for k in ("search_h1", "search_h2", "search_h3"))
     for i, k in enumerate(("search_h1", "search_h2", "search_h3")):
-        sz = fit(TX[k], 80, "serif", PW - 120)
         text(c, TX[k], ax, ay - 190 + i * 98, sz, hexc(CORAL if i == 2 else INK), "serif")
     # buy / rent toggle
     ty = ay + 150; tw, th = 460, 92
@@ -318,7 +318,7 @@ def spread3(c, t, L, TX):  # map
             ph = ((t - EV["near_me"]) * 0.9 + r / 3) % 1
             c.drawCircle(nx, ny, 14 + ph * 90, paint(hexc("#0D3E9E", .35 * (1 - ph) * k), stroke=4))
         c.drawCircle(nx, ny, 20 * k, paint(hexc(WHITE))); c.drawCircle(nx, ny, 14 * k, paint(hexc("#0D3E9E")))
-        lw = text_w(TX["near_me"], 28, "semi") + 70; lx = nx - 40 - lw / 2 - (0 if L["o"] == "L" else 0)
+        lw = text_w(TX["near_me"], 28, "semi") + 70; lx = nx - 40 - lw / 2 if L["o"] == "L" else nx + 40 + lw / 2
         def chip(c):
             c.drawRRect(rr(lx, ny - 70, lw, 58, 29), paint(hexc(INK)))
             nav = skia.Path(); px, py = lx - lw / 2 + 32, ny - 70
