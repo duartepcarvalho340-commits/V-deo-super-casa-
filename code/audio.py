@@ -139,4 +139,8 @@ os.makedirs(f"{ROOT}/audio/stems", exist_ok=True)
 pk = max(1e-9, np.abs(mix).max())
 for name, x in (("music", music * duck), ("sfx", sfx), ("voice", voice), (f"mix_raw_{LANG}", mix)):
     sf.write(f"{ROOT}/audio/stems/{name}.wav", (x / pk * .7).astype(np.float32), SR)
+# un-ducked bed (music + sfx, same scale as the mix) for re-voicing elsewhere
+os.makedirs(f"{ROOT}/audio/bed", exist_ok=True)
+sf.write(f"{ROOT}/audio/bed/music.wav", (music / pk * .7).astype(np.float32), SR)
+sf.write(f"{ROOT}/audio/bed/sfx.wav", (sfx * fade / pk * .7).astype(np.float32), SR)
 print("ok")
