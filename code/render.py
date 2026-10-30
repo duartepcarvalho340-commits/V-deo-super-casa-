@@ -22,10 +22,10 @@ TF = {"disp": skia.Typeface.MakeFromFile(f"{FD}/InterDisplay-Bold.otf"), "bold":
 # ---------------- palette (SUPERCASA base colours: blue + white; names kept generic) ----------------
 def hexc(h, a=1.0):
     h = h.lstrip("#"); return skia.Color(int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16), int(max(0, min(1, a)) * 255))
-TABLE, TABLE_D, TABLE_L = "#C9D6EA", "#9FB3D3", "#E6EDF7"
+TABLE, TABLE_D, TABLE_L = "#1658D6", "#0B3488", "#2A6CEB"
 PAPER, PAPER_D, INK, INK_S = "#FCFCFA", "#E6ECF5", "#14284B", "#66738A"
 CORAL, CORAL_D, CORAL_L = "#1658D6", "#0D3E9E", "#CFDDF8"
-TEAL, TEAL_D, SAGE, SUN, SKY, SEA, SAND, WHITE = "#4C8FF0", "#1A4FB5", "#BFD4F2", "#F4B740", "#DCE8FA", "#D6E5F8", "#F1F3F6", "#FFFFFF"
+TEAL, TEAL_D, SAGE, SUN, SKY, SEA, SAND, WHITE = "#4C8FF0", "#1A4FB5", "#BFD4F2", "#8DB6F7", "#DCE8FA", "#D6E5F8", "#F1F3F6", "#FFFFFF"
 
 # ---------------- maths ----------------
 clamp = lambda x, a=0.0, b=1.0: max(a, min(b, x))
@@ -108,7 +108,7 @@ def house_icon(c, x, y, s, wall, roof, door=None, win=None, lights=0.0, chimney=
     rw = w * 0.13; c.drawCircle(x, y - wh - rh * 0.42, rw * 0.5, paint(hexc(wc)))
 
 def tree(c, x, y, s, col=TEAL):
-    c.drawRect(R(x - s * 0.06, y - s * 0.7, x + s * 0.06, y), paint(hexc("#7C8CA8")))
+    c.drawRect(R(x - s * 0.06, y - s * 0.7, x + s * 0.06, y), paint(hexc("#0D3E9E")))
     c.drawCircle(x, y - s * 0.95, s * 0.42, paint(hexc(col)))
     c.drawCircle(x - s * 0.12, y - s * 1.08, s * 0.16, paint(hexc("#FFFFFF", .18)))
 
@@ -152,7 +152,7 @@ def wordmark(c, x, y, size, col, gleam=-1.0):
     cw_ = text_w("CASA", size, "disp"); roof_mark(c, x + w * 0.5 - cw_ * 0.5, y - size * 1.08, cw_ * 0.4, col, size * 0.085)
     if 0 <= gleam <= 1:
         gx = x - w / 2 + (w + 200) * gleam - 100
-        sh = skia.GradientShader.MakeLinear([skia.Point(gx - 60, y), skia.Point(gx + 60, y)], [hexc("#7FB0FF", 0), hexc("#7FB0FF", .9), hexc("#7FB0FF", 0)])
+        sh = skia.GradientShader.MakeLinear([skia.Point(gx - 60, y), skia.Point(gx + 60, y)], [hexc("#9CC2FF", 0), hexc("#9CC2FF", .95), hexc("#9CC2FF", 0)])
         c.save(); c.clipRect(R(x - w / 2, y - size * 1.1, x + w / 2, y + size * 0.6))
         p = skia.Paint(AntiAlias=True, Shader=sh); p.setBlendMode(skia.BlendMode.kSrcATop)
         c.drawRect(R(gx - 60, y - size * 1.1, gx + 60, y + size * 0.6), p); c.restore()
@@ -284,7 +284,7 @@ def geo(L):
 def spread3(c, t, L, TX):  # map
     PW, PH = L["PW"], L["PH"]; P = geo(L)
     c.drawRect(R(-PW * 2, -PH * 2, PW * 2, PH * 2), paint(hexc(SEA)))
-    for poly, col in ((SPAIN, "#E3EAF4"), (PT, WHITE)):
+    for poly, col in ((SPAIN, "#E6EEFA"), (PT, WHITE)):
         p = skia.Path(); p.moveTo(*P(*poly[0]))
         for q in poly[1:]: p.lineTo(*P(*q))
         p.close(); c.drawPath(p, paint(hexc(col)))
@@ -358,7 +358,7 @@ def spread4(c, t, L, TX):  # save + alerts
         if 0 < u < 1:
             for j in range(8):
                 a = j * math.pi / 4; r = 40 + u * 46
-                c.drawCircle(hx2 + math.cos(a) * r, hy2 + math.sin(a) * r, 7 * (1 - u), paint(hexc([CORAL, SUN][j % 2])))
+                c.drawCircle(hx2 + math.cos(a) * r, hy2 + math.sin(a) * r, 7 * (1 - u), paint(hexc([CORAL, TEAL][j % 2])))
         tx = ax - cw / 2 + 34
         text(c, TX["listing_p"], tx, top + ph + 56, 46, hexc(INK), "disp", "l")
         text(c, TX["listing_t"], tx, top + ph + 116, 30, hexc(INK), "semi", "l")
@@ -390,20 +390,20 @@ SPREADS = [spread1, spread2, spread3, spread4]
 def cover(c, t, L, TX, logo_k=1.0):
     bx, by = L["B"]; PW, PH = L["PW"], L["PH"]; m = 16
     rect = R(bx - PW / 2 - m, by - PH / 2 - m, bx + PW / 2 + m, by + PH / 2 + m)
-    c.drawRRect(skia.RRect.MakeRectXY(rect, 14, 14), paint(hexc(CORAL)))
+    c.drawRRect(skia.RRect.MakeRectXY(rect, 14, 14), paint(hexc(WHITE)))
     c.save(); c.clipRect(rect)
     for i in range(6):  # embossed rooflines
-        roof_mark(c, bx, by - PH / 2 + 20 + i * 190, PW * 0.9, CORAL_D, 3)
+        roof_mark(c, bx, by - PH / 2 + 20 + i * 190, PW * 0.9, CORAL_L, 3)
     grain(c, rect, .12); c.restore()
     sp = (rect.left() + 10, rect.right() - 10) if L["o"] == "L" else (rect.top() + 10, rect.bottom() - 10)
-    if L["o"] == "L": c.drawRect(R(rect.left(), rect.top(), rect.left() + 26, rect.bottom()), paint(hexc(CORAL_D, .5)))
-    else: c.drawRect(R(rect.left(), rect.top(), rect.right(), rect.top() + 26), paint(hexc(CORAL_D, .5)))
+    if L["o"] == "L": c.drawRect(R(rect.left(), rect.top(), rect.left() + 26, rect.bottom()), paint(hexc(CORAL, .9)))
+    else: c.drawRect(R(rect.left(), rect.top(), rect.right(), rect.top() + 26), paint(hexc(CORAL, .9)))
     gl = (t - EV["logo_gleam"]) / 0.9 if t > 14 else (t - 0.05) / 0.9
-    wordmark(c, bx, by + 10, fit("SUPERCASA", 104, "disp", PW - 180), WHITE, gleam=gl)
+    wordmark(c, bx, by + 10, fit("SUPERCASA", 104, "disp", PW - 180), CORAL, gleam=gl)
     k = sstep(EV["tagline"], EV["tagline"] + 0.6, t) if t > 14 else 0
     if k > 0:
-        layer_alpha(c, k); text(c, TX["tagline"], bx, by + 210 + (1 - k) * 16, fit(TX["tagline"], 46, "ital", PW - 120), hexc(WHITE), "ital"); c.restore()
-    text(c, "supercasa.pt", bx, by + PH / 2 - 60, 26, hexc(WHITE, .75), "semi")
+        layer_alpha(c, k); text(c, TX["tagline"], bx, by + 210 + (1 - k) * 16, fit(TX["tagline"], 46, "ital", PW - 120), hexc(INK), "ital"); c.restore()
+    text(c, "supercasa.pt", bx, by + PH / 2 - 60, 26, hexc(CORAL, .8), "semi")
 
 def endcard_page(c, t, L, TX):
     pass  # the card itself is drawn above the book (it straddles the spine)

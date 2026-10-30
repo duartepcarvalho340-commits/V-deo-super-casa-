@@ -5,7 +5,7 @@ Independent concept by Duarte Carvalho (@duartecarvalho) · **not affiliated wit
 **Concept — "Your next chapter":** the home search is shown as a pop-up book. Each page turn is a feature
 (search buy/rent → map + near me → favourites + alerts), and the houses, cards and pins pop up from the paper.
 At the end the book closes on the cover (logo + tagline) and opens once more onto the end card.
-Base colours: SUPERCASA blue + white (approximate shades, drawn in code; the logo is an approximation too).
+Colours: SUPERCASA blue + white only (blue table, white pages and cover, blue logo; approximate shades drawn in code, logo approximated).
 
 ## Files
 - `code/timing.py` — page turns, events and all on-screen text (`TEXT["en"]`, `TEXT["pt"]`)
