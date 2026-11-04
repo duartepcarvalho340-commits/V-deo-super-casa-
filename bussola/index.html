@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Descobre a tua ideologia, os teus 12 eixos políticos e o teu partido em Portugal e no mundo. Versão rápida (20 perguntas) ou completa (75).">
+<meta property="og:title" content="Bússola Política">
+<meta property="og:description" content="Descobre onde estás na política: ideologia, 12 eixos e o teu partido em Portugal e no mundo.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<title>Bússola Política</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: coluna central ao estilo Apple — fundo cinza claro, cartões brancos arredondados, barra translúcida no topo */
+:root{
+  --bg:#F5F5F7; --surface:#FFFFFF; --surface2:#F2F2F4; --ink:#1D1D1F; --muted:#6E6E73; --line:#D2D2D7;
+  --accent:#0071E3; --accent-soft:rgba(0,113,227,.09); --good:#34C759;
+  --nav:rgba(245,245,247,.78); --shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.05);
+  --f:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Inter","Helvetica Neue",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#1C1C1E; --surface2:#2C2C2E; --ink:#F5F5F7; --muted:#98989D; --line:#38383A;
+  --accent:#2997FF; --accent-soft:rgba(41,151,255,.14); --good:#30D158;
+  --nav:rgba(0,0,0,.72); --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#1C1C1E; --surface2:#2C2C2E; --ink:#F5F5F7; --muted:#98989D; --line:#38383A;
+  --accent:#2997FF; --accent-soft:rgba(41,151,255,.14); --good:#30D158;
+  --nav:rgba(0,0,0,.72); --shadow:none; color-scheme:dark}
+
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:17px;line-height:1.47;-webkit-font-smoothing:antialiased;letter-spacing:-.011em}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--nav)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--nav);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.nav .in{max-width:980px;margin:0 auto;height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));font-size:14px}
+.nav b{font-weight:600;font-size:17px;display:flex;align-items:center;gap:8px}
+.dot{width:18px;height:18px;border-radius:50%;background:conic-gradient(#0071E3 0 25%,#FF375F 0 50%,#FF9F0A 0 75%,#30D158 0);flex:none}
+.nav span{color:var(--muted)}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 80px;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;font-weight:700;letter-spacing:-.025em;line-height:1.07;text-wrap:balance}
+h1{font-size:clamp(40px,7vw,72px)}
+h2{font-size:clamp(28px,4.4vw,40px)}
+h3{font-size:21px;letter-spacing:-.02em}
+p{margin:0;max-width:62ch}
+.lead{font-size:clamp(19px,2.4vw,24px);color:var(--muted);line-height:1.35;font-weight:500}
+.muted{color:var(--muted)}
+.eyebrow{font-size:13px;font-weight:600;color:var(--accent)}
+.small{font-size:13px;color:var(--muted)}
+.view{display:flex;flex-direction:column;gap:20px}
+.panel{background:var(--surface);border-radius:22px;padding:26px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px;min-width:0}
+.grid{display:grid;gap:20px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.grid>*{min-width:0}
+.col{display:flex;flex-direction:column;gap:20px;min-width:0}
+
+.btn{font:inherit;font-size:17px;font-weight:500;border:0;border-radius:980px;padding:13px 26px;cursor:pointer;background:var(--accent);color:#fff;transition:transform .15s,opacity .15s}
+.btn:hover{opacity:.9}.btn:active{transform:scale(.97)}
+.btn.sec{background:var(--surface2);color:var(--ink)}
+.btn:focus-visible,.opt:focus-visible,.link:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.link{background:none;border:0;font:inherit;font-size:15px;color:var(--accent);cursor:pointer;padding:6px 0}
+.link:disabled{color:var(--muted);opacity:.5;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:820px;margin:8px auto 0;text-align:left}
+.mode{font:inherit;color:var(--ink);background:var(--surface);border:2px solid transparent;border-radius:24px;padding:26px;box-shadow:var(--shadow);cursor:pointer;display:flex;flex-direction:column;gap:10px;transition:transform .15s,border-color .15s;min-width:0;text-align:left}
+.mode:hover{transform:translateY(-3px);border-color:var(--accent)}
+.mode:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.mode .tag{align-self:flex-start;font-size:12px;font-weight:600;border-radius:980px;padding:4px 10px;background:var(--surface2);color:var(--muted)}
+.mode.rec .tag{background:var(--accent-soft);color:var(--accent)}
+.mode .num{font-size:56px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.mode .num small{font-size:20px;font-weight:600;letter-spacing:-.01em;color:var(--muted);margin-left:6px}
+.mode h3{font-size:24px}
+.mode p{color:var(--muted);font-size:15px}
+.mode .go{margin-top:auto;padding-top:8px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:15px;font-weight:600;color:var(--accent)}
+.mode .bar{flex:1;max-width:120px}
+.navbtn{background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:0}
+.hero{text-align:center;align-items:center;padding-block:20px 10px}
+.hero .lead{margin:0 auto}
+.stat b{display:block;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.stat span{color:var(--muted);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{font-size:13px;background:var(--surface2);border-radius:980px;padding:6px 12px;color:var(--ink)}
+.hemi svg{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+.qwrap{max-width:680px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:22px}
+.prog{display:flex;flex-direction:column;gap:10px}
+.prog .t{display:flex;justify-content:space-between;font-size:14px;color:var(--muted)}
+.prog .t b{color:var(--accent);font-weight:600}
+.bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:4px;transition:width .3s}
+.qtext{font-size:clamp(24px,3.8vw,34px);font-weight:600;letter-spacing:-.022em;line-height:1.2;text-wrap:pretty;min-height:2.4em}
+.opts{background:var(--surface);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.opt{display:flex;align-items:center;gap:14px;width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:16px 18px;font:inherit;color:var(--ink);cursor:pointer;text-align:left;transition:background .15s}
+.opt:last-child{border-bottom:0}
+.opt:hover{background:var(--surface2)}
+.opt .rad{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;transition:all .15s}
+.opt .rad svg{width:14px;height:14px;opacity:0}
+.opt.on{background:var(--accent-soft)}
+.opt.on .rad{background:var(--accent);border-color:var(--accent)}
+.opt.on .rad svg{opacity:1}
+.opt .lbl{flex:1}
+.opt .k{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+.qnav{display:flex;justify-content:space-between}
+
+.card{border-radius:30px;padding:30px 28px;color:#F5F5F7;background:radial-gradient(120% 80% at 100% 0%,#3A3A8C 0%,transparent 55%),radial-gradient(90% 70% at 0% 100%,#0B5B5B 0%,transparent 60%),#121216;display:flex;flex-direction:column;gap:22px;box-shadow:0 30px 60px rgba(0,0,0,.18)}
+.c-head{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,247,.6)}
+.c-head b{font-size:20px;letter-spacing:-.02em;text-transform:none;color:#fff;display:flex;gap:8px;align-items:center}
+.c-head hr{flex:1;border:0;border-top:1px solid rgba(255,255,255,.18);margin:0}
+.c-fam{font-size:13px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(245,245,247,.6)}
+.c-ideo{font-size:clamp(30px,5.4vw,46px);font-weight:700;letter-spacing:-.03em;line-height:1.05;margin-top:4px}
+.c-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:14px}
+.c-grid>*{min-width:0}
+.glass{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:18px}
+.glass .ph{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,247,.6);margin-bottom:12px}
+.hp{display:flex;flex-direction:column;gap:4px;justify-content:flex-end}
+.mono-big{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:32px;color:#fff;margin-bottom:14px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.hp .pc{font-size:60px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.hp .lab{font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,245,247,.6);margin-top:6px}
+.hp .nm{font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.1}
+.hp .ds{font-size:14px;color:rgba(245,245,247,.65)}
+.axl{display:flex;flex-direction:column;gap:7px}
+.axr{display:grid;grid-template-columns:24px 1fr 56px 42px;gap:9px;align-items:center;font-size:14.5px;font-weight:500}
+.axr .ic{width:24px;height:24px;border-radius:7px;display:grid;place-items:center}
+.axr .ic svg{width:14px;height:14px}
+.axr .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.axr .tr{height:5px;border-radius:3px;background:rgba(255,255,255,.14);overflow:hidden}
+.axr .tr i{display:block;height:100%;border-radius:3px}
+.axr .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.plist{display:flex;flex-direction:column;gap:12px}
+.pi{display:grid;grid-template-columns:42px 1fr auto;gap:12px;align-items:center;font-size:15px;font-weight:500;line-height:1.2}
+.pi .mono{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:15px;color:#fff}
+.pi .fl{width:42px;height:28px;border-radius:5px;overflow:hidden;display:block}
+.pi .fl svg{width:100%;height:100%;display:block}
+.pi small{display:block;color:rgba(245,245,247,.6);font-size:12.5px;font-weight:400}
+.pi .v{font-weight:700;font-variant-numeric:tabular-nums}
+.c-foot{border-top:1px solid rgba(255,255,255,.14);padding-top:16px;display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:15px}
+.c-foot b{font-weight:700}
+.sw{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:0}
+
+.chart svg{width:100%;height:auto;display:block}
+.rk{display:grid;grid-template-columns:140px 1fr 46px;gap:12px;align-items:center;font-size:15px}
+.rk .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rk .tr{height:8px;border-radius:8px;background:var(--surface2);overflow:hidden}
+.rk .tr i{display:block;height:100%;border-radius:8px}
+.rk .v{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ranking{display:flex;flex-direction:column;gap:10px}
+.axis{display:flex;flex-direction:column;gap:4px}
+.axis .hd{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.track{position:relative;height:22px}
+.track:before{content:"";position:absolute;left:0;right:0;top:9px;height:4px;border-radius:4px;background:var(--surface2)}
+.track:after{content:"";position:absolute;left:50%;top:5px;height:12px;width:1px;background:var(--line)}
+.mk{position:absolute;top:3px;transform:translateX(-50%);width:16px;height:16px;border-radius:50%}
+.mk.you{background:var(--accent);box-shadow:0 0 0 3px var(--surface);z-index:2}
+.mk.pty{width:12px;height:12px;top:5px;box-shadow:0 0 0 2px var(--surface)}
+.world{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.country{background:var(--surface2);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.country .hd{display:flex;align-items:center;gap:10px;font-weight:600}
+.country .hd .fl{width:30px;height:20px;border-radius:4px;overflow:hidden;flex:none}
+.country .hd .fl svg{width:100%;height:100%;display:block}
+.country .best{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.mini{display:grid;grid-template-columns:1fr 70px 36px;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+.mini .tr{height:5px;border-radius:5px;background:var(--line);overflow:hidden}
+.mini .tr i{display:block;height:100%}
+.mini .v{text-align:right;font-variant-numeric:tabular-nums}
+.mini .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.legend2{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted)}
+.legend2 span{display:inline-flex;align-items:center;gap:6px}
+.legend2 i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.toast{font-size:14px;color:var(--good)}
+.copyfall{width:100%;font:inherit;font-size:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink)}
+.verdict .big{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.verdict .big b{font-size:clamp(40px,6vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1}
+
+.sheet{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(16px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.sheet-in{background:var(--surface);border-radius:26px;padding:20px;display:flex;flex-direction:column;gap:14px;align-items:center;max-width:480px;width:100%;max-height:100%;overflow:auto}
+.sheet-in img{width:100%;max-height:62vh;object-fit:contain;border-radius:18px;display:block;-webkit-touch-callout:default}
+.sheet-in p{font-size:14px;color:var(--muted);text-align:center}
+@media (max-width:720px){
+  .g2,.g3,.c-grid,.modes{grid-template-columns:1fr}
+  .panel{padding:20px;border-radius:20px}
+  .card{padding:22px 16px;border-radius:24px}
+  .mono-big{width:64px;height:64px;font-size:24px}
+  .rk{grid-template-columns:100px 1fr 42px}
+  .opt .k{display:none}
+  .stat b{font-size:34px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+</head>
+<body>
+<nav class="nav"><div class="in"><button class="navbtn" id="homeBtn" aria-label="Voltar ao início"><b><span class="dot"></span>Bússola Política</b></button><span id="topstate">Escolhe a tua versão</span></div></nav>
+
+<div class="wrap">
+  <section class="view" id="intro">
+    <div class="view hero">
+      <span class="eyebrow">Portugal e o mundo</span>
+      <h1>Descobre onde estás na política.</h1>
+      <p class="lead">Economia, empresas, religião, tradição, tecnologia, ambiente, imigração e Europa. No fim recebes a tua ideologia, 12 eixos, as figuras e os lugares mais parecidos contigo e o teu partido em Portugal e em mais sete países.</p>
+      <div class="modes">
+        <button class="mode" data-mode="quick" id="modeQuick">
+          <span class="tag">Rápida</span>
+          <span class="num">20<small>perguntas</small></span>
+          <h3>Versão rápida</h3>
+          <p>Cerca de 3 minutos. Uma ou duas perguntas por eixo, para teres uma ideia geral.</p>
+          <span class="go"><span class="st">Começar</span><span class="bar" hidden><i></i></span></span>
+        </button>
+        <button class="mode rec" data-mode="full" id="modeFull">
+          <span class="tag">Recomendada</span>
+          <span class="num">75<small>perguntas</small></span>
+          <h3>Versão completa</h3>
+          <p>Cerca de 12 minutos. Mais perguntas por eixo, para um resultado mais preciso.</p>
+          <span class="go"><span class="st">Começar</span><span class="bar" hidden><i></i></span></span>
+        </button>
+      </div>
+    </div>
+    <div class="grid g3">
+      <div class="panel stat"><b>20 ou 75</b><span>afirmações, à tua escolha</span></div>
+      <div class="panel stat"><b>12</b><span>eixos políticos</span></div>
+      <div class="panel stat"><b>8</b><span>países com partidos comparados</span></div>
+    </div>
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Assembleia da República</h3>
+        <div class="hemi" id="hemiIntro"></div>
+        <div class="legend" id="legend"></div>
+        <p class="small">230 deputados eleitos nas legislativas de 18 de maio de 2025.</p>
+      </div>
+      <div class="panel">
+        <h3>Os 12 eixos</h3>
+        <div class="chips" id="axisChips"></div>
+        <h3 style="margin-top:8px">Também comparamos com</h3>
+        <div class="chips" id="countryChips"></div>
+        <p class="small">Sem registo. As respostas ficam só neste browser.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="view" id="quiz" hidden>
+    <div class="qwrap">
+      <div class="prog">
+        <div class="t"><b id="qcat">Economia</b><span id="qcount"></span></div>
+        <div class="bar"><i id="qbar" style="width:0"></i></div>
+      </div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts" role="radiogroup" aria-label="A tua resposta"></div>
+      <div class="qnav">
+        <button class="link" id="prevBtn">‹ Anterior</button>
+        <button class="link" id="skipBtn">Não sei, saltar ›</button>
+      </div>
+      <p class="small" style="text-align:center;margin:0 auto">Atalhos: teclas 1 a 5, ← para voltar, 0 para saltar.</p>
+    </div>
+  </section>
+
+  <section class="view" id="result" hidden>
+    <div class="card" id="card"></div>
+    <div class="row" style="justify-content:center"><button class="btn" id="imgBtn">Criar imagem para partilhar</button></div>
+
+    <div class="panel verdict" id="ptBlock"></div>
+
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Radar dos 12 eixos</h3>
+        <div class="chart" id="radar"></div>
+        <div class="legend2" id="radarLegend"></div>
+      </div>
+      <div class="panel">
+        <h3>Mapa político</h3>
+        <div class="chart" id="compass"></div>
+        <p class="small">Horizontal: Estado ↔ mercado. Vertical: progressista ↔ tradicionalista.</p>
+      </div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Partidos portugueses</h3>
+        <div class="ranking" id="ranking"></div>
+      </div>
+      <div class="panel">
+        <h3>O teu lugar no hemiciclo</h3>
+        <div class="hemi" id="hemiResult"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>O teu partido no mundo</h3>
+      <div class="world" id="world"></div>
+    </div>
+
+    <div class="grid g2">
+      <div class="panel">
+        <h3>Os eixos em detalhe</h3>
+        <div class="ranking" id="axes" style="gap:12px"></div>
+        <p class="small" id="axesCap"></p>
+      </div>
+      <div class="col">
+        <div class="panel">
+          <h3>Como respondeste</h3>
+          <div class="chart" id="donut"></div>
+          <div class="legend2" id="donutLegend"></div>
+        </div>
+        <div class="panel">
+          <h3>Também parecidos contigo</h3>
+          <div class="ranking" id="morePeople"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="justify-content:center">
+      <button class="btn" id="imgBtn2">Criar imagem</button>
+      <button class="btn sec" id="copyBtn">Copiar texto</button>
+      <button class="btn sec" id="reviewBtn">Rever respostas</button>
+      <button class="btn sec" id="restartBtn">Refazer do zero</button>
+      <button class="btn sec" id="switchBtn">Fazer a outra versão</button>
+    </div>
+    <p class="toast" id="toast" aria-live="polite" style="text-align:center;margin:0 auto"></p>
+    <textarea class="copyfall" id="copyFall" rows="3" hidden readonly></textarea>
+
+    <p class="small" style="text-align:center;margin:0 auto">A versão rápida dá uma aproximação; a completa é mais precisa. Cada resposta move-te em 12 eixos. Em cada eixo, a percentagem mostra a força do polo para onde pendes; 50% é neutro. Ideologias, figuras, lugares e partidos têm perfis estimados nos mesmos eixos, a partir de programas eleitorais, posições públicas e votações. É uma ferramenta de reflexão, não uma recomendação de voto.</p>
+  </section>
+</div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-label="Imagem do resultado">
+  <div class="sheet-in">
+    <img id="imgOut" alt="Imagem com o teu resultado da Bússola Política">
+    <p id="imgHint">No telemóvel, mantém o dedo na imagem e escolhe "Guardar imagem". No computador, clica com o botão direito e escolhe "Guardar imagem como".</p>
+    <div class="row" style="justify-content:center">
+      <button class="btn" id="copyImg">Copiar imagem</button>
+      <button class="btn sec" id="closeImg">Fechar</button>
+    </div>
+    <p class="toast" id="imgToast" aria-live="polite"></p>
+  </div>
+</div>
+
+<script>
+const IC = {
+ uni:'<path d="M2 13h12M3 11h10M4 6v5M8 6v5M12 6v5M2 5l6-3 6 3z" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/>',
+ dem:'<rect x="3" y="7" width="10" height="7" rx="1" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M6 7V3h4v4M6 4.5l1.5 1.5L10 3.5" stroke="#fff" stroke-width="1.4" fill="none"/>',
+ lib:'<path d="M3 13C6 7 9 4 14 2c-1 5-4 8-9 10M3 13l4-4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+ ass:'<circle cx="7" cy="5" r="2.6" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M2 14c0-3 2.2-5 5-5s5 2 5 5" stroke="#fff" stroke-width="1.6" fill="none"/>',
+ mil:'<path d="M8 2l5 2v4c0 3-2.2 5-5 6-2.8-1-5-3-5-6V4z" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/>',
+ nac:'<path d="M4 14V2M4 3h8l-2 3 2 3H4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/>',
+ pri:'<path d="M8 1.5v13M11 4.5C11 3.4 9.7 3 8 3S5 3.6 5 5s1.4 1.8 3 2.2 3 .9 3 2.4S9.7 12 8 12s-3-.6-3-1.7" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+ mer:'<path d="M2 12l4-4 3 3 5-6M10 5h4v4" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+ glo:'<circle cx="8" cy="8" r="6" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M2 8h12M8 2c2 2 2.6 4 2.6 6S10 12 8 14C6 12 5.4 10 5.4 8S6 4 8 2" stroke="#fff" stroke-width="1.3" fill="none"/>',
+ rel:'<path d="M8 2v12M4 6h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/>',
+ tra:'<path d="M3 14V8l5-5 5 5v6zM6.5 14v-3.5h3V14" stroke="#fff" stroke-width="1.6" fill="none" stroke-linejoin="round"/>',
+ tec:'<rect x="4" y="4" width="8" height="8" rx="1.5" stroke="#fff" stroke-width="1.6" fill="none"/><path d="M6 1.5v2M10 1.5v2M6 12.5v2M10 12.5v2M1.5 6h2M1.5 10h2M12.5 6h2M12.5 10h2" stroke="#fff" stroke-width="1.4"/>'
+};
+const AXES = [
+ {k:"uni", p:"Unitário",       n:"Descentralizado",   c:"#8E8E93"},
+ {k:"dem", p:"Democracia",     n:"Autoritarismo",     c:"#30B0C7"},
+ {k:"lib", p:"Liberdade",      n:"Controlo",          c:"#FF9F0A"},
+ {k:"ass", p:"Assimilação",    n:"Multiculturalismo", c:"#FF375F"},
+ {k:"mil", p:"Militarista",    n:"Pacifista",         c:"#8AB531"},
+ {k:"nac", p:"Nacionalista",   n:"Internacionalista", c:"#FF6B2C"},
+ {k:"pri", p:"Privado",        n:"Público",           c:"#C69A2B"},
+ {k:"mer", p:"Livre mercado",  n:"Regulação",         c:"#30D158"},
+ {k:"glo", p:"Globalismo",     n:"Protecionismo",     c:"#64D2FF"},
+ {k:"rel", p:"Religioso",      n:"Secular",           c:"#5E5CE6"},
+ {k:"tra", p:"Tradicionalista",n:"Progressista",      c:"#AC8E68"},
+ {k:"tec", p:"Tecnológico",    n:"Ecologista",        c:"#0A84FF"}
+];
+const KI = Object.fromEntries(AXES.map((a,i)=>[a.k,i]));
+
+const QALL = [
+ {c:"Território", t:"Portugal deve avançar com a regionalização, criando regiões administrativas com órgãos eleitos.", e:{uni:-1}},
+ {c:"Território", t:"As grandes decisões devem ser tomadas pelo Governo central, para garantir igualdade em todo o país.", e:{uni:1}},
+ {c:"Território", t:"As câmaras municipais devem receber muito mais poderes e dinheiro do Estado central.", e:{uni:-.8}},
+ {c:"Democracia", t:"O país precisava de um líder forte que pudesse decidir sem estar sempre dependente do Parlamento.", e:{dem:-1,lib:-.3}},
+ {c:"Democracia", t:"Os cidadãos deviam votar mais vezes em referendos sobre temas importantes.", e:{dem:.8}},
+ {c:"Instituições", t:"O sistema político precisa de uma rutura: menos deputados e um Presidente da República com mais poderes.", e:{dem:-.6,uni:.2}},
+ {c:"Democracia", t:"A imprensa e os tribunais devem ser totalmente independentes, mesmo quando atrapalham o Governo.", e:{dem:1}},
+ {c:"Liberdades", t:"A canábis deve ser legal para uso recreativo, com regras semelhantes às do álcool.", e:{lib:1,tra:-.4}},
+ {c:"Liberdades", t:"A liberdade de expressão deve proteger até opiniões ofensivas, salvo incitamento direto à violência.", e:{lib:1}},
+ {c:"Segurança", t:"A videovigilância com reconhecimento facial em espaços públicos é aceitável para combater o crime.", e:{lib:-1}},
+ {c:"Liberdades", t:"A prostituição deve ser legalizada e regulamentada como atividade profissional, com descontos e direitos.", e:{lib:.8,tra:-.4}},
+ {c:"Costumes", t:"A eutanásia deve ser legal em Portugal.", e:{lib:.5,rel:-.7,tra:-.4}},
+ {c:"Segurança", t:"A PSP e a GNR precisam de mais meios e mais autoridade para atuar nas ruas.", e:{lib:-.6,mil:.3}},
+ {c:"Imigração", t:"Quem vem viver para Portugal deve adotar a língua, os costumes e os valores portugueses.", e:{ass:1}},
+ {c:"Identidade", t:"O uso de burca ou niqab deve ser proibido em espaços públicos.", e:{ass:.8,lib:-.3}},
+ {c:"Imigração", t:"A imigração deve ser bastante mais limitada, com quotas anuais definidas por setor.", e:{ass:.6,nac:.6}},
+ {c:"Imigração", t:"Quem trabalha e desconta em Portugal deve conseguir a nacionalidade portuguesa ao fim de poucos anos.", e:{ass:-.5,nac:-.5}},
+ {c:"Defesa", t:"Portugal deve aumentar o investimento em defesa para cumprir os compromissos da NATO.", e:{mil:1}},
+ {c:"Defesa", t:"O serviço militar obrigatório deve regressar.", e:{mil:.8,tra:.3}},
+ {c:"Mundo", t:"A União Europeia deve continuar a apoiar militarmente a Ucrânia.", e:{mil:.6,nac:-.5}},
+ {c:"Defesa", t:"Portugal devia sair da NATO e adotar uma política de neutralidade.", e:{mil:-1,nac:.3}},
+ {c:"Europa", t:"Portugal deve aprofundar a integração europeia, mesmo que isso signifique ceder mais soberania a Bruxelas.", e:{nac:-1}},
+ {c:"Europa", t:"Portugal estaria melhor fora do euro.", e:{nac:1,glo:-.3}},
+ {c:"Soberania", t:"O interesse nacional deve estar sempre acima de compromissos internacionais.", e:{nac:1}},
+ {c:"História", t:"Portugal deve fazer um reconhecimento oficial, e eventualmente reparações, pelo passado colonial e esclavagista.", e:{nac:-.7,tra:-.5}},
+ {c:"Economia", t:"O Estado deve manter ou recuperar o controlo de empresas estratégicas, como a TAP, a CGD, os CTT ou a REN.", e:{pri:-1}},
+ {c:"Saúde", t:"Hospitais públicos podem ser geridos por privados (PPP) se isso trouxer melhores resultados para os doentes.", e:{pri:1}},
+ {c:"Educação", t:"As famílias devem poder escolher uma escola privada paga pelo Estado (cheque-ensino).", e:{pri:.8}},
+ {c:"Pensões", t:"A Segurança Social deve incluir uma parte de capitalização em contas individuais de cada trabalhador.", e:{pri:1}},
+ {c:"Impostos", t:"O IRC deve baixar de forma significativa para atrair investimento.", e:{mer:1}},
+ {c:"Impostos", t:"O IRS deveria ter muito menos escalões, idealmente uma taxa única igual para todos.", e:{mer:1}},
+ {c:"Impostos", t:"Portugal deve criar um imposto sobre as grandes fortunas.", e:{mer:-1}},
+ {c:"Trabalho", t:"A lei laboral deve ser mais flexível, tornando mais fácil contratar e despedir.", e:{mer:1}},
+ {c:"Habitação", t:"O Estado deve impor tetos ao valor das rendas para travar a crise da habitação.", e:{mer:-1}},
+ {c:"Trabalho", t:"O salário mínimo deve subir por decisão política, mesmo acima do ritmo da produtividade.", e:{mer:-1}},
+ {c:"Trabalho", t:"Os sindicatos e a contratação coletiva devem ter mais força nas negociações com os patrões.", e:{mer:-1}},
+ {c:"Empresas", t:"A semana de trabalho de quatro dias deve tornar-se obrigatória para todas as empresas.", e:{mer:-.9}},
+ {c:"Empresas", t:"Os salários dos gestores das grandes empresas devem ter um teto em relação ao salário mais baixo da empresa.", e:{mer:-1}},
+ {c:"Empresas", t:"As empresas devem ser obrigadas a publicar os salários de cada função.", e:{mer:-.6,lib:-.2}},
+ {c:"Empresas", t:"Os subsídios e fundos europeus às empresas distorcem o mercado e deviam ser reduzidos.", e:{mer:.6,pri:.4}},
+ {c:"Empresas", t:"Lojas e grandes superfícies devem poder abrir ao domingo e feriados sem restrições.", e:{mer:.7,rel:-.3}},
+ {c:"Empresas", t:"Os motoristas da Uber, Bolt e plataformas de entregas devem ser contratados como trabalhadores por conta de outrem.", e:{mer:-.8}},
+ {c:"Empresas", t:"Abrir e gerir uma empresa em Portugal devia ter muito menos burocracia, licenças e inspeções.", e:{mer:.8,pri:.2}},
+ {c:"Comércio", t:"O acordo de comércio livre entre a União Europeia e o Mercosul é bom para Portugal.", e:{glo:1}},
+ {c:"Comércio", t:"Portugal deve proteger os agricultores e a indústria nacional da concorrência estrangeira, mesmo com tarifas.", e:{glo:-1}},
+ {c:"Investimento", t:"É positivo que empresas estrangeiras comprem empresas portuguesas, se trouxerem investimento.", e:{glo:1,pri:.2}},
+ {c:"Religião", t:"As raízes cristãs devem ser uma referência na identidade e nas políticas do país.", e:{rel:1,tra:.4}},
+ {c:"Religião", t:"A Igreja Católica não deve ter qualquer privilégio do Estado, incluindo os da Concordata.", e:{rel:-1}},
+ {c:"Religião", t:"A disciplina de Educação Moral e Religiosa Católica deve continuar a existir nas escolas públicas.", e:{rel:.8}},
+ {c:"Religião", t:"Crucifixos e outros símbolos religiosos não devem estar em escolas, hospitais e tribunais públicos.", e:{rel:-1}},
+ {c:"Religião", t:"Uma sociedade precisa da religião para manter valores morais sólidos.", e:{rel:1}},
+ {c:"Religião", t:"Feriados religiosos como o Corpo de Deus ou a Assunção de Nossa Senhora devem manter-se.", e:{rel:.6,tra:.4}},
+ {c:"Costumes", t:"A interrupção voluntária da gravidez deve continuar a ser um direito da mulher.", e:{rel:-.6,tra:-.6}},
+ {c:"Família", t:"A família tradicional deve estar no centro das políticas públicas.", e:{tra:1}},
+ {c:"Costumes", t:"Casais do mesmo sexo devem ter exatamente os mesmos direitos que os outros, incluindo a adoção.", e:{tra:-1}},
+ {c:"Costumes", t:"A mudança de género no registo civil deve depender só da vontade da pessoa, sem relatório médico.", e:{tra:-1}},
+ {c:"Tradição", t:"As touradas devem ser proibidas.", e:{tra:-.7,tec:-.2}},
+ {c:"Tradição", t:"As festas populares, romarias e tradições regionais devem ter apoio público para não desaparecerem.", e:{tra:.7}},
+ {c:"Tradição", t:"O Acordo Ortográfico de 1990 deve ser revogado.", e:{tra:.6,nac:.4}},
+ {c:"Tradição", t:"A escola deve ensinar mais História de Portugal e menos temas de cidadania e identidade.", e:{tra:.8,nac:.3}},
+ {c:"Tradição", t:"A caça deve ser proibida.", e:{tra:-.6,tec:-.3}},
+ {c:"Família", t:"Casar e ter filhos deve ser incentivado pelo Estado como prioridade nacional.", e:{tra:.7}},
+ {c:"Energia", t:"Portugal deve ponderar a energia nuclear como parte do seu futuro energético.", e:{tec:1}},
+ {c:"Tecnologia", t:"A inteligência artificial e a automação vão trazer mais benefícios do que problemas.", e:{tec:1}},
+ {c:"Tecnologia", t:"A inteligência artificial deve ser fortemente regulada, mesmo que isso atrase a inovação.", e:{tec:-.7,mer:-.4}},
+ {c:"Tecnologia", t:"As redes sociais devem ser proibidas a menores de 16 anos.", e:{lib:-.7,tec:-.3}},
+ {c:"Tecnologia", t:"O Estado deve poder aceder a mensagens encriptadas para investigar crimes.", e:{lib:-1}},
+ {c:"Tecnologia", t:"Portugal deve facilitar as criptomoedas, como o bitcoin, e atrair empresas do setor.", e:{tec:.8,mer:.4}},
+ {c:"Tecnologia", t:"Portugal deve atrair centros de dados e gigafábricas, mesmo que consumam muita energia e água.", e:{tec:.9,glo:.3}},
+ {c:"Ambiente", t:"O combate às alterações climáticas deve ter prioridade, mesmo que custe algum crescimento económico.", e:{tec:-.8}},
+ {c:"Ambiente", t:"Novas minas de lítio em Portugal devem ser travadas para proteger o território e as populações.", e:{tec:-.8}},
+ {c:"Ambiente", t:"A venda de carros novos a gasolina e gasóleo deve acabar em 2035, como decidiu a União Europeia.", e:{tec:-.8,nac:-.2}},
+ {c:"Ambiente", t:"Os voos curtos, como Lisboa–Porto, devem ser substituídos pelo comboio.", e:{tec:-.6}},
+ {c:"Ambiente", t:"A carne e outros produtos de origem animal devem pagar mais impostos pelo impacto ambiental.", e:{tec:-.7,mer:-.3}},
+ {c:"Ambiente", t:"O novo aeroporto de Lisboa deve avançar o mais depressa possível, mesmo com impacto ambiental.", e:{tec:.6}}
+];
+
+const QUICK_KEYS=["Portugal deve avançar com a regionalização","O país precisava de um líder forte","A canábis deve ser legal","A videovigilância com reconhecimento facial","Quem vem viver para Portugal deve adotar","A imigração deve ser bastante mais limitada","Portugal deve aumentar o investimento em defesa","Portugal deve aprofundar a integração europeia","O Estado deve manter ou recuperar o controlo","Hospitais públicos podem ser geridos","O IRS deveria ter muito menos escalões","A semana de trabalho de quatro dias","O acordo de comércio livre entre a União Europeia e o Mercosul","Portugal deve proteger os agricultores","As raízes cristãs devem ser","Crucifixos e outros símbolos religiosos","Casais do mesmo sexo devem ter","A família tradicional deve estar","Portugal deve ponderar a energia nuclear","O combate às alterações climáticas deve ter prioridade"];
+const QQUICK=QALL.filter(q=>QUICK_KEYS.some(k=>q.t.startsWith(k)));
+const MODES={quick:{q:QQUICK,ls:"bussola-rapida-v1",min:8,nome:"rápida"},full:{q:QALL,ls:"bussola-pt-v3",min:12,nome:"completa"}};
+let mode="full", Q=QALL;
+
+const PARTIES = [
+ {k:"PCP", n:"PCP (CDU)", full:"Partido Comunista Português", c:"#D3122A", seats:3, ax:"start", v:[-.5,.3,-.1,-.2,-.8,.6,-1,-1,-.8,-.6,-.1,.2],
+  d:"Comunista, concorre na CDU com o PEV. Nacionalizações, direitos laborais fortes, soberania nacional, contra o euro e a NATO."},
+ {k:"BE", n:"Bloco de Esquerda", full:"Bloco de Esquerda", c:"#8E1B3E", seats:1, ax:"end", v:[-.5,.7,.8,-.9,-.8,-.1,-.8,-.9,-.6,-.9,-.95,-.4],
+  d:"Esquerda socialista e progressista. Tetos às rendas, impostos sobre fortunas, serviços públicos, feminismo e direitos LGBT."},
+ {k:"LIVRE", n:"Livre", full:"Livre", c:"#6FA539", seats:6, ax:"start", v:[-.6,.9,.7,-.8,-.1,-.9,-.5,-.6,0,-.8,-.9,-.5],
+  d:"Esquerda verde e europeísta. Transição climática, Estado social forte, federalismo europeu e liberdades individuais."},
+ {k:"PAN", n:"PAN", full:"Pessoas–Animais–Natureza", c:"#0E9C8C", seats:1, ax:"start", v:[-.4,.8,.6,-.6,-.4,-.5,-.3,-.4,-.3,-.7,-.8,-.9],
+  d:"Causa animal e ambiental em primeiro lugar, progressista nos costumes e ao centro na economia."},
+ {k:"PS", n:"PS", full:"Partido Socialista", c:"#E0457B", seats:58, ax:"end", v:[-.3,.8,.3,-.4,.4,-.7,-.3,-.3,.4,-.5,-.6,0],
+  d:"Centro-esquerda social-democrata. SNS e escola pública, economia mista, contas certas, pró-europeu e progressista nos costumes."},
+ {k:"JPP", n:"JPP", full:"Juntos pelo Povo", c:"#8A97A0", seats:1, v:null},
+ {k:"PSD", n:"PSD (AD)", full:"Partido Social Democrata", c:"#F28C28", seats:89, ax:"start", v:[-.2,.7,.1,.3,.6,-.5,.4,.4,.6,.1,.1,.3],
+  d:"Centro-direita reformista, lidera a AD com o CDS. Alívio fiscal gradual, mais espaço aos privados, pró-europeu e atlantista."},
+ {k:"CDS", n:"CDS-PP (AD)", full:"CDS – Partido Popular", c:"#1D7FD1", seats:2, ax:"start", v:[.2,.6,-.2,.6,.7,-.1,.5,.5,.4,.8,.8,.3],
+  d:"Democracia-cristã. Conservador nos costumes, defensor da família, da economia de mercado e da autoridade do Estado."},
+ {k:"IL", n:"Iniciativa Liberal", full:"Iniciativa Liberal", c:"#00AEEF", seats:9, ax:"end", v:[-.3,.8,.8,.1,.5,-.4,.95,.95,.9,-.4,-.3,.8],
+  d:"Liberalismo clássico. Menos Estado, IRS de taxa única, liberdade de escolha na saúde e educação, liberal nos costumes."},
+ {k:"CH", n:"Chega", full:"Chega", c:"#3A47A3", seats:60, ax:"end", v:[.5,-.3,-.5,.95,.6,.8,.3,.2,-.2,.6,.8,.3],
+  d:"Direita nacional-populista. Imigração muito restrita, penas mais duras, conservadorismo nos costumes e discurso antissistema."}
+];
+const PT = PARTIES.filter(p=>p.v);
+
+const WORLD = [
+ {n:"Espanha", f:"ES", p:[
+  {n:"PSOE", c:"#E30613", v:[-.5,.8,.4,-.6,.1,-.8,-.4,-.4,.4,-.8,-.8,0]},
+  {n:"PP", c:"#1D84CE", v:[.2,.7,0,.4,.6,-.3,.4,.4,.6,.4,.4,.3]},
+  {n:"Vox", c:"#63BE21", v:[.9,.2,-.4,.9,.8,.9,.5,.4,-.2,.8,.9,.2]},
+  {n:"Sumar", c:"#E5007E", v:[-.6,.8,.6,-.8,-.7,-.4,-.7,-.8,-.4,-.9,-.9,-.5]},
+  {n:"Podemos", c:"#6B2E68", v:[-.6,.7,.6,-.9,-.8,-.2,-.8,-.9,-.6,-.9,-.95,-.4]}]},
+ {n:"França", f:"FR", p:[
+  {n:"Renaissance", c:"#FFC400", v:[.3,.7,.2,.2,.6,-.9,.4,.4,.6,-.6,-.3,.8]},
+  {n:"Les Républicains", c:"#0066CC", v:[.5,.6,-.3,.7,.7,.2,.5,.5,.3,.3,.5,.6]},
+  {n:"Rassemblement National", c:"#0D378A", v:[.6,0,-.4,.9,.4,.9,-.3,-.4,-.7,.1,.4,.5]},
+  {n:"La France Insoumise", c:"#CC2443", v:[.4,.5,.3,-.8,-.7,.2,-.9,-.95,-.8,-.9,-.8,-.3]},
+  {n:"Parti Socialiste", c:"#ED1651", v:[-.2,.8,.4,-.5,.3,-.7,-.4,-.4,.3,-.8,-.7,0]},
+  {n:"Les Écologistes", c:"#00A85A", v:[-.5,.9,.6,-.8,-.4,-.8,-.5,-.6,-.3,-.8,-.9,-.8]}]},
+ {n:"Alemanha", f:"DE", p:[
+  {n:"CDU/CSU", c:"#3A3A3C", v:[-.6,.8,0,.3,.6,-.6,.4,.4,.6,.5,.3,.4]},
+  {n:"SPD", c:"#E3000F", v:[-.5,.9,.3,-.3,.3,-.7,-.3,-.3,.5,-.3,-.5,.2]},
+  {n:"Grüne", c:"#46962B", v:[-.5,.9,.6,-.7,.3,-.9,-.3,-.4,.4,-.6,-.9,-.6]},
+  {n:"AfD", c:"#009EE0", v:[.2,0,-.2,.95,.3,.9,.3,.2,-.6,.3,.8,.2]},
+  {n:"Die Linke", c:"#BE3075", v:[-.4,.8,.5,-.8,-.9,-.1,-.8,-.9,-.5,-.9,-.9,-.3]},
+  {n:"FDP", c:"#E6C800", v:[-.5,.8,.8,.2,.5,-.5,.9,.95,.9,-.4,-.4,.9]},
+  {n:"BSW", c:"#792351", v:[.3,.5,-.1,.6,-.8,.7,-.7,-.8,-.5,-.4,.3,.2]}]},
+ {n:"Itália", f:"IT", p:[
+  {n:"Fratelli d'Italia", c:"#0F3A6B", v:[.3,.4,-.3,.8,.7,.6,.3,.2,0,.8,.9,.3]},
+  {n:"Partito Democratico", c:"#E2001A", v:[-.3,.8,.4,-.6,.4,-.8,-.3,-.3,.5,-.5,-.7,.2]},
+  {n:"Movimento 5 Stelle", c:"#E8B400", v:[-.2,.6,.1,0,-.6,.2,-.5,-.5,-.4,-.3,-.3,-.4]},
+  {n:"Lega", c:"#008C45", v:[-.8,.2,-.3,.95,.5,.8,.4,.3,-.5,.6,.8,.3]},
+  {n:"Forza Italia", c:"#1E8FD6", v:[.2,.6,0,.5,.5,-.2,.7,.7,.6,.5,.5,.4]}]},
+ {n:"Reino Unido", f:"UK", p:[
+  {n:"Labour", c:"#E4003B", v:[0,.8,.3,-.4,.6,-.3,-.3,-.2,.5,-.4,-.6,.5]},
+  {n:"Conservatives", c:"#0087DC", v:[.4,.7,0,.5,.8,.6,.5,.6,.6,.2,.4,.6]},
+  {n:"Reform UK", c:"#12B6CF", v:[.5,.2,-.2,.95,.5,.95,.6,.6,0,.3,.6,.6]},
+  {n:"Liberal Democrats", c:"#FAA61A", v:[-.5,.9,.7,-.6,.3,-.8,0,.1,.6,-.6,-.8,.3]},
+  {n:"Green Party", c:"#02A95B", v:[-.5,.9,.6,-.8,-.7,-.6,-.7,-.7,-.5,-.8,-.9,-.8]}]},
+ {n:"Estados Unidos", f:"US", p:[
+  {n:"Partido Democrata", c:"#1A6AFF", v:[-.2,.8,.4,-.6,.4,-.3,-.1,-.2,.4,-.3,-.7,.5]},
+  {n:"Partido Republicano", c:"#E81B23", v:[-.3,-.2,-.2,.8,.8,1,.6,.5,-.8,.7,.8,.6]},
+  {n:"Partido Libertário", c:"#E6B800", v:[-1,.7,1,0,-.8,.3,1,1,.9,0,0,.6]},
+  {n:"Partido Verde", c:"#17AA5C", v:[-.4,.8,.6,-.8,-.8,-.3,-.7,-.8,-.6,-.7,-.9,-.8]}]},
+ {n:"Brasil", f:"BR", p:[
+  {n:"PT", c:"#C4161C", v:[0,.6,.1,-.4,-.3,.2,-.6,-.6,-.3,.2,-.4,.2]},
+  {n:"PL", c:"#0F3C8C", v:[.2,-.4,-.5,.7,.9,.9,.6,.6,.2,1,.95,.2]},
+  {n:"Novo", c:"#F37021", v:[-.5,.8,.6,.2,.4,0,.95,.95,.9,.2,.2,.7]},
+  {n:"PSOL", c:"#E6B800", v:[-.3,.7,.5,-.8,-.8,.2,-.9,-.9,-.6,-.8,-.9,-.5]},
+  {n:"MDB", c:"#30A64A", v:[0,.6,0,.1,.2,0,.2,.1,.2,.4,.3,.2]}]}
+];
+
+const IDEO = [
+ {f:"Extrema-esquerda", n:"Marxismo-leninismo", v:[.6,-.6,-.6,0,.2,.4,-1,-1,-.7,-1,0,.6], d:"Estado dono dos meios de produção, partido de vanguarda e fim da economia de mercado."},
+ {f:"Esquerda", n:"Comunismo", v:[-.4,.3,-.1,-.1,-.7,.6,-1,-1,-.8,-.6,-.1,.3], d:"Coletivização da economia, direitos laborais fortes e soberania nacional face à UE e à NATO."},
+ {f:"Esquerda", n:"Socialismo democrático", v:[-.4,.8,.6,-.8,-.7,-.2,-.8,-.9,-.5,-.8,-.9,-.1], d:"Serviços públicos fortes, redistribuição da riqueza e uma agenda ampla de direitos e liberdades."},
+ {f:"Esquerda", n:"Ecossocialismo", v:[-.5,.8,.6,-.8,-.8,-.4,-.7,-.8,-.6,-.8,-.9,-.9], d:"Anticapitalismo e emergência climática como duas faces da mesma luta."},
+ {f:"Extrema-esquerda", n:"Anarquismo", v:[-1,.6,1,-.6,-1,-.8,-1,-.8,-.5,-1,-.8,-.5], d:"Nem Estado nem patrões: autogestão, liberdade total e rejeição de toda a hierarquia."},
+ {f:"Esquerda", n:"Esquerda soberanista", v:[.3,.5,-.2,.6,-.6,.8,-.7,-.8,-.6,-.2,.3,.2], d:"Economia de esquerda com controlo da imigração e desconfiança de Bruxelas. Raro em Portugal."},
+ {f:"Centro-esquerda", n:"Social-democracia", v:[-.2,.9,.3,-.4,.3,-.6,-.4,-.4,.4,-.5,-.5,.2], d:"Mercado com Estado social robusto, progressismo moderado e confiança no projeto europeu."},
+ {f:"Centro-esquerda", n:"Terceira Via", v:[-.3,.8,.2,-.1,.6,-.6,.2,.3,.8,-.2,-.4,.6], d:"Esquerda moderna: globalização, mercado e Estado social eficiente."},
+ {f:"Centro-esquerda", n:"Ecologismo verde", v:[-.6,.9,.6,-.7,-.2,-.9,-.4,-.5,.1,-.8,-.9,-.6], d:"Transição climática, Europa federal e direitos individuais."},
+ {f:"Centro", n:"Social-liberalismo", v:[-.3,.9,.8,-.5,.3,-.8,.3,.3,.8,-.7,-.8,.7], d:"Mercado com regras, muito liberal nos costumes e europeísta convicto."},
+ {f:"Centro", n:"Centrismo pragmático", v:[0,.7,.1,.1,.3,-.4,0,0,.4,0,0,.3], d:"Avalias medida a medida, sem cartilha ideológica."},
+ {f:"Centro-direita", n:"Democracia-cristã", v:[.1,.8,0,.3,.5,-.5,.2,.1,.5,.8,.6,.3], d:"Valores cristãos, economia social de mercado e Europa unida."},
+ {f:"Centro-direita", n:"Conservadorismo liberal", v:[0,.8,.1,.4,.6,-.3,.5,.5,.7,.3,.4,.5], d:"Mercado livre, prudência nos costumes e instituições fortes."},
+ {f:"Direita", n:"Liberalismo clássico", v:[-.4,.8,.8,0,.4,-.2,.9,.95,.9,-.3,-.2,.8], d:"Menos Estado, menos impostos e liberdade de escolha em tudo."},
+ {f:"Direita", n:"Conservadorismo Reaganista", v:[-.5,.6,.1,.5,.95,.5,.9,.9,.7,.8,.8,.6], d:"Mercado livre, defesa forte, fé e família."},
+ {f:"Direita", n:"Thatcherismo", v:[.6,.5,-.2,.5,.9,.5,.9,1,.8,.3,.6,.6], d:"Privatizações, Estado central forte e mão firme na ordem pública."},
+ {f:"Direita", n:"Libertarismo", v:[-.9,.7,1,0,-.6,.3,1,1,.9,0,0,.6], d:"O Estado mínimo possível, na economia e na vida privada."},
+ {f:"Direita", n:"Anarcocapitalismo", v:[-1,.4,1,0,-.9,-.2,1,1,1,0,0,.8], d:"Abolir o Estado e deixar tudo ao mercado."},
+ {f:"Direita", n:"Nacional-conservadorismo", v:[.6,-.2,-.5,.9,.6,.9,.2,.1,-.2,.8,.9,.3], d:"Nação, fé e família acima de tudo, com um Estado forte."},
+ {f:"Direita", n:"Nacional-populismo", v:[.4,-.3,-.5,.95,.6,.9,.1,-.1,-.6,.4,.6,.3], d:"O povo contra as elites, imigração controlada e soberania nacional."},
+ {f:"Extrema-direita", n:"Corporativismo autoritário", v:[1,-1,-1,.8,.5,1,0,-.4,-.6,1,1,-.4], d:"Estado forte, Deus, Pátria e Família, sem pluralismo partidário."}
+];
+
+const PEOPLE = [
+ {n:"Ronald Reagan", d:"Presidente dos EUA, 1981–89", v:[-.5,.6,0,.4,1,.5,.9,.9,.7,.7,.8,.6]},
+ {n:"Margaret Thatcher", d:"Primeira-ministra britânica, 1979–90", v:[.6,.5,-.2,.5,.9,.6,.9,1,.8,.4,.6,.6]},
+ {n:"Silvio Berlusconi", d:"Primeiro-ministro italiano e magnata", v:[.2,.3,0,.5,.4,.3,.8,.7,.5,.5,.6,.4]},
+ {n:"Jair Bolsonaro", d:"Ex-Presidente do Brasil", v:[.2,-.5,-.5,.7,.9,.9,.6,.6,.2,1,.95,.2]},
+ {n:"Javier Milei", d:"Presidente da Argentina", v:[-.4,.3,.6,.3,.4,.2,1,1,1,.4,.5,.8]},
+ {n:"Giorgia Meloni", d:"Primeira-ministra de Itália", v:[.3,.4,-.3,.8,.7,.6,.3,.2,0,.8,.9,.3]},
+ {n:"Viktor Orbán", d:"Líder do Fidesz, Hungria", v:[.7,-.6,-.6,.95,.4,.9,0,-.1,-.3,.8,.9,.3]},
+ {n:"Marine Le Pen", d:"Rassemblement National, França", v:[.6,0,-.4,.9,.4,.9,-.3,-.4,-.7,.1,.4,.5]},
+ {n:"Donald Trump", d:"Presidente dos EUA", v:[0,-.4,-.3,.8,.8,1,.5,.3,-.9,.5,.6,.6]},
+ {n:"Elon Musk", d:"Empresário, Tesla e SpaceX", v:[-.4,.2,.6,.6,.5,.4,.9,.9,.4,-.2,.4,1]},
+ {n:"Angela Merkel", d:"Chanceler alemã, 2005–21", v:[-.4,.8,.1,0,.2,-.7,.2,.2,.7,.4,.1,.3]},
+ {n:"Emmanuel Macron", d:"Presidente de França", v:[.4,.6,.2,.2,.6,-.9,.4,.4,.6,-.6,-.3,.8]},
+ {n:"Bernie Sanders", d:"Senador dos EUA, socialista democrático", v:[-.2,.8,.4,-.6,-.5,-.1,-.7,-.9,-.6,-.4,-.7,-.2]},
+ {n:"Lula da Silva", d:"Presidente do Brasil", v:[0,.5,0,-.4,-.3,.2,-.6,-.6,-.3,.2,-.3,.2]},
+ {n:"Barack Obama", d:"Presidente dos EUA, 2009–17", v:[-.2,.9,.3,-.5,.5,-.5,-.1,0,.6,-.1,-.6,.5]},
+ {n:"Tony Blair", d:"Primeiro-ministro britânico, 1997–2007", v:[-.5,.8,0,0,.8,-.6,.3,.4,.8,.3,-.4,.6]},
+ {n:"Olof Palme", d:"Primeiro-ministro sueco, social-democrata", v:[.4,.9,.3,-.5,-.6,-.4,-.8,-.7,.2,-.7,-.6,.5]},
+ {n:"Sahra Wagenknecht", d:"Fundadora do BSW, Alemanha", v:[.3,.5,-.1,.6,-.8,.7,-.7,-.8,-.5,-.4,.3,.2]},
+ {n:"Mette Frederiksen", d:"Primeira-ministra da Dinamarca", v:[.3,.8,-.1,.7,.5,-.2,-.5,-.4,.4,-.3,-.2,.3]},
+ {n:"Greta Thunberg", d:"Ativista climática sueca", v:[-.3,.8,.5,-.8,-.9,-.7,-.6,-.8,-.7,-.7,-.9,-.9]},
+ {n:"Papa Francisco", d:"Papa, 2013–2025", v:[0,.7,0,-.7,-.9,-.6,-.4,-.6,-.3,1,.5,-.7]},
+ {n:"Ron Paul", d:"Político libertário dos EUA", v:[-1,.6,1,0,-.9,.6,1,1,.8,.5,.5,.5]},
+ {n:"Fidel Castro", d:"Líder da revolução cubana", v:[.8,-1,-1,.3,.6,.8,-1,-1,-.8,-1,.2,.3]},
+ {n:"Pedro Sánchez", d:"Presidente do Governo de Espanha", v:[-.6,.8,.4,-.6,.1,-.8,-.4,-.4,.4,-.8,-.8,0]},
+ {n:"Santiago Abascal", d:"Líder do Vox, Espanha", v:[.9,.2,-.4,.9,.8,.9,.5,.4,-.2,.8,.9,.2]},
+ {n:"Mário Soares", d:"Fundador do PS e Presidente, 1986–96", pt:1, v:[-.2,1,.4,-.3,.3,-.8,-.3,-.2,.5,-.4,-.4,.3]},
+ {n:"Francisco Sá Carneiro", d:"Fundador do PSD e primeiro-ministro", pt:1, v:[-.4,.9,.4,.2,.5,-.4,.5,.4,.5,.5,.3,.4]},
+ {n:"Álvaro Cunhal", d:"Histórico secretário-geral do PCP", pt:1, v:[.3,-.3,-.4,-.1,-.5,.6,-1,-1,-.8,-.8,.1,.6]},
+ {n:"Diogo Freitas do Amaral", d:"Fundador do CDS", pt:1, v:[.3,.9,.1,.3,.3,-.6,.3,.2,.5,.7,.5,.3]},
+ {n:"Aníbal Cavaco Silva", d:"Primeiro-ministro e Presidente da República", pt:1, v:[.5,.7,-.1,.3,.5,-.5,.4,.4,.6,.5,.5,.6]},
+ {n:"António Guterres", d:"Ex-primeiro-ministro, secretário-geral da ONU", pt:1, v:[-.3,.9,.2,-.6,-.3,-1,-.3,-.3,.6,.5,-.2,0]},
+ {n:"Pedro Passos Coelho", d:"Primeiro-ministro, 2011–15", pt:1, v:[.3,.7,.2,.3,.6,-.5,.8,.8,.8,.3,.3,.6]},
+ {n:"António Costa", d:"Ex-primeiro-ministro, presidente do Conselho Europeu", pt:1, v:[-.4,.8,.3,-.5,.4,-.8,-.3,-.3,.5,-.5,-.6,.3]},
+ {n:"Francisco Louçã", d:"Fundador do Bloco de Esquerda", pt:1, v:[-.5,.8,.7,-.8,-.8,0,-.8,-.9,-.6,-.9,-.9,0]},
+ {n:"Paulo Portas", d:"Ex-líder do CDS e vice-primeiro-ministro", pt:1, v:[.3,.6,-.3,.6,.8,.2,.6,.5,.6,.7,.7,.4]},
+ {n:"André Ventura", d:"Líder do Chega", pt:1, v:[.5,-.3,-.6,.95,.7,.8,.3,.3,-.2,.7,.8,.3]},
+ {n:"Rui Tavares", d:"Fundador do Livre", pt:1, v:[-.6,.9,.7,-.8,0,-1,-.4,-.5,.2,-.8,-.9,-.3]},
+ {n:"João Cotrim de Figueiredo", d:"Ex-líder da Iniciativa Liberal", pt:1, v:[-.3,.8,.8,.1,.5,-.3,.95,.95,.9,-.3,-.3,.8]},
+ {n:"Pedro Nuno Santos", d:"Ex-secretário-geral do PS", pt:1, v:[-.3,.8,.3,-.5,.3,-.5,-.6,-.6,.2,-.6,-.6,.2]},
+ {n:"António de Oliveira Salazar", d:"Ditador do Estado Novo, 1932–68", pt:1, v:[1,-1,-1,.8,.4,1,0,-.3,-.6,1,1,-.6]}
+];
+
+const star=(cx,cy,r,f)=>{let p=[];for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.42:r;p.push((cx+rr*Math.cos(a)).toFixed(1)+","+(cy+rr*Math.sin(a)).toFixed(1));}return `<polygon points="${p.join(" ")}" fill="${f}"/>`;};
+const H=c=>c.map((x,i)=>`<rect y="${40/c.length*i}" width="60" height="${40/c.length+.5}" fill="${x}"/>`).join("");
+const V=c=>c.map((x,i)=>`<rect x="${60/c.length*i}" width="${60/c.length+.5}" height="40" fill="${x}"/>`).join("");
+const NORD=(bg,cr,inr)=>`<rect width="60" height="40" fill="${bg}"/><rect x="16" width="10" height="40" fill="${cr}"/><rect y="15" width="60" height="10" fill="${cr}"/>`+(inr?`<rect x="19" width="4" height="40" fill="${inr}"/><rect y="18" width="60" height="4" fill="${inr}"/>`:"");
+const FLAGS = {
+ PT:`<rect width="60" height="40" fill="#DA291C"/><rect width="24" height="40" fill="#046A38"/><circle cx="24" cy="20" r="8" fill="#FFE900"/><circle cx="24" cy="20" r="4.5" fill="#DA291C"/>`,
+ TX:`<rect width="60" height="40" fill="#fff"/><rect y="20" width="60" height="20" fill="#BF0A30"/><rect width="20" height="40" fill="#002868"/>${star(10,20,7,"#fff")}`,
+ FL:`<rect width="60" height="40" fill="#fff"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="7"/><circle cx="30" cy="20" r="5" fill="#E8B23A"/>`,
+ CA:`<rect width="60" height="40" fill="#fff"/><rect y="34" width="60" height="6" fill="#B22234"/>${star(9,8,5,"#B22234")}<ellipse cx="32" cy="24" rx="12" ry="5" fill="#7A4B2A"/>`,
+ US:H(["#B22234","#fff","#B22234","#fff","#B22234","#fff","#B22234"])+`<rect width="26" height="22" fill="#3C3B6E"/>${star(7,6,3,"#fff")}${star(19,6,3,"#fff")}${star(13,11,3,"#fff")}${star(7,16,3,"#fff")}${star(19,16,3,"#fff")}`,
+ ES:`<rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/>`,
+ FR:V(["#002395","#fff","#ED2939"]),
+ PL:H(["#fff","#DC143C"]), HU:H(["#CE2939","#fff","#477050"]), DE:H(["#000","#DD0000","#FFCE00"]), NL:H(["#AE1C28","#fff","#21468B"]),
+ VE:H(["#FFCC00","#00247D","#CF142B"]), SG:H(["#EF3340","#fff"]), IT:V(["#009246","#fff","#CE2B37"]), IE:V(["#169B62","#fff","#FF883E"]),
+ SE:NORD("#006AA7","#FECC00"), DK:NORD("#C8102E","#fff"), NO:NORD("#BA0C2F","#fff","#00205B"),
+ CH:`<rect width="60" height="40" fill="#DA291C"/><rect x="26" y="9" width="8" height="22" fill="#fff"/><rect x="19" y="16" width="22" height="8" fill="#fff"/>`,
+ JP:`<rect width="60" height="40" fill="#fff"/><circle cx="30" cy="20" r="11" fill="#BC002D"/>`,
+ CU:H(["#002A8F","#fff","#002A8F","#fff","#002A8F"])+`<polygon points="0,0 28,20 0,40" fill="#CF142B"/>${star(9,20,5,"#fff")}`,
+ CN:`<rect width="60" height="40" fill="#DE2910"/>${star(11,11,7,"#FFDE00")}`,
+ UK:`<rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><rect x="24" width="12" height="40" fill="#fff"/><rect y="14" width="60" height="12" fill="#fff"/><rect x="26.5" width="7" height="40" fill="#C8102E"/><rect y="16.5" width="60" height="7" fill="#C8102E"/>`,
+ BR:`<rect width="60" height="40" fill="#009C3B"/><polygon points="30,5 55,20 30,35 5,20" fill="#FFDF00"/><circle cx="30" cy="20" r="8" fill="#002776"/>`,
+ AR:H(["#74ACDF","#fff","#74ACDF"])+`<circle cx="30" cy="20" r="4" fill="#F6B40E"/>`,
+ CR:`<rect width="60" height="40" fill="#002B7F"/><rect y="6.7" width="60" height="26.6" fill="#fff"/><rect y="13.3" width="60" height="13.4" fill="#CE1126"/>`,
+ MA:V(["#00529F","#FFD100","#00529F"])+`<rect x="27" y="13" width="6" height="14" fill="#DA291C"/><rect x="23" y="17" width="14" height="6" fill="#DA291C"/>`,
+ AZ:`<rect width="60" height="40" fill="#fff"/><rect width="18" height="40" fill="#00529F"/><circle cx="36" cy="20" r="6" fill="none" stroke="#FFD100" stroke-width="2"/>`
+};
+const PLACES = [
+ {n:"Texas", w:"Estados Unidos", f:"TX", v:[-.6,.6,.3,.6,.9,.7,.9,.9,.5,.8,.8,.7]},
+ {n:"Flórida", w:"Estados Unidos", f:"FL", v:[-.5,.6,.2,.5,.8,.7,.8,.8,.6,.7,.7,.6]},
+ {n:"Califórnia", w:"Estados Unidos", f:"CA", v:[-.5,.9,.6,-.7,0,-.4,0,-.3,.6,-.6,-.9,.8]},
+ {n:"Polónia", w:"Europa", f:"PL", v:[.5,.6,-.2,.8,.9,.5,.2,.2,.4,.9,.8,.4]},
+ {n:"Hungria", w:"Europa", f:"HU", v:[.8,-.3,-.4,.9,.3,.9,0,0,0,.7,.8,.3]},
+ {n:"Suécia", w:"Europa", f:"SE", v:[.4,.9,.5,-.2,.6,-.3,-.4,.3,.8,-.9,-.8,.5]},
+ {n:"Dinamarca", w:"Europa", f:"DK", v:[.5,.9,.4,.7,.6,-.1,-.5,.4,.8,-.6,-.6,.4]},
+ {n:"Noruega", w:"Europa", f:"NO", v:[.4,1,.5,0,.4,.4,-.7,-.2,.6,-.6,-.7,.5]},
+ {n:"Suíça", w:"Europa", f:"CH", v:[-1,1,.6,.6,.3,.8,.7,.8,.7,-.2,.3,.7]},
+ {n:"Países Baixos", w:"Europa", f:"NL", v:[.3,.9,.8,.2,.4,-.3,.4,.6,1,-.8,-.8,.6]},
+ {n:"Alemanha", w:"Europa", f:"DE", v:[-.9,.9,.2,-.1,.4,-.6,0,.1,.7,0,-.4,.2]},
+ {n:"Reino Unido", w:"Europa", f:"UK", v:[.3,.9,.2,.2,.8,.6,.3,.5,.7,-.1,-.4,.6]},
+ {n:"Irlanda", w:"Europa", f:"IE", v:[.8,.9,.3,-.3,-.7,-.6,.5,.6,1,.2,-.6,.6]},
+ {n:"Itália", w:"Europa", f:"IT", v:[.3,.6,-.1,.6,.4,.5,.2,0,.2,.7,.6,.1]},
+ {n:"Portugal", w:"média nacional", f:"PT", v:[.6,.7,.2,.2,.2,-.5,-.2,-.2,.5,.2,-.4,.2]},
+ {n:"Alentejo", w:"Portugal", f:"AZ", v:[-.3,.4,0,.1,-.4,.3,-.8,-.8,-.6,-.6,0,0]},
+ {n:"Madeira", w:"Portugal", f:"MA", v:[-.9,.4,-.1,.4,.3,.2,.4,.4,.5,.6,.6,.3]},
+ {n:"Brasil", w:"América do Sul", f:"BR", v:[-.6,.4,-.3,.3,.2,.4,0,0,0,.7,.5,.3]},
+ {n:"Argentina", w:"América do Sul", f:"AR", v:[-.6,.5,.4,.2,.2,.3,.7,.8,.7,.5,.3,.5]},
+ {n:"Venezuela", w:"América do Sul", f:"VE", v:[.5,-.8,-.8,.2,.6,.9,-.9,-.9,-.8,.3,.3,0]},
+ {n:"Cuba", w:"Caraíbas", f:"CU", v:[.9,-1,-1,.3,.4,.9,-1,-1,-.8,-.8,0,0]},
+ {n:"Costa Rica", w:"América Central", f:"CR", v:[.6,.9,.4,0,-1,-.2,-.2,0,.5,.6,.2,-.6]},
+ {n:"Singapura", w:"Ásia", f:"SG", v:[.9,-.2,-.8,.7,.6,.5,.6,.8,1,0,.6,1]},
+ {n:"Japão", w:"Ásia", f:"JP", v:[.6,.8,-.1,.9,.2,.5,.4,.3,.4,-.3,.7,1]},
+ {n:"China", w:"Ásia", f:"CN", v:[1,-1,-1,.8,.7,.8,-.5,-.4,.3,-1,.4,1]}
+];
+
+let answers=new Array(Q.length).fill(null), idx=0;
+function save(){try{localStorage.setItem(MODES[mode].ls,JSON.stringify({answers,idx}));}catch(e){}}
+function readSaved(m){try{const s=JSON.parse(localStorage.getItem(MODES[m].ls)||"null");if(s&&Array.isArray(s.answers)&&s.answers.length===MODES[m].q.length)return s;}catch(e){}return null;}
+function setMode(m){mode=m;Q=MODES[m].q;const s=readSaved(m);if(s){answers=s.answers;idx=Math.min(s.idx||0,Q.length-1);}else{answers=new Array(Q.length).fill(null);idx=0;}}
+function renderModes(){
+  ["quick","full"].forEach(m=>{const el=$(m==="quick"?"modeQuick":"modeFull"),s=readSaved(m),tot=MODES[m].q.length;
+    const n=s?s.answers.filter(a=>a!==null).length:0,st=el.querySelector(".st"),bar=el.querySelector(".bar");
+    if(n===tot){st.textContent="Ver o meu resultado ›";bar.hidden=true;}
+    else if(n>0){st.textContent=`Continuar · ${n} de ${tot}`;bar.hidden=false;bar.querySelector("i").style.width=(n/tot*100)+"%";}
+    else{st.textContent="Começar ›";bar.hidden=true;}});
+  $("topstate").textContent="Escolhe a tua versão";
+}
+function openMode(m){
+  setMode(m);const n=answers.filter(a=>a!==null).length;
+  if(n===Q.length){renderResult();show("result");}
+  else{if(n>0){const f=answers.findIndex(a=>a===null);idx=f<0?0:f;}renderQ();show("quiz");}
+}
+const $=id=>document.getElementById(id);
+const OPTS=[{v:2,l:"Concordo totalmente"},{v:1,l:"Concordo"},{v:0,l:"Neutro"},{v:-1,l:"Discordo"},{v:-2,l:"Discordo totalmente"}];
+const CHECK='<svg viewBox="0 0 14 14" aria-hidden="true"><path d="M3 7.2l2.6 2.6L11 4.4" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function hemicycle(highlight){
+  const total=230,rows=8,r0=.42;
+  const radii=Array.from({length:rows},(_,i)=>r0+(1-r0)*i/(rows-1));
+  const sumR=radii.reduce((a,b)=>a+b,0);
+  let counts=radii.map(r=>Math.floor(total*r/sumR)), rest=total-counts.reduce((a,b)=>a+b,0);
+  for(let i=rows-1;rest>0;i=(i-1+rows)%rows){counts[i]++;rest--;}
+  const cx=200,cy=196,R=186,pts=[];
+  radii.forEach((r,i)=>{const n=counts[i];for(let j=0;j<n;j++){const a=Math.PI*(1-j/(n-1));pts.push({x:cx+R*r*Math.cos(a),y:cy-R*r*Math.sin(a),a});}});
+  pts.sort((p,q)=>q.a-p.a);
+  let s='',i=0;
+  PARTIES.forEach(p=>{for(let k=0;k<p.seats;k++){const pt=pts[i++];const dim=highlight&&highlight!==p.k;s+=`<circle cx="${pt.x.toFixed(1)}" cy="${pt.y.toFixed(1)}" r="5.6" fill="${p.c}" ${dim?'opacity=".14"':''}/>`;}});
+  const hp=highlight&&PARTIES.find(x=>x.k===highlight);
+  const T="font-family:var(--f);font-weight:700;letter-spacing:-.02em;fill:var(--ink)";
+  let mid;
+  if(highlight&&!hp) mid=`<text x="200" y="184" text-anchor="middle" style="${T};font-size:26px">Sem lugar</text>`;
+  else if(hp) mid=`<text x="200" y="176" text-anchor="middle" style="${T};font-size:28px">${hp.n.replace(/ \(.*\)/,'')}</text><text x="200" y="196" text-anchor="middle" style="font-family:var(--f);font-size:12px;fill:var(--muted)">${hp.seats} ${hp.seats===1?'deputado':'deputados'} em 230</text>`;
+  else mid=`<text x="200" y="188" text-anchor="middle" style="${T};font-size:42px">230</text>`;
+  return `<svg viewBox="0 0 400 204" role="img" aria-label="Hemiciclo da Assembleia da República">${s}${mid}</svg>`;
+}
+
+function show(v){["intro","quiz","result"].forEach(x=>$(x).hidden=x!==v);window.scrollTo({top:0});}
+function renderQ(){
+  const q=Q[idx];
+  $("qcat").textContent=q.c; $("qcount").textContent=`${idx+1} de ${Q.length}`; $("qtext").textContent=q.t;
+  const answered=answers.filter(a=>a!==null).length;
+  $("qbar").style.width=(answered/Q.length*100)+"%";
+  $("topstate").textContent=`${answered} de ${Q.length}`;
+  $("opts").innerHTML=OPTS.map((o,i)=>`<button class="opt ${answers[idx]===o.v?'on':''}" role="radio" aria-checked="${answers[idx]===o.v}" data-v="${o.v}" id="opt${i}"><span class="rad">${CHECK}</span><span class="lbl">${o.l}</span><span class="k">${i+1}</span></button>`).join("");
+  $("prevBtn").disabled=idx===0;
+}
+let busy=false;
+function answer(v){
+  if(busy)return; answers[idx]=v; save();
+  if(v!=="s")document.querySelectorAll(".opt").forEach(b=>{const on=+b.dataset.v===v;b.classList.toggle("on",on);b.setAttribute("aria-checked",on);});
+  busy=true; setTimeout(()=>{busy=false;next();},v==="s"?0:300);
+}
+function next(){if(idx<Q.length-1){idx++;save();renderQ();}else finish();}
+function finish(){
+  const n=answers.filter(a=>a!==null&&a!=="s").length;
+  if(n<MODES[mode].min){const f=answers.findIndex(a=>a===null||a==="s");idx=f<0?0:f;renderQ();
+    $("qtext").textContent=`Respondeste a poucas afirmações para um resultado fiável. Responde a pelo menos ${MODES[mode].min}. `+Q[idx].t;return;}
+  renderResult(); show("result");
+}
+$("opts").addEventListener("click",e=>{const b=e.target.closest(".opt");if(b)answer(+b.dataset.v);});
+$("skipBtn").onclick=()=>answer("s");
+$("prevBtn").onclick=()=>{if(idx>0){idx--;save();renderQ();}};
+document.addEventListener("keydown",e=>{
+  if($("quiz").hidden||e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.key>="1"&&e.key<="5")answer(OPTS[+e.key-1].v);
+  else if(e.key==="0")answer("s");
+  else if(e.key==="ArrowLeft")$("prevBtn").click();
+});
+
+function scores(){
+  const sum=new Array(12).fill(0),max=new Array(12).fill(0);
+  Q.forEach((q,i)=>{const a=answers[i];if(a===null||a==="s")return;for(const k in q.e){const j=KI[k];sum[j]+=a*q.e[k];max[j]+=2*Math.abs(q.e[k]);}});
+  return sum.map((s,j)=>max[j]?s/max[j]:0);
+}
+function rms(a,b){let s=0;for(let i=0;i<12;i++)s+=(a[i]-b[i])**2;return Math.sqrt(s/12);}
+const comp=(u,v)=>Math.max(0,Math.min(100,Math.round(100*(1-rms(u,v)/2))));
+const rankBy=(l,u)=>l.map(x=>({...x,pc:comp(u,x.v)})).sort((a,b)=>b.pc-a.pc);
+function initials(n){const w=n.replace(/ (de|da|do|dos|das) /g," ").split(" ");return (w[0][0]+(w.length>1?w[w.length-1][0]:"")).toUpperCase();}
+function hue(n){let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))%360;return `linear-gradient(135deg,hsl(${h} 60% 52%),hsl(${(h+40)%360} 60% 38%))`;}
+const flagSvg=f=>`<svg viewBox="0 0 60 40" aria-hidden="true">${FLAGS[f]}</svg>`;
+const icon=k=>`<svg viewBox="0 0 16 16" aria-hidden="true">${IC[k]}</svg>`;
+
+function radar(u,party){
+  const cx=210,cy=210,R=140,n=12;
+  const pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  let g='';
+  [.25,.5,.75,1].forEach(t=>{g+=`<polygon points="${AXES.map((_,i)=>pt(i,R*t).join(",")).join(" ")}" fill="none" stroke="var(--line)" stroke-width="1"/>`;});
+  AXES.forEach((a,i)=>{const [x,y]=pt(i,R);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`;
+    const [lx,ly]=pt(i,R+22);const anc=Math.abs(lx-cx)<8?"middle":lx>cx?"start":"end";
+    g+=`<text x="${lx}" y="${ly+4}" text-anchor="${anc}" style="font-family:var(--f);font-size:12.5px;font-weight:500;fill:var(--muted)">${a.p}</text>`;});
+  const poly=(v,col,fo,dash)=>`<polygon points="${v.map((s,i)=>pt(i,R*(s+1)/2).join(",")).join(" ")}" fill="${col}" fill-opacity="${fo}" stroke="${col}" stroke-width="2" ${dash?'stroke-dasharray="5 4"':''} stroke-linejoin="round"/>`;
+  g+=poly(party.v,party.c,.08,true)+poly(u,"var(--accent)",.2,false);
+  u.forEach((s,i)=>{const [x,y]=pt(i,R*(s+1)/2);g+=`<circle cx="${x}" cy="${y}" r="3.5" fill="var(--accent)"/>`;});
+  return `<svg viewBox="-40 10 500 400" role="img" aria-label="Radar dos 12 eixos">${g}</svg>`;
+}
+function compass(u,bestK){
+  const S=340,P=36,I=S-2*P,ex=v=>(v[KI.pri]+v[KI.mer])/2,so=v=>v[KI.tra];
+  const X=v=>P+(v+1)/2*I,Y=v=>P+(1-(v+1)/2)*I;
+  let g=`<rect x="${P}" y="${P}" width="${I/2}" height="${I/2}" fill="#FF375F" fill-opacity=".08"/><rect x="${P+I/2}" y="${P}" width="${I/2}" height="${I/2}" fill="#0A84FF" fill-opacity=".08"/><rect x="${P}" y="${P+I/2}" width="${I/2}" height="${I/2}" fill="#30D158" fill-opacity=".08"/><rect x="${P+I/2}" y="${P+I/2}" width="${I/2}" height="${I/2}" fill="#FF9F0A" fill-opacity=".08"/>`;
+  g+=`<rect x="${P}" y="${P}" width="${I}" height="${I}" fill="none" stroke="var(--line)"/><line x1="${X(0)}" y1="${P}" x2="${X(0)}" y2="${P+I}" stroke="var(--line)"/><line x1="${P}" y1="${Y(0)}" x2="${P+I}" y2="${Y(0)}" stroke="var(--line)"/>`;
+  const lab="font-family:var(--f);font-size:11px;font-weight:600;fill:var(--muted);letter-spacing:.04em";
+  g+=`<text x="${S/2}" y="${P-12}" text-anchor="middle" style="${lab}">TRADICIONALISTA</text><text x="${S/2}" y="${S-P+22}" text-anchor="middle" style="${lab}">PROGRESSISTA</text><text x="${P-12}" y="${S/2}" text-anchor="middle" transform="rotate(-90 ${P-12} ${S/2})" style="${lab}">ESTADO</text><text x="${S-P+16}" y="${S/2}" text-anchor="middle" transform="rotate(90 ${S-P+16} ${S/2})" style="${lab}">MERCADO</text>`;
+  PT.forEach(p=>{const x=X(ex(p.v)),y=Y(so(p.v)),on=p.k===bestK,dx=p.ax==="end"?-10:10;
+    g+=`<circle cx="${x}" cy="${y}" r="${on?8:6}" fill="${p.c}" stroke="var(--surface)" stroke-width="2"/><text x="${x+dx}" y="${y+4}" text-anchor="${p.ax}" style="font-family:var(--f);font-size:11.5px;font-weight:${on?700:500};fill:var(--ink)">${p.k==="LIVRE"?"Livre":p.k==="CH"?"Chega":p.k}</text>`;});
+  const x=X(ex(u)),y=Y(so(u));
+  g+=`<circle cx="${x}" cy="${y}" r="16" fill="var(--accent)" fill-opacity=".18"/><circle cx="${x}" cy="${y}" r="8" fill="var(--accent)" stroke="var(--surface)" stroke-width="3"/><text x="${x}" y="${y-20}" text-anchor="middle" style="font-family:var(--f);font-size:12px;font-weight:700;fill:var(--accent)">Tu</text>`;
+  return `<svg viewBox="0 0 ${S} ${S}" role="img" aria-label="Mapa político">${g}</svg>`;
+}
+function donut(){
+  const cats=[{v:2,l:"Concordo totalmente",c:"#30D158"},{v:1,l:"Concordo",c:"#9BDDAA"},{v:0,l:"Neutro",c:"#AEAEB2"},{v:-1,l:"Discordo",c:"#FF9F99"},{v:-2,l:"Discordo totalmente",c:"#FF453A"},{v:"s",l:"Saltadas",c:"#5E5CE6"}];
+  const tot=answers.length; let acc=0,g='';const R=70,C=2*Math.PI*R;
+  cats.forEach(c=>{c.n=answers.filter(a=>a===c.v).length;if(!c.n)return;const len=c.n/tot*C;
+    g+=`<circle cx="100" cy="100" r="${R}" fill="none" stroke="${c.c}" stroke-width="26" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc}" transform="rotate(-90 100 100)"/>`;acc+=len;});
+  const agree=answers.filter(a=>a===1||a===2).length;
+  g+=`<text x="100" y="100" text-anchor="middle" style="font-family:var(--f);font-size:30px;font-weight:700;fill:var(--ink)">${Math.round(agree/tot*100)}%</text><text x="100" y="120" text-anchor="middle" style="font-family:var(--f);font-size:12px;fill:var(--muted)">de concordância</text>`;
+  $("donutLegend").innerHTML=cats.filter(c=>c.n).map(c=>`<span><i style="background:${c.c}"></i>${c.l} · ${c.n}</span>`).join("");
+  return `<svg viewBox="0 0 200 200" style="max-width:220px;margin:0 auto" role="img" aria-label="Distribuição das respostas">${g}</svg>`;
+}
+
+let lastText="", lastRes=null;
+function renderResult(){
+  const u=scores();
+  const ideo=rankBy(IDEO,u)[0], people=rankBy(PEOPLE,u), places=rankBy(PLACES,u), parties=rankBy(PT,u);
+  const best=parties[0], foreign=people.filter(p=>!p.pt)[0];
+  const none=best.pc<70||(best.pc<76&&foreign.pc>=best.pc+8);
+  const top=people[0];
+  $("topstate").textContent="Resultado";
+
+  const axisRows=AXES.map((a,i)=>{const s=u[i],pc=Math.round(50+50*Math.abs(s));
+    return `<div class="axr"><span class="ic" style="background:${a.c}">${icon(a.k)}</span><span class="nm">${s>=0?a.p:a.n}</span><span class="tr"><i style="width:${pc}%;background:${a.c}"></i></span><span class="v" style="color:${a.c}">${pc}%</span></div>`;}).join("");
+  $("card").innerHTML=`
+    <div class="c-head"><b><span class="dot"></span>Bússola Política</b><hr><span>Versão ${MODES[mode].nome}</span></div>
+    <div><div class="c-fam">${ideo.f}</div><div class="c-ideo">${ideo.n}</div></div>
+    <div class="c-grid">
+      <div class="glass hp">
+        <div class="mono-big" style="background:${hue(top.n)}">${initials(top.n)}</div>
+        <div class="pc">${top.pc}%</div><div class="lab">Mais compatível</div>
+        <div class="nm">${top.n}</div><div class="ds">${top.d}</div>
+      </div>
+      <div class="glass"><div class="ph">Os teus 12 eixos</div><div class="axl">${axisRows}</div></div>
+    </div>
+    <div class="c-grid">
+      <div class="glass"><div class="ph">Outras personalidades</div><div class="plist">${people.slice(1,4).map(p=>`<div class="pi"><span class="mono" style="background:${hue(p.n)}">${initials(p.n)}</span><span>${p.n}<small>${p.d}</small></span><span class="v">${p.pc}%</span></div>`).join("")}</div></div>
+      <div class="glass"><div class="ph">Lugares próximos</div><div class="plist">${places.slice(0,3).map(p=>`<div class="pi"><span class="fl">${flagSvg(p.f)}</span><span>${p.n}<small>${p.w}</small></span><span class="v">${p.pc}%</span></div>`).join("")}</div></div>
+    </div>
+    <div class="c-foot">
+      <span>${none?`<span class="sw" style="background:#98989D"></span>Em Portugal: <b>nenhum partido me representa</b>`:`<span class="sw" style="background:${best.c}"></span>Em Portugal: <b>${best.n} · ${best.pc}%</b>`}</span>
+      <span style="color:rgba(245,245,247,.6)">${WORLD.slice(0,3).map(c=>`${c.n}: ${rankBy(c.p,u)[0].n}`).join(" · ")}</span>
+    </div>`;
+
+  $("ptBlock").innerHTML = none
+    ? `<span class="eyebrow">O teu partido em Portugal</span><div class="big"><b>Nenhum</b><span class="muted">o mais próximo seria ${best.n}, com ${best.pc}%</span></div>
+       <p>A tua combinação de posições não tem tradução no Parlamento português. Quem melhor te representaria é <b>${foreign.n}</b> (${foreign.d}), com ${foreign.pc}% de compatibilidade.</p><p class="muted">A tua ideologia: <b>${ideo.n}</b>. ${ideo.d}</p>`
+    : `<span class="eyebrow">O teu partido em Portugal · ${best.full}</span><div class="big"><b style="color:${best.c}">${best.pc}%</b><h2>${best.n}</h2></div>
+       <p>${best.d}</p><p class="muted">A tua ideologia: <b>${ideo.n}</b>. ${ideo.d} Logo a seguir: <b>${parties[1].n}</b> (${parties[1].pc}%).</p>`;
+
+  $("radar").innerHTML=radar(u,best);
+  $("radarLegend").innerHTML=`<span><i style="background:var(--accent)"></i>Tu</span><span><i style="background:${best.c}"></i>${best.n}</span>`;
+  $("compass").innerHTML=compass(u,none?null:best.k);
+  $("ranking").innerHTML=parties.map(p=>`<div class="rk"><span class="nm">${p.n}</span><span class="tr"><i style="width:${p.pc}%;background:${p.c}"></i></span><span class="v">${p.pc}%</span></div>`).join("");
+  $("hemiResult").innerHTML=hemicycle(none?"__":best.k);
+  $("world").innerHTML=WORLD.map(c=>{const r=rankBy(c.p,u);
+    return `<div class="country"><div class="hd"><span class="fl">${flagSvg(c.f)}</span>${c.n}</div>
+      <div class="best"><span class="sw" style="background:${r[0].c};width:10px;height:10px"></span>${r[0].n} <span class="muted" style="font-weight:600">${r[0].pc}%</span></div>
+      ${r.slice(1).map(p=>`<div class="mini"><span class="n">${p.n}</span><span class="tr"><i style="width:${p.pc}%;background:${p.c}"></i></span><span class="v">${p.pc}%</span></div>`).join("")}</div>`;}).join("");
+  $("axes").innerHTML=AXES.map((a,i)=>{const ux=(1-(u[i]+1)/2)*100,px=(1-(best.v[i]+1)/2)*100;
+    return `<div class="axis"><div class="hd"><span>${a.p}</span><span>${a.n}</span></div><div class="track"><span class="mk pty" style="left:${px}%;background:${best.c}"></span><span class="mk you" style="left:${ux}%"></span></div></div>`;}).join("");
+  $("axesCap").innerHTML=`<span class="sw" style="background:var(--accent)"></span>Tu &nbsp; <span class="sw" style="background:${best.c}"></span>${best.n}`;
+  $("donut").innerHTML=donut();
+  $("morePeople").innerHTML=people.slice(4,10).map(p=>`<div class="rk"><span class="nm">${p.n}</span><span class="tr"><i style="width:${p.pc}%;background:var(--accent)"></i></span><span class="v">${p.pc}%</span></div>`).join("");
+
+  lastRes={ideo,top,people,places,best,none,u,world:WORLD.map(c=>`${c.n}: ${rankBy(c.p,u)[0].n}`),worldTop:WORLD.slice(0,3).map(c=>{const r=rankBy(c.p,u)[0];return {c:c.n,f:c.f,p:r.n,pc:r.pc};})};
+  lastText=`Fiz a Bússola Política (versão ${MODES[mode].nome}, ${Q.length} perguntas). Ideologia: ${ideo.n} (${ideo.f}). Mais compatível: ${top.n} (${top.pc}%). Lugar mais próximo: ${places[0].n}. `+
+    (none?`Em Portugal nenhum partido me representa; quem me representaria é ${foreign.n}. `:`Em Portugal: ${best.n} (${best.pc}%). `)+
+    WORLD.map(c=>`${c.n}: ${rankBy(c.p,u)[0].n}`).join(", ")+".";
+}
+
+$("modeQuick").onclick=()=>openMode("quick");
+$("modeFull").onclick=()=>openMode("full");
+$("homeBtn").onclick=()=>{renderModes();show("intro");};
+$("reviewBtn").onclick=()=>{idx=0;renderQ();show("quiz");};
+$("restartBtn").onclick=()=>{answers=new Array(Q.length).fill(null);idx=0;save();renderModes();show("intro");};
+/* ---------- imagem 1080x1920 ---------- */
+const CF='-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif';
+function svgImg(inner,vb,w,h){return new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${w}" height="${h}">${inner}</svg>`);});}
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath();}
+function fit(c,t,max,size,weight,min){let z=size;for(;;){c.font=`${weight} ${z}px ${CF}`;if(c.measureText(t).width<=max||z<=min)return z;z-=2;}}
+function wrap(c,t,max){const out=[];let cur="";for(const x of t.split(" ")){const tt=cur?cur+" "+x:x;if(c.measureText(tt).width>max&&cur){out.push(cur);cur=x;}else cur=tt;}if(cur)out.push(cur);return out;}
+function ell(c,t,max){if(c.measureText(t).width<=max)return t;while(t.length&&c.measureText(t+"…").width>max)t=t.slice(0,-1);return t+"…";}
+function sp(c,v){if("letterSpacing" in c)c.letterSpacing=v;}
+function avatar(c,n,cx,cy,r,fs){let h=0;for(const ch of n)h=(h*31+ch.charCodeAt(0))%360;const g=c.createLinearGradient(cx-r,cy-r,cx+r,cy+r);g.addColorStop(0,`hsl(${h} 60% 52%)`);g.addColorStop(1,`hsl(${(h+40)%360} 60% 38%)`);
+  c.fillStyle=g;c.beginPath();c.arc(cx,cy,r,0,Math.PI*2);c.fill();c.strokeStyle="rgba(255,255,255,.25)";c.lineWidth=3;c.stroke();
+  c.fillStyle="#fff";c.font=`700 ${fs}px ${CF}`;c.textAlign="center";c.textBaseline="middle";c.fillText(initials(n),cx,cy+2);c.textAlign="left";c.textBaseline="alphabetic";}
+const FAMC={"Extrema-esquerda":"#C8102E","Esquerda":"#E8317E","Centro-esquerda":"#C04FD6","Centro":"#7D5CF0","Centro-direita":"#2E8BFF","Direita":"#0A5BD6","Extrema-direita":"#1C2A8C"};
+function rgba(hex,a){const n=parseInt(hex.slice(1),16);return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;}
+async function makeImage(){
+  const D=lastRes; try{if(document.fonts&&document.fonts.ready)await document.fonts.ready;}catch(e){}
+  const W=1080,H=1920,INK="#1D1D1F",GR="#6E6E73",LG="#E5E5EA",AC=FAMC[D.ideo.f]||"#0071E3";
+  const cv=document.createElement("canvas");cv.width=W;cv.height=H;const c=cv.getContext("2d");
+  c.fillStyle="#F5F5F7";c.fillRect(0,0,W,H);
+  const card=(x,y,w,h,r)=>{c.save();c.shadowColor="rgba(0,0,0,.07)";c.shadowBlur=50;c.shadowOffsetY=12;rr(c,x,y,w,h,r);c.fillStyle="#fff";c.fill();c.restore();};
+  const small=(t,x,y,col)=>{c.fillStyle=col||GR;c.font=`600 22px ${CF}`;sp(c,"3px");c.fillText(t,x,y);sp(c,"0px");};
+  /* topo */
+  c.fillStyle=AC;c.beginPath();c.arc(66,96,14,0,Math.PI*2);c.fill();
+  c.fillStyle=INK;c.font=`600 34px ${CF}`;sp(c,"-.5px");c.fillText("Bússola Política",94,108);sp(c,"0px");
+  const vt=`Versão ${MODES[mode].nome}`;c.font=`500 24px ${CF}`;const vw=c.measureText(vt).width+40;rr(c,W-52-vw,70,vw,52,26);c.fillStyle="#E8E8ED";c.fill();c.fillStyle=GR;c.fillText(vt,W-52-vw+20,104);
+  /* cartão principal */
+  const X=48,Y=150,CW=984,CH=1060;card(X,Y,CW,CH,52);
+  c.save();rr(c,X,Y,CW,CH,52);c.clip();let g=c.createRadialGradient(X+CW,Y,0,X+CW,Y,760);g.addColorStop(0,rgba(AC,.16));g.addColorStop(1,rgba(AC,0));c.fillStyle=g;c.fillRect(X,Y,CW,CH);c.restore();
+  small("A MINHA IDEOLOGIA",104,236);
+  c.font=`600 26px ${CF}`;const fw=c.measureText(D.ideo.f).width+44;rr(c,104,260,fw,52,26);c.fillStyle=rgba(AC,.12);c.fill();c.fillStyle=AC;c.fillText(D.ideo.f,126,295);
+  c.fillStyle=AC;c.font=`800 88px ${CF}`;sp(c,"-3px");let lines=wrap(c,D.ideo.n,872);if(lines.length>2){fit(c,D.ideo.n,872*2,88,800,60);lines=wrap(c,D.ideo.n,872);}
+  let y=402;lines.slice(0,2).forEach(l=>{c.fillText(l,100,y);y+=92;});sp(c,"0px");
+  c.fillStyle=GR;c.font=`400 30px ${CF}`;wrap(c,D.ideo.d,860).slice(0,2).forEach(l=>{c.fillText(l,104,y-20);y+=42;});
+  /* radar */
+  const cx=540,cy=Math.max(890,y+250),R=200,n=12,pt=(i,r)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+r*Math.cos(a),cy+r*Math.sin(a)];};
+  c.strokeStyle=LG;c.lineWidth=2;
+  [.25,.5,.75,1].forEach(t=>{c.beginPath();for(let i=0;i<n;i++){const [px,py]=pt(i,R*t);i?c.lineTo(px,py):c.moveTo(px,py);}c.closePath();c.stroke();});
+  for(let i=0;i<n;i++){const [px,py]=pt(i,R);c.beginPath();c.moveTo(cx,cy);c.lineTo(px,py);c.stroke();}
+  c.beginPath();D.u.forEach((z,i)=>{const [px,py]=pt(i,R*(1+Math.abs(z))/2);i?c.lineTo(px,py):c.moveTo(px,py);});c.closePath();
+  c.fillStyle=rgba(AC,.18);c.fill();c.strokeStyle=AC;c.lineWidth=5;c.lineJoin="round";c.stroke();
+  D.u.forEach((z,i)=>{const [px,py]=pt(i,R*(1+Math.abs(z))/2);c.beginPath();c.arc(px,py,7,0,Math.PI*2);c.fillStyle="#fff";c.fill();c.lineWidth=4;c.strokeStyle=AC;c.stroke();});
+  AXES.forEach((a,i)=>{const z=D.u[i],pc=Math.round(50+50*Math.abs(z)),nm=z>=0?a.p:a.n;const [lx,ly]=pt(i,R+34);
+    const al=Math.abs(lx-cx)<10?"center":lx>cx?"left":"right";c.textAlign=al;
+    const top=ly<cy-R*.9, bot=ly>cy+R*.9; const by=top?ly-26:bot?ly+18:ly-6;
+    c.fillStyle=GR;c.font=`500 21px ${CF}`;c.fillText(nm,lx,by);c.fillStyle=AC;c.font=`700 24px ${CF}`;c.fillText(pc+"%",lx,by+28);c.textAlign="left";});
+  /* três destaques */
+  const TY=1240,TH=300,TW=(984-48)/3;
+  const tile=(i,lab,draw,name,pct,pcol)=>{const tx=48+i*(TW+24);card(tx,TY,TW,TH,40);small(lab,tx+30,TY+50);draw(tx+30,TY+76);
+    c.fillStyle=INK;c.font=`700 30px ${CF}`;sp(c,"-.5px");const ls=wrap(c,name,TW-60);
+    if(ls.length>1){c.fillText(ell(c,ls[0],TW-60),tx+30,TY+192);c.fillText(ell(c,ls.slice(1).join(" "),TW-60),tx+30,TY+226);}else c.fillText(ls[0],tx+30,TY+210);
+    c.fillStyle=pcol||AC;c.font=`800 48px ${CF}`;sp(c,"-2px");c.fillText(pct,tx+30,TY+276);sp(c,"0px");};
+  const flags=await Promise.all([D.places[0],...D.worldTop.map(w=>({f:w.f}))].map(p=>svgImg(FLAGS[p.f],"0 0 60 40",180,120)));
+  tile(0,"EM PORTUGAL",(x,yy)=>{c.beginPath();c.arc(x+30,yy+30,30,0,Math.PI*2);c.fillStyle=D.none?"#AEAEB2":D.best.c;c.fill();if(!D.none){c.fillStyle="#fff";c.font=`700 ${D.best.k.length>3?16:20}px ${CF}`;c.textAlign="center";c.textBaseline="middle";c.fillText(D.best.k==="LIVRE"?"L":D.best.k,x+30,yy+31);c.textAlign="left";c.textBaseline="alphabetic";}},
+    D.none?"Nenhum partido":D.best.n, D.none?"—":D.best.pc+"%");
+  tile(1,"FIGURA",(x,yy)=>{const gg=c.createLinearGradient(x,yy,x+64,yy+64);gg.addColorStop(0,rgba(AC,.75));gg.addColorStop(1,AC);c.fillStyle=gg;c.beginPath();c.arc(x+32,yy+32,32,0,Math.PI*2);c.fill();
+      c.fillStyle="#fff";c.font=`700 24px ${CF}`;c.textAlign="center";c.textBaseline="middle";c.fillText(initials(D.top.n),x+32,yy+33);c.textAlign="left";c.textBaseline="alphabetic";},
+    D.top.n, D.top.pc+"%");
+  tile(2,"LUGAR",(x,yy)=>{c.save();rr(c,x,yy+2,90,60,10);c.clip();if(flags[0])c.drawImage(flags[0],x,yy+2,90,60);c.restore();rr(c,x,yy+2,90,60,10);c.strokeStyle="rgba(0,0,0,.08)";c.lineWidth=2;c.stroke();},
+    D.places[0].n, D.places[0].pc+"%");
+  /* no mundo */
+  const MY=1572,MH=230;card(48,MY,984,MH,40);small("O MEU PARTIDO NO MUNDO",78,MY+52);
+  const colW=(984-60)/3;
+  D.worldTop.forEach((w,i)=>{const x=78+i*colW,yy=MY+86;c.save();rr(c,x,yy,60,40,7);c.clip();if(flags[i+1])c.drawImage(flags[i+1],x,yy,60,40);c.restore();
+    c.fillStyle=GR;c.font=`500 22px ${CF}`;c.fillText(w.c,x+76,yy+29);
+    c.fillStyle=INK;c.font=`700 30px ${CF}`;c.fillText(ell(c,w.p,colW-30),x,yy+92);
+    c.fillStyle=AC;c.font=`700 24px ${CF}`;c.fillText(w.pc+"%",x,yy+124);});
+  /* rodapé */
+  c.fillStyle=GR;c.font=`500 26px ${CF}`;c.fillText("Descobre o teu perfil",52,1872);
+  c.fillStyle=AC;c.font=`700 26px ${CF}`;c.textAlign="right";c.fillText("Bússola Política",W-52,1872);c.textAlign="left";
+  return cv;
+}
+let imgBlob=null;
+async function openImage(){
+  if(!lastRes)return;
+  $("imgToast").textContent="";$("sheet").hidden=false;$("imgOut").removeAttribute("src");$("imgHint").textContent="A criar a imagem…";
+  try{const cv=await makeImage();$("imgOut").src=cv.toDataURL("image/png");
+    imgBlob=new Promise(r=>cv.toBlob(r,"image/png"));
+    $("imgHint").textContent="No telemóvel, mantém o dedo na imagem e escolhe \"Guardar imagem\". No computador, clica com o botão direito e escolhe \"Guardar imagem como\".";}
+  catch(e){$("imgHint").textContent="Não foi possível criar a imagem neste browser. Tira um print ao cartão do resultado.";}
+}
+$("imgBtn").onclick=openImage; $("imgBtn2").onclick=openImage;
+$("closeImg").onclick=()=>{$("sheet").hidden=true;};
+$("sheet").addEventListener("click",e=>{if(e.target.id==="sheet")$("sheet").hidden=true;});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("sheet").hidden=true;});
+$("copyImg").onclick=()=>{
+  try{navigator.clipboard.write([new ClipboardItem({"image/png":imgBlob})]).then(()=>{$("imgToast").textContent="Imagem copiada. Cola-a onde quiseres.";},()=>{$("imgToast").textContent="Este browser não deixa copiar imagens. Guarda-a com o dedo ou o botão direito.";});}
+  catch(e){$("imgToast").textContent="Este browser não deixa copiar imagens. Guarda-a com o dedo ou o botão direito.";}
+};
+$("switchBtn").onclick=()=>openMode(mode==="quick"?"full":"quick");
+$("copyBtn").onclick=()=>{
+  const ok=()=>{$("toast").textContent="Copiado.";setTimeout(()=>$("toast").textContent="",3000);};
+  const fall=()=>{const t=$("copyFall");t.hidden=false;t.value=lastText;t.focus();t.select();$("toast").textContent="Seleciona e copia o texto abaixo.";};
+  try{navigator.clipboard.writeText(lastText).then(ok,fall);}catch(e){fall();}
+};
+
+$("hemiIntro").innerHTML=hemicycle(null);
+$("legend").innerHTML=PARTIES.map(p=>`<span><i style="background:${p.c}"></i>${p.k==="PSD"?"PSD":p.k==="CDS"?"CDS-PP":p.n} ${p.seats}</span>`).join("");
+$("axisChips").innerHTML=AXES.map(a=>`<span>${a.p} ↔ ${a.n}</span>`).join("");
+$("countryChips").innerHTML=WORLD.map(c=>`<span>${c.n}</span>`).join("");
+renderModes();
+</script>
+
+</body>
+</html>
