@@ -115,11 +115,11 @@ def icon_globe(c, x, y, r, t, k):
     c.restore()
 def icon_macro(c, x, y, r, t, k):
     c.save(); c.translate(x, y); c.scale(k, k)
-    for i, hgt in enumerate((0.55, 0.95, 1.35)):
-        g = ease_out(clamp(k * 1.6 - i * 0.25)); hh = r * hgt * g
-        c.drawRect(skia.Rect.MakeLTRB(-r + i * r * 0.62, r * 0.75 - hh, -r + i * r * 0.62 + r * 0.42, r * 0.75), paint(hexc(INK)))
+    for i, hgt in enumerate((0.55, 0.95, 1.35)):  # bars on the left half
+        g = ease_out(clamp(k * 1.6 - i * 0.25)); hh = r * hgt * g; x0 = -r + i * r * 0.45
+        c.drawRect(skia.Rect.MakeLTRB(x0, r * 0.75 - hh, x0 + r * 0.32, r * 0.75), paint(hexc(INK)))
     c.drawLine(-r * 1.1, r * 0.75, r * 1.1, r * 0.75, paint(hexc(INK), stroke=r * 0.05))
-    text(c, "%", r * 0.78, -r * 0.35, r * 1.05, hexc(INK), "F600")
+    text(c, "%", r * 0.68, r * 0.12, r * 0.85, hexc(INK), "F600")  # right half, clear of the bars
     c.restore()
 def icon_markets(c, x, y, r, t, k):
     c.save(); c.translate(x, y); c.scale(k, k)
