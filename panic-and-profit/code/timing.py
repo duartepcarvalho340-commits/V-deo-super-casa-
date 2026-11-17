@@ -1,5 +1,5 @@
 """Timing and on-screen text for the Panic & Profit launch reel. All times in seconds.
-Times follow the narration in audio/voice_timing_en.json (ElevenLabs voice "John" via Higgsfield)."""
+Times follow the narration in audio/voice_timing_en.json (ElevenLabs voice "Marcus" via Higgsfield)."""
 
 FPS = 60
 DURATION = 21.0
@@ -16,14 +16,14 @@ SCENES = {
 
 # narration-locked events
 EVENTS = {
-    "slips": [0.22, 0.75, 1.38, 1.85, 2.42, 2.75, 3.02, 3.28],
+    "slips": [0.22, 0.75, 1.34, 1.85, 2.38, 2.75, 3.02, 3.28],
     "fall": 3.6,
-    "w_every": 3.72, "w_headline": 4.08, "w_moves": 4.52, "w_your": 4.78, "w_money": 4.95,
+    "w_every": 3.72, "w_headline": 4.1, "w_moves": 4.55, "w_your": 4.82, "w_money": 5.0,
     "turn_out": 5.9,
     "slip_back": 6.15, "flip": 6.75, "expand": 7.35,
     "tile_1": 8.3, "tile_2": 9.6, "tile_3": 10.5,
     "card_out": 11.2, "grid_in": 11.15, "no_panic": 12.65, "flip_green": 12.72,
-    "w_understand": 13.5, "w_world": 14.0, "w_invest": 14.78, "w_better": 15.38,
+    "w_understand": 13.5, "w_world": 14.2, "w_invest": 14.78, "w_better": 15.3,
     "statement_out": 15.9,
     "vline": 16.0, "wordmark": 16.3, "subtitle": 16.9, "cta": 17.7,
     "to_endcard": 18.75, "endcard": 19.0,

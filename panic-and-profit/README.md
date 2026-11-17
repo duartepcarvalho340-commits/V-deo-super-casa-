@@ -22,10 +22,14 @@ There is no continuous thread between scenes. Each transition is physical paper:
 ## Files
 - `code/timing.py`: scene boundaries, narration-locked events, motion-blur windows and all on-screen text (`TEXT["en"]`)
 - `code/voice_en_eleven.py`: **current narration**. It cuts the ElevenLabs takes in `audio/raw/` (Higgsfield `text2speech_v2`,
-  variant `elevenlabs`, preset voice **John**, male) at their pauses, speeds up a few lines slightly without changing pitch, and places each phrase on its beat, writing
+  variant `elevenlabs`, preset voice **Marcus**, male, calm) at their pauses, speeds up the opening line slightly
+  without changing pitch, and places each phrase on its beat, writing
   `audio/voice_en.wav` and `audio/voice_timing_en.json`.
 - `code/voice_en.py`: the first version (Kokoro `af_heart`), replaced because it sounded robotic. Kept for reference.
-  `python3 code/voice_en_eleven.py emily` rebuilds the second version (female ElevenLabs voice "Emily").
+  `python3 code/voice_en_eleven.py emily` / `john` rebuild the earlier versions (Emily, female; John, male, rejected as too excited).
+- Voice choice: 8 male voices were auditioned on the same lines (`audio/raw/audition/`) and measured for pitch
+  variation. Marcus had the lowest (F0 ≈ 123 Hz, 8 semitones p10–p90, against 216 Hz / 12.7 st for John).
+  Runner-up: Julian (`audio/raw/voz_alternativa_julian.m4a`).
 - `audio/raw/voz_alternativa_sloane.m4a`: an audition of an alternative voice (Sloane) on two lines
 - `code/audio.py`: original score at 120 BPM. D minor during the panic (sub-bass pulse, clock tick, stabs, riser),
   then D major for the recovery (piano, claps, pad), then a bell chord on the logo. SFX on every headline, on the
@@ -34,7 +38,7 @@ There is no continuous thread between scenes. Each transition is physical paper:
   cut dead when the headlines fall. Music and chaos are ducked under the voice.
 - `code/render.py`: Skia renderer. `--orient V|L`; the vertical layout is built from scratch, not cropped.
 - `exports/`: `panicandprofit_EN_1080x1920.mp4` (Reels) and `panicandprofit_EN_1920x1080.mp4`
-  (60 fps, H.264 + AAC 192k, −14 LUFS integrated, −3 dBTP peak)
+  (60 fps, H.264 + AAC 192k, −14 LUFS integrated, −1.8 dBTP peak)
 - `contact_sheet_V.png` / `contact_sheet_L.png`: one frame per second
 
 ## Re-render
@@ -42,9 +46,9 @@ There is no continuous thread between scenes. Each transition is physical paper:
 bash <video-spec skill>/scripts/setup.sh . en       # Skia, Kokoro voice
 # fonts (Google Fonts is blocked, so @fontsource from npm, converted to TTF into assets/fonts/):
 #   npm pack @fontsource/fraunces@5.1.0 @fontsource/inter@5.1.0  -> Fraunces-{400,400i,600,700,900}.ttf, Inter-{400..800}.ttf
-python3 code/voice_en_eleven.py john   # needs audio/raw/john_*.wav (ffmpeg -i x.mp3 -ac 1 -ar 48000 x.wav)
+python3 code/voice_en_eleven.py marcus   # needs audio/raw/marcus_*.wav (ffmpeg -i x.mp3 -ac 1 -ar 48000 x.wav)
 python3 code/audio.py en
-ffmpeg -i audio/stems/mix_raw_en.wav -af "volume=2.55dB,aresample=192000,alimiter=limit=0.70:attack=0.5:release=50:level=false,aresample=48000" -c:a pcm_s16le audio/mix_en.wav
+ffmpeg -i audio/stems/mix_raw_en.wav -af "volume=5.4dB,aresample=192000,alimiter=limit=0.65:attack=0.5:release=50:level=false,aresample=48000" -c:a pcm_s16le audio/mix_en.wav
 python3 code/render.py --orient V --out exports/panicandprofit_EN_1080x1920.mp4
 python3 code/render.py --orient L --out exports/panicandprofit_EN_1920x1080.mp4
 # stills: python3 code/render.py --orient V --scale 0.5 --out previews/s.png --still 1 4 8
@@ -54,6 +58,6 @@ and adjust the `volume=` gain until you are at −14 LUFS.
 
 ## Licences
 - Fonts: Fraunces and Inter, both SIL Open Font License 1.1 (via @fontsource; licence files are in `assets/fonts/`).
-- Voice: ElevenLabs (preset "John") generated through Higgsfield. Check commercial use against the terms of the
+- Voice: ElevenLabs (preset "Marcus") generated through Higgsfield. Check commercial use against the terms of the
   Higgsfield plan in use (the account is currently on the free plan). The old Kokoro voice is Apache-2.0.
 - Music and SFX: synthesised in `code/audio.py` (original, no samples).
