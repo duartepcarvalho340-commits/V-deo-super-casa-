@@ -1,5 +1,5 @@
 from pathlib import Path
-OUT = Path("/home/user/V-deo-super-casa-/instagram/panic-and-profit/carrossel_01_panico.html")
+OUT = Path(__file__).resolve().parent/"carrossel_01_panico.html"
 
 P="#1B7F4B"; PL="#4FB07A"; PD="#0F4D2D"; RED="#C8102E"; GREY="#8A8A8A"
 LBG="#FAFAF7"; LBR="#E6E4DE"; DBG="#121413"; INK="#141414"
@@ -124,7 +124,7 @@ b7=f'''<div style="text-align:center;display:flex;flex-direction:column;align-it
 <div style="padding:0 0 4px;margin-bottom:26px;">{logo(26,line_w=190)}</div>
 <h2 class="serif" style="font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-0.4px;color:{INK};margin-bottom:10px;">O pânico é deles.<br>O plano é teu.</h2>
 <p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;margin-bottom:22px;max-width:290px;">Mercados, macro e geopolítica explicados sem ruído. Para quem já investe e quer fazê-lo melhor.</p>
-<div class="sans" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:{P};color:#fff;font-weight:700;font-size:14px;border-radius:28px;">Segue @panicandprofit</div>
+<div class="sans" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:{P};color:#fff;font-weight:700;font-size:14px;border-radius:28px;">Segue @panic.and.profit</div>
 <p class="sans" style="font-size:11px;color:#8A8580;margin-top:12px;">Guarda este post para a próxima queda.</p>
 <p class="sans" style="font-size:8px;letter-spacing:1.5px;color:#A09B95;margin-top:18px;">NÃO É ACONSELHAMENTO FINANCEIRO</p></div>'''
 slides.append(slide(6,LBG,b7,True,last=True,justify="center"))
@@ -152,7 +152,7 @@ body{{background:#ECEBE6;font-family:'Inter',sans-serif;display:flex;justify-con
 .ig-caption small{{display:block;color:#999;font-size:10px;margin-top:6px;letter-spacing:.5px}}
 </style></head><body>
 <div class="ig-frame">
-<div class="ig-header"><div class="ig-avatar">P<i>&amp;</i>P</div><div><div style="font-size:13px;font-weight:600;">panicandprofit</div><div style="font-size:11px;color:#888;">Markets · Macro · Geopolitics</div></div></div>
+<div class="ig-header"><div class="ig-avatar">P<i>&amp;</i>P</div><div><div style="font-size:13px;font-weight:600;">panic.and.profit</div><div style="font-size:11px;color:#888;">Markets · Macro · Geopolitics</div></div></div>
 <div class="carousel-viewport"><div class="carousel-track">{"".join(slides)}</div></div>
 <div class="ig-dots">{"".join('<span class="on"></span>' if k==0 else '<span></span>' for k in range(TOTAL))}</div>
 <div class="ig-actions"><div>
@@ -160,7 +160,7 @@ body{{background:#ECEBE6;font-family:'Inter',sans-serif;display:flex;justify-con
 <svg width="24" height="24" fill="none" stroke="#111" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.4A8.5 8.5 0 1 1 21 12z"/></svg>
 <svg width="24" height="24" fill="none" stroke="#111" stroke-width="2" viewBox="0 0 24 24"><path d="M22 3L9.2 13.5M22 3l-7 18-3.5-7.5L3 10z"/></svg></div>
 <svg width="24" height="24" fill="none" stroke="#111" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1z"/></svg></div>
-<div class="ig-caption"><b>panicandprofit</b> Vender no pânico parece proteção. Os números dizem outra coisa. Guarda para a próxima queda. 📉📈<small>HÁ 2 HORAS</small></div>
+<div class="ig-caption"><b>panic.and.profit</b> Vender no pânico parece proteção. Os números dizem outra coisa. Guarda para a próxima queda. 📉📈<small>HÁ 2 HORAS</small></div>
 </div>
 <script>
 const track=document.querySelector('.carousel-track'),vp=document.querySelector('.carousel-viewport'),dots=[...document.querySelectorAll('.ig-dots span')];
