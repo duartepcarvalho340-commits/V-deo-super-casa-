@@ -53,18 +53,18 @@ slides.append(slide(0,LBG,b1,True,justify="center"))
 def card(date,title,val,up):
     c=P if up else RED
     tri="M6 2 L11 10 L1 10 Z" if up else "M1 2 L11 2 L6 10 Z"
-    return f'''<div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:6px;padding:10px 12px;margin-bottom:8px;">
+    return f'''<div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1.5px solid {INK};border-radius:4px;padding:10px 12px;margin-bottom:8px;box-shadow:3px 3px 0 rgba(0,0,0,0.06);">
 <div><div class="sans" style="font-size:8px;font-weight:700;letter-spacing:1.5px;color:{c};">{date}</div>
 <div class="serif" style="font-size:16px;font-weight:800;color:{INK};text-transform:uppercase;letter-spacing:0.2px;">{title}</div></div>
 <div style="display:flex;align-items:center;gap:8px;"><span class="sans" style="font-size:15px;font-weight:700;color:{c};">{val}</span>
 <div style="width:26px;height:26px;background:{c};border-radius:4px;display:flex;align-items:center;justify-content:center;"><svg width="12" height="12" viewBox="0 0 12 12"><path d="{tri}" fill="#fff"/></svg></div></div></div>'''
-b2=f'''{tag("O PROBLEMA · ABRIL DE 2025", "#E8566C")}
-<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:#fff;margin-bottom:16px;">Em dois dias, o S&amp;P 500 caiu ~10,5%. Muitos venderam.</h2>
+b2=f'''{tag("O PROBLEMA · ABRIL DE 2025", RED)}
+<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:{INK};margin-bottom:16px;">Em dois dias, o S&amp;P 500 caiu ~10,5%. Muitos venderam.</h2>
 {card("3 ABR · TARIFAS","Mercados afundam","−4,8%",False)}
 {card("4 ABR · PÂNICO","Investidores fogem","−6,0%",False)}
 {card("9 ABR · PAUSA NAS TARIFAS","Mercado dispara","+9,5%",True)}
-<p class="sans" style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;margin-top:8px;">Quem vendeu a 4 de abril ficou de fora, três sessões depois, do melhor dia do índice desde 2008.</p>'''
-slides.append(slide(1,DBG,b2,False))
+<p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;margin-top:8px;">Quem vendeu a 4 de abril ficou de fora, três sessões depois, do melhor dia do índice desde 2008.</p>'''
+slides.append(slide(1,LBG,b2,True))
 
 # 3 DATA - J.P. Morgan
 def hbar(label,val,ret,pct,c,txtc):
@@ -84,17 +84,17 @@ slides.append(slide(2,LBG,b3,True))
 # 4 WHY - clustering
 def pair(year,d1,v1,d2,v2):
     return f'''<div style="display:flex;gap:8px;margin-bottom:10px;">
-<div style="flex:0 0 46px;" class="serif"><span style="font-size:22px;font-weight:300;color:{PL};">{year}</span></div>
-<div style="flex:1;background:rgba(200,16,46,0.14);border:1px solid rgba(200,16,46,0.35);border-radius:8px;padding:8px 10px;"><div class="sans" style="font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.5);">{d1}</div><div class="serif" style="font-size:19px;font-weight:700;color:#FF6B7F;">{v1}</div></div>
-<div style="flex:1;background:rgba(27,127,75,0.18);border:1px solid rgba(79,176,122,0.4);border-radius:8px;padding:8px 10px;"><div class="sans" style="font-size:9px;letter-spacing:1px;color:rgba(255,255,255,0.5);">{d2}</div><div class="serif" style="font-size:19px;font-weight:700;color:{PL};">{v2}</div></div></div>'''
-b4=f'''{tag("PORQUÊ", PL)}
-<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:#fff;margin-bottom:10px;">Os melhores dias escondem-se no meio dos piores.</h2>
-<p class="sans" style="font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:16px;"><b style="color:#fff;">7 dos 10 melhores dias</b> dos últimos 20 anos aconteceram a menos de duas semanas dos 10 piores.</p>
+<div style="flex:0 0 46px;" class="serif"><span style="font-size:22px;font-weight:300;color:{INK};">{year}</span></div>
+<div style="flex:1;background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.3);border-radius:8px;padding:8px 10px;"><div class="sans" style="font-size:9px;letter-spacing:1px;color:#8A8580;">{d1}</div><div class="serif" style="font-size:19px;font-weight:700;color:{RED};">{v1}</div></div>
+<div style="flex:1;background:rgba(27,127,75,0.07);border:1px solid rgba(27,127,75,0.3);border-radius:8px;padding:8px 10px;"><div class="sans" style="font-size:9px;letter-spacing:1px;color:#8A8580;">{d2}</div><div class="serif" style="font-size:19px;font-weight:700;color:{P};">{v2}</div></div></div>'''
+b4=f'''{tag("PORQUÊ", P)}
+<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:{INK};margin-bottom:10px;">Os melhores dias escondem-se no meio dos piores.</h2>
+<p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;margin-bottom:16px;"><b style="color:{INK};">7 dos 10 melhores dias</b> dos últimos 20 anos aconteceram a menos de duas semanas dos 10 piores.</p>
 {pair("2008","15 OUT","−9,0%","13 OUT","+11,6%")}
 {pair("2020","16 MAR","−12,0%","24 MAR","+9,4%")}
 {pair("2025","4 ABR","−6,0%","9 ABR","+9,5%")}
-<p class="sans" style="font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;margin-top:4px;">Para apanhar o ressalto, tens de estar dentro quando tudo parece pior.</p>'''
-slides.append(slide(3,DBG,b4,False))
+<p class="sans" style="font-size:12px;color:#8A8580;line-height:1.5;margin-top:4px;">Para apanhar o ressalto, tens de estar dentro quando tudo parece pior.</p>'''
+slides.append(slide(3,LBG,b4,True))
 
 # 5 NUANCE (advanced)
 b5=f'''{tag("PARA QUEM JÁ SABE", P)}
@@ -108,26 +108,26 @@ slides.append(slide(4,LBG,b5,True))
 
 # 6 HOW-TO (dark)
 def step(n,t,d):
-    return f'''<div style="display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.08);">
-<span class="serif" style="font-size:26px;font-weight:300;color:{PL};min-width:34px;line-height:1;">{n}</span>
-<div><div class="sans" style="font-size:14px;font-weight:600;color:#fff;">{t}</div><div class="sans" style="font-size:12px;color:rgba(255,255,255,0.5);line-height:1.45;margin-top:2px;">{d}</div></div></div>'''
-b6=f'''{tag("O PLANO ANTI-PÂNICO", PL)}
-<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:#fff;margin-bottom:8px;">Decide antes da queda, não durante.</h2>
+    return f'''<div style="display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid {LBR};">
+<span class="serif" style="font-size:26px;font-weight:300;color:{P};min-width:34px;line-height:1;">{n}</span>
+<div><div class="sans" style="font-size:14px;font-weight:600;color:{INK};">{t}</div><div class="sans" style="font-size:12px;color:#8A8580;line-height:1.45;margin-top:2px;">{d}</div></div></div>'''
+b6=f'''{tag("O PLANO ANTI-PÂNICO", P)}
+<h2 class="serif" style="font-size:29px;font-weight:700;line-height:1.1;letter-spacing:-0.4px;color:{INK};margin-bottom:8px;">Decide antes da queda, não durante.</h2>
 {step("01","Liquidez fora da bolsa","3 a 6 meses de despesas. Ninguém te obriga a vender no fundo.")}
 {step("02","Alocação definida","Ex.: 80% ações / 20% obrigações, escrita antes de precisares dela.")}
 {step("03","Rebalancear por regra","Só quando o peso se desvia mais de 5 p.p. Nunca por manchete.")}
 {step("04","Investir todos os meses","Nas quedas, o mesmo valor compra mais unidades.")}'''
-slides.append(slide(5,DBG,b6,False))
+slides.append(slide(5,LBG,b6,True))
 
 # 7 CTA
 b7=f'''<div style="text-align:center;display:flex;flex-direction:column;align-items:center;">
-<div style="background:#fff;border-radius:14px;padding:18px 22px 14px;margin-bottom:26px;">{logo(26,line_w=190)}</div>
-<h2 class="serif" style="font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-0.4px;color:#fff;margin-bottom:10px;">O pânico é deles.<br>O plano é teu.</h2>
-<p class="sans" style="font-size:13px;color:rgba(255,255,255,0.75);line-height:1.5;margin-bottom:22px;max-width:290px;">Mercados, macro e geopolítica explicados sem ruído. Para quem já investe e quer fazê-lo melhor.</p>
-<div class="sans" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:{LBG};color:{PD};font-weight:700;font-size:14px;border-radius:28px;">Segue @panicandprofit</div>
-<p class="sans" style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:12px;">Guarda este post para a próxima queda.</p>
-<p class="sans" style="font-size:8px;letter-spacing:1.5px;color:rgba(255,255,255,0.4);margin-top:18px;">NÃO É ACONSELHAMENTO FINANCEIRO</p></div>'''
-slides.append(slide(6,GRAD,b7,False,last=True,justify="center"))
+<div style="padding:0 0 4px;margin-bottom:26px;">{logo(26,line_w=190)}</div>
+<h2 class="serif" style="font-size:28px;font-weight:700;line-height:1.12;letter-spacing:-0.4px;color:{INK};margin-bottom:10px;">O pânico é deles.<br>O plano é teu.</h2>
+<p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;margin-bottom:22px;max-width:290px;">Mercados, macro e geopolítica explicados sem ruído. Para quem já investe e quer fazê-lo melhor.</p>
+<div class="sans" style="display:inline-flex;align-items:center;gap:8px;padding:12px 26px;background:{P};color:#fff;font-weight:700;font-size:14px;border-radius:28px;">Segue @panicandprofit</div>
+<p class="sans" style="font-size:11px;color:#8A8580;margin-top:12px;">Guarda este post para a próxima queda.</p>
+<p class="sans" style="font-size:8px;letter-spacing:1.5px;color:#A09B95;margin-top:18px;">NÃO É ACONSELHAMENTO FINANCEIRO</p></div>'''
+slides.append(slide(6,LBG,b7,True,last=True,justify="center"))
 
 html=f'''<!DOCTYPE html><html lang="pt-PT"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Panic &amp; Profit — Carrossel</title>
