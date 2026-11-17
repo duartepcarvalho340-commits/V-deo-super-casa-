@@ -1,6 +1,6 @@
 ---
 name: panic-profit-reel
-description: Make a Panic & Profit Instagram Reel (vertical 1080x1920, US English, real verified market data) animated in code with Skia, Kokoro voice and an original score, then schedule it via Metricool after approval. Adapted from video-spec. Use for "reel", "vídeo Panic & Profit", or the Wednesday/Saturday slot of the daily task.
+description: Make a Panic & Profit Instagram Reel (vertical 1080x1920, US English, real verified market data) animated in code with Skia, Kokoro voice and an original score, then schedule it via Metricool after approval. Adapted from video-spec. Use for "reel", "vídeo Panic & Profit", or the Reel days of the daily task (alternating with carousels).
 ---
 
 # panic-profit-reel: Reels educativos animados em código (Panic & Profit)

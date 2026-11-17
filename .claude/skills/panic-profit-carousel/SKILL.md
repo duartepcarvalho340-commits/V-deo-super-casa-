@@ -1,6 +1,6 @@
 ---
 name: panic-profit-carousel
-description: Make a Panic & Profit Instagram carousel (7 slides, US English, real verified US-market data, light brand design) from build.py/export.js, then schedule it via Metricool after approval. Use for "carrossel Panic & Profit" or the carousel slots of the daily task.
+description: Make a Panic & Profit Instagram carousel (7 slides, US English, real verified US-market data, light brand design) from build.py/export.js, then schedule it via Metricool after approval. Use for "carrossel Panic & Profit" or the carousel days of the daily task (alternating with Reels).
 ---
 
 # panic-profit-carousel
