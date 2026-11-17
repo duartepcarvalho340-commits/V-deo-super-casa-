@@ -33,7 +33,7 @@ EVENTS = {
 FAST = [(3.55, 4.1, 5), (6.15, 6.5, 4), (6.75, 7.4, 4), (11.2, 12.35, 4), (12.75, 13.75, 3),
         (15.85, 16.2, 4), (18.7, 19.05, 4)]
 
-HANDLE = "@panicandprofit"
+HANDLE = "@panic.and.profit"
 
 TEXT = {"en": {
     "breaking": "BREAKING", "live": "LIVE",
@@ -50,7 +50,7 @@ TEXT = {"en": {
               ("03", "Markets", "Stocks, bonds, your savings")],
     "statement": [("Understand", 0), ("the", 0), ("world.", 0), ("Invest", 1), ("better.", 1)],
     "subtitle": "MARKETS · MACRO · GEOPOLITICS",
-    "cta": "Follow @panicandprofit",
+    "cta": "Follow @panic.and.profit",
     "end_line": "Follow for markets, macro & geopolitics",
     "end_small": "NOT FINANCIAL ADVICE",
 }}
