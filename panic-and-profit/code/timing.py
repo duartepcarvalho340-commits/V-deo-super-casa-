@@ -1,5 +1,5 @@
 """Timing and on-screen text for the Panic & Profit launch reel. All times in seconds.
-Times follow the narration in audio/voice_timing_en.json (ElevenLabs voice "Emily" via Higgsfield)."""
+Times follow the narration in audio/voice_timing_en.json (ElevenLabs voice "John" via Higgsfield)."""
 
 FPS = 60
 DURATION = 21.0
@@ -16,22 +16,22 @@ SCENES = {
 
 # narration-locked events
 EVENTS = {
-    "slips": [0.27, 0.85, 1.47, 1.95, 2.57, 2.80, 3.05, 3.28],
-    "fall": 3.55,
-    "w_every": 3.75, "w_headline": 4.05, "w_moves": 4.48, "w_your": 4.72, "w_money": 4.92,
+    "slips": [0.22, 0.75, 1.38, 1.85, 2.42, 2.75, 3.02, 3.28],
+    "fall": 3.6,
+    "w_every": 3.72, "w_headline": 4.08, "w_moves": 4.52, "w_your": 4.78, "w_money": 4.95,
     "turn_out": 5.9,
     "slip_back": 6.15, "flip": 6.75, "expand": 7.35,
-    "tile_1": 8.35, "tile_2": 9.65, "tile_3": 10.56,
-    "card_out": 11.2, "grid_in": 11.15, "no_panic": 12.72, "flip_green": 12.78,
-    "w_understand": 13.66, "w_world": 14.15, "w_invest": 14.8, "w_better": 15.1,
-    "statement_out": 15.68,
-    "vline": 15.85, "wordmark": 16.15, "subtitle": 16.75, "cta": 17.55,
+    "tile_1": 8.3, "tile_2": 9.6, "tile_3": 10.5,
+    "card_out": 11.2, "grid_in": 11.15, "no_panic": 12.65, "flip_green": 12.72,
+    "w_understand": 13.5, "w_world": 14.0, "w_invest": 14.78, "w_better": 15.38,
+    "statement_out": 15.9,
+    "vline": 16.0, "wordmark": 16.3, "subtitle": 16.9, "cta": 17.7,
     "to_endcard": 18.75, "endcard": 19.0,
 }
 
 # fast-motion windows -> extra motion-blur subsamples (t0, t1, n)
-FAST = [(3.5, 4.05, 5), (6.15, 6.5, 4), (6.75, 7.4, 4), (11.2, 12.35, 4), (12.75, 13.75, 3),
-        (15.55, 15.95, 4), (18.7, 19.05, 4)]
+FAST = [(3.55, 4.1, 5), (6.15, 6.5, 4), (6.75, 7.4, 4), (11.2, 12.35, 4), (12.75, 13.75, 3),
+        (15.85, 16.2, 4), (18.7, 19.05, 4)]
 
 HANDLE = "@panicandprofit"
 

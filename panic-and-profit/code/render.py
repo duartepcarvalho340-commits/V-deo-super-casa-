@@ -324,7 +324,7 @@ def scene_explain(c, L, t, T):
     c.restore(); c.restore()
 
 def scene_recover(c, L, t, T):
-    if not (EV["grid_in"] - 0.05 < t < 16.1): return
+    if not (EV["grid_in"] - 0.05 < t < 16.4): return
     gw, gh = L["gslip"]; back = ease_io((t - (EV["w_understand"] - 0.15)) / 0.5)
     out = ease_in((t - EV["statement_out"]) / 0.35)
     c.save(); cx, cy = L["W"] / 2, L["H"] / 2 + (40 if L["H"] > L["W"] else 0)
