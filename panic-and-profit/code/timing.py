@@ -16,7 +16,7 @@ SCENES = {
 
 # narration-locked events
 EVENTS = {
-    "slips": [0.22, 0.75, 1.34, 1.85, 2.38, 2.75, 3.02, 3.28],
+    "slips": [-0.2, 0.75, 1.34, 1.85, 2.38, 2.75, 3.02, 3.28],
     "fall": 3.6,
     "w_every": 3.72, "w_headline": 4.1, "w_moves": 4.55, "w_your": 4.82, "w_money": 5.0,
     "turn_out": 5.9,

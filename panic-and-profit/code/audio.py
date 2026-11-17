@@ -50,7 +50,7 @@ drone = sum(np.sin(2 * np.pi * np.cumsum(f * r) / SR) for r in (1, 1.006, 1.5, 2
 place(music, lp(drone, 2500), 0.0, .05)
 for e in EV["slips"]:  # staccato minor stab on each slip
     n = int(.22 * SR); s = sum(lp(saw(midi(m), n, .006), 2400) for m in (62, 65, 69)) * env(n, .003, .07)
-    place(music, s, e, .07, pan=rng.uniform(-.4, .4))
+    place(music, s, max(e, 0.0), .07, pan=rng.uniform(-.4, .4))
 
 # --- clock tick-tock: 16ths through panic, quarters through the turn and explain ---
 t = 0.0
@@ -138,7 +138,7 @@ def boom():
     n = int(1.4 * SR); tt = np.arange(n) / SR
     return np.sin(2 * np.pi * np.cumsum(40 + 60 * np.exp(-tt * 8)) / SR) * env(n, .002, .45) + lp(rng.standard_normal(n), 300) * env(n, .001, .2) * .6
 
-for i, e in enumerate(EV["slips"]): place(sfx, slam(), e, .55 + .04 * i, pan=rng.uniform(-.35, .35))
+for i, e in enumerate(EV["slips"]): place(sfx, slam(), max(e, 0.0), .55 + .04 * i, pan=rng.uniform(-.35, .35))
 
 # ---------------- chaos layer (panic only): sirens + phone notifications, cut dead at the fall ----------------
 chaos = np.zeros((N, 2)); END = EV["fall"] + 0.02

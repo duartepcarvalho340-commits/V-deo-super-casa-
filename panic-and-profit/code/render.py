@@ -77,8 +77,8 @@ def rise_word(c, s, x, y, size, color, tf, k, align="l"):
     """Word slides up from behind its own baseline mask (editorial type reveal)."""
     if k <= 0: return tw(s, size, tf)
     c.save(); w = tw(s, size, tf); x0 = x + {"c": -w / 2, "l": 0, "r": -w}[align]
-    c.clipRect(skia.Rect.MakeLTRB(x0 - size, y - size * 0.95, x0 + w + size, y + size * 0.42))
-    text(c, s, x, y + (1 - ease_out(k)) * size * 1.25, size, color, tf, align); c.restore(); return w
+    c.clipRect(skia.Rect.MakeLTRB(x0 - size, y - size * 0.95, x0 + w + size, y + size * 0.72))  # keeps descenders (y, g, p)
+    text(c, s, x, y + (1 - ease_out(k)) * size * 1.45, size, color, tf, align); c.restore(); return w
 
 # ---------------- headline slip ----------------
 def slip(c, x, y, w, h, kicker, head, state=0.0, rot=0.0, sc=1.0, alpha=1.0, flipy=1.0, shadow=1.0, calm=None):
@@ -196,7 +196,7 @@ def layout(o):
 # ---------------- scenes ----------------
 def chrome_panic(c, L, t, T):
     """Masthead strip: red BREAKING tag, blinking LIVE dot, hairline and a red ticker band."""
-    a = sstep(0.0, 0.25, t) * (1 - sstep(3.5, 3.75, t))
+    a = 1 - sstep(3.5, 3.75, t)  # on screen from frame 0
     if a <= 0: return
     W, y = L["W"], L["top"]; alpha_layer(c, a)
     bw = tw(T["breaking"], 26, "I800", 0.14) + 36
@@ -207,7 +207,7 @@ def chrome_panic(c, L, t, T):
     c.drawLine(60, y + 46, W - 60, y + 46, paint(hexc(INK), stroke=2, cap="butt"))
     by = y + 46 + 34; c.drawRect(skia.Rect.MakeLTRB(0, by - 26, W, by + 26), paint(hexc(RED)))
     c.save(); c.clipRect(skia.Rect.MakeLTRB(0, by - 26, W, by + 26))
-    items = T["ticker"] * 3; x = W - t * 520 - 200
+    items = T["ticker"] * 5; x = 40 - t * 520  # band already full at frame 0
     for s in items:
         tri(c, x, by, 9, False, hexc(WHITE)); x += 24
         x += text(c, s, x, by, 24, hexc(WHITE), "I700", "l", track=0.1) + 70
@@ -263,7 +263,7 @@ def scene_turn(c, L, t, T):
             w = rise_word(c, s, x, y, size, col, tf, (t - EV[keys[wi]]) / 0.35)
             if last:  # red underline strikes under "money."
                 ku = ease_out((t - EV["w_money"] - 0.3) / 0.4)
-                if ku > 0: c.drawLine(x, y + size * 0.5, x + w * ku, y + size * 0.5, paint(hexc(RED, 1 - out), stroke=10, cap="butt"))
+                if ku > 0: c.drawLine(x, y + size * 0.74, x + w * ku, y + size * 0.74, paint(hexc(RED, 1 - out), stroke=10, cap="butt"))
             x += w + size * 0.24
 
 def card_geom(L, t):
