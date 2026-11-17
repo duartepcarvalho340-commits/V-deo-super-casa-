@@ -2,3 +2,4 @@ assets/voice/
 previews/
 audio/stems/
 __pycache__/
+audio/raw/*.wav

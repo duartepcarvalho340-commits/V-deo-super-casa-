@@ -1,5 +1,5 @@
 """Timing and on-screen text for the Panic & Profit launch reel. All times in seconds.
-Times follow the narration in audio/voice_timing_en.json (Kokoro af_heart)."""
+Times follow the narration in audio/voice_timing_en.json (ElevenLabs voice "Emily" via Higgsfield)."""
 
 FPS = 60
 DURATION = 21.0
@@ -16,15 +16,15 @@ SCENES = {
 
 # narration-locked events
 EVENTS = {
-    "slips": [0.30, 0.80, 1.32, 1.78, 2.24, 2.62, 2.95, 3.22],
+    "slips": [0.27, 0.85, 1.47, 1.95, 2.57, 2.80, 3.05, 3.28],
     "fall": 3.55,
     "w_every": 3.75, "w_headline": 4.05, "w_moves": 4.48, "w_your": 4.72, "w_money": 4.92,
     "turn_out": 5.9,
     "slip_back": 6.15, "flip": 6.75, "expand": 7.35,
-    "tile_1": 8.55, "tile_2": 9.55, "tile_3": 10.45,
+    "tile_1": 8.35, "tile_2": 9.65, "tile_3": 10.56,
     "card_out": 11.2, "grid_in": 11.15, "no_panic": 12.72, "flip_green": 12.78,
-    "w_understand": 13.55, "w_world": 14.05, "w_invest": 14.74, "w_better": 15.05,
-    "statement_out": 15.6,
+    "w_understand": 13.66, "w_world": 14.15, "w_invest": 14.8, "w_better": 15.1,
+    "statement_out": 15.68,
     "vline": 15.85, "wordmark": 16.15, "subtitle": 16.75, "cta": 17.55,
     "to_endcard": 18.75, "endcard": 19.0,
 }

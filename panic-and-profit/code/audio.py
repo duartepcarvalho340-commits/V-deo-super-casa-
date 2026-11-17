@@ -1,5 +1,6 @@
 """Original score + synthesised SFX for the Panic & Profit reel; ducks the music under the narration.
-Panic: 120 BPM, D minor — pulsing sub bass, clock tick, staccato stabs, rising tension.
+Panic: 120 BPM, D minor — pulsing sub bass, clock tick, staccato stabs, rising tension,
+plus a chaos layer (two sirens, phone notifications and vibrations) that cuts dead when the headlines fall.
 Explain: groove builds (kick, muted plucks). Recovery: opens to D major — clean piano, claps, warm pad.
 Logo: pen-stroke + bell chord; end card sustains and fades.
 Usage: python3 code/audio.py en  -> audio/stems/mix_raw_en.wav"""
@@ -138,6 +139,53 @@ def boom():
     return np.sin(2 * np.pi * np.cumsum(40 + 60 * np.exp(-tt * 8)) / SR) * env(n, .002, .45) + lp(rng.standard_normal(n), 300) * env(n, .001, .2) * .6
 
 for i, e in enumerate(EV["slips"]): place(sfx, slam(), e, .55 + .04 * i, pan=rng.uniform(-.35, .35))
+
+# ---------------- chaos layer (panic only): sirens + phone notifications, cut dead at the fall ----------------
+chaos = np.zeros((N, 2)); END = EV["fall"] + 0.02
+def siren_wail(dur, f_lo=620, f_hi=1350, rate=0.55):
+    """US-style wail: slow up/down sweep, square-ish tone, band-limited like a distant speaker."""
+    n = int(dur * SR); t = np.arange(n) / SR
+    f = f_lo + (f_hi - f_lo) * (0.5 - 0.5 * np.cos(2 * np.pi * rate * t))
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    tone = np.tanh(2.5 * np.sin(ph)) + .3 * np.sin(2 * ph)
+    return bp(tone, 450, 3200)
+def siren_twotone(dur, f1=740, f2=988, period=1.1):
+    """European hi-lo siren with a slight Doppler rise as it approaches."""
+    n = int(dur * SR); t = np.arange(n) / SR
+    f = np.where((t % period) < period / 2, f1, f2) * (1 + 0.025 * t / dur)
+    f = lp(f, 40)  # soften the steps
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    return bp(np.tanh(2 * np.sin(ph)) + .25 * np.sin(3 * ph), 500, 4000)
+def ping(kind):
+    n = int(.5 * SR); t = np.arange(n) / SR
+    if kind == 0:   # two-note "ding-ding" message
+        out = np.zeros(n)
+        for k, m in enumerate((88, 93)):
+            o = int(k * .09 * SR); out[o:] += (np.sin(2 * np.pi * midi(m) * t) * env(n, .001, .12))[:n - o]
+        return out
+    if kind == 1:   # news-alert tri-tone
+        out = np.zeros(n)
+        for k, m in enumerate((84, 88, 91)):
+            o = int(k * .07 * SR); out[o:] += (np.sin(2 * np.pi * midi(m) * t) * env(n, .001, .09))[:n - o]
+        return out
+    if kind == 2:   # glassy single pop
+        return (np.sin(2 * np.pi * 1760 * t) + .5 * np.sin(2 * np.pi * 2640 * t)) * env(n, .0005, .07)
+    # phone vibration buzz on a desk
+    m = int(.35 * SR); tb = np.arange(m) / SR
+    buzz = np.sign(np.sin(2 * np.pi * 165 * tb)) * (0.6 + .4 * np.sin(2 * np.pi * 28 * tb)) * np.minimum(1, tb / .01) * np.exp(-tb * 3)
+    out = np.zeros(n); out[:m] = lp(buzz, 900); return out
+w = siren_wail(END - 0.0); w *= np.linspace(0.35, 1.0, len(w)) ** 1.5
+place(chaos, np.stack([w * np.linspace(.9, .4, len(w)), w * np.linspace(.4, .9, len(w))], 1), 0.0, .10)   # drifts left -> right
+tt_ = siren_twotone(END - 1.3); tt_ *= np.linspace(0.15, 1.0, len(tt_)) ** 2                              # approaching
+place(chaos, tt_, 1.3, .09, pan=.45)
+times = 0.12 + (END - .25) * np.sort(rng.random(22)) ** 0.75   # 22 notifications, denser towards the fall
+for k, tn in enumerate(times):
+    kind = [0, 1, 2, 3, 0, 2, 1, 3][k % 8]
+    place(chaos, ping(kind), tn, (.07 if kind < 3 else .12) * (0.7 + .6 * tn / END), pan=rng.uniform(-.8, .8))
+for e in EV["slips"][2:]:  # a news-alert tone stacked on some slams
+    place(chaos, ping(1), e + .03, .06, pan=rng.uniform(-.5, .5))
+cut = np.clip((END - T) / .03, 0, 1)[:, None]; chaos *= cut   # everything stops dead at the fall
+chaos = reverb(chaos, 0.9, .12) * 2.8
 place(sfx, whoosh(.55, 3000, 200), EV["fall"] - .05, .35); place(sfx, boom(), EV["fall"] + .12, .55)
 for kw, f in (("w_every", 0), ("w_moves", 0)): place(sfx, hp(rng.standard_normal(int(.03 * SR)), 2500) * env(int(.03 * SR), .0003, .008), EV[kw], .1)
 place(sfx, bell([86, 93], .5, .05), EV["w_money"] + .05, .05)               # a light 'ka-ching' on "money"
@@ -165,11 +213,12 @@ sfx = reverb(sfx, 1.0, .1)
 v, vsr = sf.read(f"{ROOT}/audio/voice_{LANG}.wav"); v = resample_poly(v, SR, vsr)[:N]; v = np.pad(v, (0, N - len(v)))
 e = lp(np.abs(v), 6)[:, None]; e = e / (e.max() + 1e-9)
 duck = 1 - .5 * np.clip(e * 3, 0, 1)
-voice = np.stack([v, v], 1) * 1.15
-mix = music * duck + sfx + voice
+voice = np.stack([v, v], 1) * 1.6
+chaos_duck = 1 - .45 * np.clip(e * 3, 0, 1)
+mix = music * duck + sfx + chaos * chaos_duck + voice
 mix *= np.clip((DURATION - T) / .8, 0, 1)[:, None]
 os.makedirs(f"{ROOT}/audio/stems", exist_ok=True)
 pk = max(1e-9, np.abs(mix).max())
-for name, x in (("music", music * duck), ("sfx", sfx), ("voice", voice), (f"mix_raw_{LANG}", mix)):
+for name, x in (("music", music * duck), ("sfx", sfx), ("chaos", chaos * chaos_duck), ("voice", voice), (f"mix_raw_{LANG}", mix)):
     sf.write(f"{ROOT}/audio/stems/{name}.wav", (x / pk * .7).astype(np.float32), SR)
 print("ok")
