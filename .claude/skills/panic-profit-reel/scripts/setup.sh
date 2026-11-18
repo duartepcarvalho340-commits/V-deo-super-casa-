@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Panic & Profit Reel pipeline setup (English only). Usage: bash setup.sh <project_dir>
 set -e
-P=${1:-$PWD}; mkdir -p "$P"/{assets/fonts,assets/voice,code,audio/stems,exports,previews}
+P=${1:-$PWD}; mkdir -p "$P"/{assets/fonts,assets/voice,code,audio/stems,exports,previews}; P=$(cd "$P" && pwd)
 (apt-get install -y -q libegl1 libgl1 >/dev/null 2>&1 || (apt-get update -q >/dev/null && apt-get install -y -q libegl1 libgl1 >/dev/null)) || true
 pip install -q skia-python kokoro-onnx soundfile scipy opencv-python-headless fonttools brotli 2>&1 | grep -v WARNING || true
 # English voice: Kokoro v1.0 (Apache-2.0, commercial use OK). Voices shared across projects in ~/.cache.
