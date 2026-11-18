@@ -1,6 +1,6 @@
-"""Panic & Profit Reel renderer (vertical 1080x1920). Skia 2D -> raw BGRA frames -> ffmpeg.
-Concept: "the vertical feed" - each fact is a card-page; the camera scrolls down the feed like a thumb,
-and the story turns into a seesaw (rates vs. value) and discounting bars.
+"""Panic & Profit Reel renderer (Nvidia, 2026-11-18) (vertical 1080x1920). Skia 2D -> raw BGRA frames -> ffmpeg.
+Concept: "split screen" - the frame is cut into PANIC (red tint, top) and PROFIT (green tint, bottom);
+the divider slides as the story moves from the CEO exit to the record quarter, then dissolves into the lesson.
 Usage: python3 code/render.py --scale 1 --fps 60 --out exports/reel.mp4
        python3 code/render.py --scale 0.5 --out previews/s.png --still 1 5 8"""
 import argparse, math, os, subprocess, sys
@@ -87,163 +87,145 @@ def background(c):
     c.clear(hexc(BG))
     for yy in range(160, H, 120): c.drawLine(0, yy, W, yy, paint(hexc("#EFEDE7"), stroke=1.2, cap_round=False))
 
-# ---------------- scenes (local coords 0..W, 0..H) ----------------
-def scene_hook(c, t):
-    k = back_out((t - EV["card_in"]) / 0.55); x = lerp(W + 40, 100, clamp(k, 0, 1.2)) if t > EV["card_in"] else W + 40
-    cw, ch, cy = 880, 168, 560
-    c.drawRect(rect(x + 8, cy + 8, cw, ch), paint(hexc("#000000", .06)))
-    c.drawRect(rect(x, cy, cw, ch), paint(hexc("#FFFFFF"))); c.drawRect(rect(x, cy, cw, ch), paint(hexc(INK), stroke=4, cap_round=False))
-    text(c, "BREAKING · FED", x + 34, cy + 52, 26, hexc(RED), IN[700], track=3)
-    text(c, "DEC 9: ANOTHER HIKE?", x + 34, cy + 128, 54, hexc(INK), FR[800])
-    c.drawRect(rect(x + cw - 128, cy + 42, 92, 92), paint(hexc(RED))); tri(c, x + cw - 82, cy + 88, 46, True, hexc("#FFFFFF"))
-    for key, s, yb, col, tf in (("line1", "The Fed is", 940, INK, FR[800]), ("line2", "about to hike.", 1075, INK, FR[800]), ("line3", "Again.", 1230, RED, FRI[800])):
-        a = ease_out((t - EV[key]) / 0.45)
-        if a <= 0: continue
-        alpha_layer(c, a); text(c, s, 100, yb + (1 - a) * 40, 132, hexc(col), tf); c.restore()
-    a = ease_out((t - 2.2) / 0.5)
-    alpha_layer(c, a); text(c, "What it means for your stocks, in 30 seconds.", 100, 1340, 36, hexc(MUTE), IN[500]); c.restore()
 
-TL = [("tl_1", "JUL 2023", "The Fed's last hike", "before this new cycle", INK, False),
-      ("tl_2", "SEP 16, 2026", "First hike since 2023", "+0.25 pt  →  3.75%–4.00%", RED, True),
-      ("tl_3", "OCT 28", "Hold, but 2 voted to hike", "Cook and Hammack dissented (10–2)", INK, False),
-      ("tl_4", "NOV 10", "October CPI came in hot", "+0.4% m/m · core +0.3% vs 0.2% expected", RED, True)]
-def scene_timeline(c, t):
-    a = ease_out((t - 3.45) / 0.4); alpha_layer(c, a)
-    text(c, "How we got here", 100, 430, 72, hexc(INK), FR[700]); c.restore()
-    x, y0, y1 = 150, 560, 1430; ys = [600, 830, 1060, 1290]
-    prog = sstep(EV["tl_1"] - 0.1, EV["tl_4"] + 0.3, t)
-    c.drawLine(x, y0, x, y1, paint(hexc(BORDER), stroke=6))
-    c.drawLine(x, y0, x, lerp(y0, y1, prog), paint(hexc(INK), stroke=6))
-    for (key, date, title, sub, col, up), y in zip(TL, ys):
-        k = back_out((t - EV[key]) / 0.45)
-        if t < EV[key]: c.drawCircle(x, y, 13, paint(hexc(BORDER))); continue
-        c.drawCircle(x, y, 22 * clamp(k, 0, 1.3), paint(hexc(col))); c.drawCircle(x, y, 8 * clamp(k, 0, 1), paint(hexc(BG)))
-        a = ease_out((t - EV[key]) / 0.4); alpha_layer(c, a); dx = (1 - a) * 40
-        text(c, date, x + 60 + dx, y - 34, 26, hexc(col if col == RED else MUTE), IN[700], track=2.5)
-        text(c, title, x + 60 + dx, y + 22, 50, hexc(INK), FR[700])
-        text(c, sub, x + 60 + dx, y + 70, 30, hexc(MUTE), IN[500])
-        if up: tri(c, W - 90 + dx, y + 6, 34, True, hexc(RED))
+# ---------------- divider (screen y of the PANIC/PROFIT split) ----------------
+DIV = monotone([(0, 960), (4.45, 960), (5.05, 1460), (11.6, 1460), (12.15, 470), (22.3, 470), (22.85, 960), (DURATION, 960)])
+TINT = lambda t: 1 - sstep(22.35, 22.9, t)   # tints fade out for the lesson
+
+def card(c, x, y, w, h, tag, title, col, up, k):
+    if k <= 0: return
+    xx = lerp(W + 30, x, clamp(k, 0, 1.15))
+    c.drawRect(rect(xx + 8, y + 8, w, h), paint(hexc("#000000", .06)))
+    c.drawRect(rect(xx, y, w, h), paint(hexc("#FFFFFF"))); c.drawRect(rect(xx, y, w, h), paint(hexc(INK), stroke=4, cap_round=False))
+    text(c, tag, xx + 30, y + 46, 24, hexc(col), IN[700], track=3)
+    text(c, title, xx + 30, y + h - 34, 44 if tw(title, 46, FR[800]) > w - 160 else 46, hexc(INK), FR[800])
+    c.drawRect(rect(xx + w - 104, y + h / 2 - 38, 76, 76), paint(hexc(col))); tri(c, xx + w - 66, y + h / 2, 38, up, hexc("#FFFFFF"))
+
+def scene_split(c, t):
+    d = DIV(t); ti = TINT(t)
+    if ti > 0:
+        c.drawRect(rect(0, 0, W, d), paint(hexc("#F7E3E6", .75 * ti))); c.drawRect(rect(0, d, W, H - d), paint(hexc("#E2F0E7", .75 * ti)))
+        c.drawLine(0, d, W, d, paint(hexc(INK, ti), stroke=5, cap_round=False))
+        # side labels
+        alpha_layer(c, ti * (1 - sstep(22.0, 22.4, t)))
+        if d > 520: text(c, "PANIC", 100, d - 34, 30, hexc(RED), IN[700], track=6)
+        if d < 1400: text(c, "PROFIT", 100, d + 64, 30, hexc(GREEN), IN[700], track=6)
         c.restore()
-
-def scene_odds(c, t):
-    a = ease_out((t - 9.85) / 0.4); alpha_layer(c, a)
-    text(c, "What markets are pricing", W / 2, 430, 64, hexc(INK), FR[700], "c")
-    text(c, "Odds of a Fed hike on Dec 9", W / 2, 505, 36, hexc(MUTE), IN[500], "c"); c.restore()
-    cx, cy, r = W / 2, 960, 300; k = ease_io((t - EV["ring_start"]) / (EV["ring_end"] - EV["ring_start"]))
-    c.drawCircle(cx, cy, r, paint(hexc(BORDER), stroke=48, cap_round=False))
-    if k > 0:
-        arc = skia.Path(); arc.addArc(skia.Rect.MakeLTRB(cx - r, cy - r, cx + r, cy + r), -90, 324 * k)
-        c.drawPath(arc, paint(hexc(RED), stroke=48, cap_round=False))
-    v = int(round(90 * k)); s = f"~{v}%" if k > 0.98 else f"{v}%"
-    text(c, s, cx, cy + 62, 180, hexc(INK), FR[800], "c")
-    a = ease_out((t - 12.6) / 0.5); alpha_layer(c, a)
-    text(c, "Roughly 9 in 10", cx, cy + 420, 56, hexc(RED), FR[700], "c")
-    text(c, "Next decision: Wednesday, Dec 9", cx, cy + 480, 34, hexc(MUTE), IN[500], "c"); c.restore()
-
-def box(c, cx, cy, w, h, lines, col, arrow_up):
-    c.drawRect(rect(cx - w / 2 + 6, cy - h / 2 + 6, w, h), paint(hexc("#000000", .06)))
-    c.drawRect(rect(cx - w / 2, cy - h / 2, w, h), paint(hexc("#FFFFFF")))
-    c.drawRect(rect(cx - w / 2, cy - h / 2, w, h), paint(hexc(INK), stroke=4, cap_round=False))
-    n = len(lines); yy = cy - (n - 1) * 24 + 14
-    for i, s in enumerate(lines): text(c, s, cx, yy + i * 48 - 18, 40, hexc(col), FR[800], "c")
-    c.drawRect(rect(cx - 34, cy + h / 2 - 2, 68, 56), paint(hexc(RED))); tri(c, cx, cy + h / 2 + 26, 30, arrow_up, hexc("#FFFFFF"))
-def scene_seesaw(c, t):
-    a = ease_out((t - 14.3) / 0.4); alpha_layer(c, a)
-    text(c, "Why stocks care", W / 2, 430, 72, hexc(INK), FR[700], "c")
-    text(c, "Rates and valuations sit on a seesaw.", W / 2, 505, 36, hexc(MUTE), IN[500], "c"); c.restore()
-    px, py = W / 2, 1180; ang = 13 * ease_io((t - EV["beam_tilt"]) / (EV["beam_tilt_end"] - EV["beam_tilt"]))
-    pv = skia.Path(); pv.moveTo(px, py); pv.lineTo(px + 90, py + 150); pv.lineTo(px - 90, py + 150); pv.close(); c.drawPath(pv, paint(hexc(INK)))
-    c.drawLine(120, py + 152, W - 120, py + 152, paint(hexc(INK), stroke=5))
-    L = 430; th = math.radians(ang)
-    ends = [(px + (-L) * math.cos(th), py + (-L) * math.sin(th)), (px + L * math.cos(th), py + L * math.sin(th))]
-    c.save(); c.translate(px, py); c.rotate(ang); c.drawRRect(rrect(-L - 30, -14, 2 * L + 60, 28, 8), paint(hexc(INK))); c.restore()
-    c.drawCircle(px, py, 16, paint(hexc(GREY)))
-    ea = ease_out((t - 14.9) / 0.4); alpha_layer(c, ea)
-    box(c, ends[0][0] + 90, ends[0][1] - 150, 280, 150, ["RATES"], RED, True)
-    box(c, ends[1][0] - 120, ends[1][1] - 175, 330, 190, ["VALUE OF", "FUTURE", "PROFITS"], INK, False)
-    c.restore()
-    a = ease_out((t - 16.9) / 0.4); alpha_layer(c, a)
-    text(c, "Rates up  →  what future profits are", W / 2, 1450, 36, hexc(INK), IN[600], "c")
-    text(c, "worth today goes down.", W / 2, 1498, 36, hexc(INK), IN[600], "c"); c.restore()
-
-def scene_bars(c, t):
-    a = ease_out((t - 18.75) / 0.4); alpha_layer(c, a)
-    text(c, "$100, ten years from now", W / 2, 430, 66, hexc(INK), FR[700], "c")
-    text(c, "What it's worth today:", W / 2, 505, 36, hexc(MUTE), IN[500], "c"); c.restore()
-    base, full, bw = 1320, 640, 250
-    k3 = ease_io((t - EV["bar3_start"]) / (EV["bar3_end"] - EV["bar3_start"])); k5 = ease_io((t - EV["bar5_start"]) / (EV["bar5_end"] - EV["bar5_start"]))
-    vals = [(310, "at 3%", lerp(100, 74.41, k3), INK, k3), (770, "at 5%", lerp(100, 61.39, k5), RED, k5)]
-    gin = ease_out((t - EV["bars_in"]) / 0.5)
-    for x, lab, v, col, k in vals:
-        h = full * v / 100 * gin
-        c.drawRect(rect(x - bw / 2, base - full * gin, bw, full * gin), paint(hexc(BORDER), stroke=3, cap_round=False))
-        c.drawRect(rect(x - bw / 2, base - h, bw, h), paint(hexc(col if k > 0 else "#CFCBC2")))
-        if gin > 0.3:
-            text(c, f"${v:.0f}", x, base - h - 26, 76, hexc(col if k > 0 else INK), FR[800], "c")
-            text(c, lab, x, base + 64, 44, hexc(INK), FR[700], "c")
-    c.drawLine(120, base, W - 120, base, paint(hexc(INK), stroke=5))
-    a = ease_out((t - 24.2) / 0.4); alpha_layer(c, a)
-    text(c, "Same $100. Higher rate, lower value.", W / 2, 1470, 38, hexc(RED), IN[600], "c"); c.restore()
-
-def scene_duration(c, t):
-    a = ease_out((t - 25.15) / 0.4); alpha_layer(c, a)
-    text(c, "The further out the profits,", W / 2, 430, 58, hexc(INK), FR[700], "c")
-    text(c, "the bigger the hit.", W / 2, 505, 58, hexc(RED), FRI[700], "c"); c.restore()
-    k = ease_io((t - EV["dur_start"]) / (EV["dur_end"] - EV["dur_start"]))
-    base, x0, x1 = 1250, 130, 950; n = 10; step = (x1 - x0) / n; bw = step * 0.62; full = 560
-    gin = ease_out((t - 25.2) / 0.5)
-    for i in range(1, n + 1):
-        x = x0 + step * (i - 0.5); h3 = full / 1.03 ** i * gin; h5 = full / 1.05 ** i * gin; h = lerp(h3, h5, k)
-        c.drawRect(rect(x - bw / 2, base - h3, bw, h3 - h), paint(hexc(RED, .85)))
-        c.drawRect(rect(x - bw / 2, base - h, bw, h), paint(hexc(INK)))
-        if i in (1, 10): text(c, f"Yr {i}", x, base + 48, 30, hexc(MUTE), IN[600], "c")
-    c.drawLine(110, base, W - 110, base, paint(hexc(INK), stroke=5))
-    a = ease_out((t - 26.4) / 0.4); alpha_layer(c, a)
-    c.drawRect(rect(150, 1350, 34, 34), paint(hexc(RED, .85)))
-    text(c, "value lost when rates go from 3% to 5%", 200, 1378, 32, hexc(INK), IN[500])
-    text(c, "Long-duration growth stocks feel it first.", W / 2, 1470, 38, hexc(INK), IN[600], "c"); c.restore()
+    # ---- hook ----
+    if t < 5.2:
+        a = 1 - sstep(4.45, 4.85, t)
+        alpha_layer(c, a)
+        k = ease_out((t - EV["ceo_out"]) / 0.45)
+        if k > 0: alpha_layer(c, k); text(c, "CEO out.", 100, 760 + (1 - k) * 40, 150, hexc(RED), FRI[800]); c.restore()
+        k = back_out((t - EV["chip"]) / 0.4)
+        if t > EV["chip"]:
+            cw = tw("5 DAYS LATER", 28, IN[700]) + 3 * 11 + 56; s = clamp(k, 0, 1.2)
+            c.save(); c.translate(W / 2, 960); c.scale(s, s)
+            c.drawRRect(rrect(-cw / 2, -34, cw, 68, 34), paint(hexc(INK))); text(c, "5 DAYS LATER", 0, 10, 28, hexc("#FFFFFF"), IN[700], "c", track=3); c.restore()
+        k = ease_out((t - EV["record"]) / 0.45)
+        if k > 0: alpha_layer(c, k); text(c, "Record", 100, 1210 + (1 - k) * 40, 150, hexc(GREEN), FR[800]); text(c, "quarter.", 100, 1360 + (1 - k) * 40, 150, hexc(GREEN), FR[800]); c.restore()
+        c.restore()
+    # ---- panic (top) ----
+    if 4.6 < t < 12.4:
+        a = sstep(4.7, 5.1, t) * (1 - sstep(11.6, 12.0, t)); alpha_layer(c, a)
+        text(c, "Nov 12, 2026", 100, 430, 64, hexc(INK), FR[700])
+        card(c, 100, 500, 880, 170, "BREAKING · NVIDIA", "JENSEN HUANG STEPS DOWN", RED, False, back_out((t - EV["card1"]) / 0.55))
+        card(c, 100, 720, 880, 170, "SAME DAY · INTERIM CEO", "CFO COLETTE KRESS", INK, True, back_out((t - EV["card2"]) / 0.55))
+        k = ease_out((t - EV["ticker"]) / 0.4)
+        if k > 0:
+            alpha_layer(c, k)
+            text(c, "NVDA", 100, 1080, 56, hexc(INK), IN[700], track=4)
+            text(c, "−4.3%", 100, 1290 + (1 - k) * 30, 200, hexc(RED), FR[800])
+            text(c, "close on Nov 12", 100, 1360, 34, hexc(MUTE), IN[500]); c.restore()
+        c.restore()
+    # ---- profit (bottom) ----
+    if 11.9 < t < 22.9:
+        a = sstep(12.1, 12.5, t) * (1 - sstep(22.2, 22.6, t)); alpha_layer(c, a)
+        text(c, "Nov 17: her first earnings", 100, 400, 50, hexc(INK), FR[700])
+        k = ease_io((t - EV["rev_start"]) / (EV["rev_end"] - EV["rev_start"]))
+        text(c, "Q3 REVENUE", 100, 580, 28, hexc(GREEN), IN[700], track=4)
+        text(c, f"${115.8 * k:.1f}B", 100, 760, 190, hexc(INK), FR[800])
+        k2 = back_out((t - EV["yoy"]) / 0.4)
+        if t > EV["yoy"]:
+            s = clamp(k2, 0, 1.2); c.save(); c.translate(100, 800); c.scale(s, s)
+            c.drawRRect(rrect(0, 0, 330, 70, 35), paint(hexc(GREEN))); text(c, "+103% y/y", 165, 47, 36, hexc("#FFFFFF"), IN[700], "c"); c.restore()
+        # bars: expected vs actual vs Q4 guide
+        base, x0, bw, sc = 1395, 130, 230, 3.1
+        for key, x, val, lab, col in (("bar_exp", x0, 108.9, "Expected", GREY), ("bar_act", x0 + 290, 115.8, "Actual", GREEN), ("guide", x0 + 580, 130.0, "Q4 guide", INK)):
+            g = ease_out((t - EV[key]) / 0.6)
+            if g <= 0: continue
+            h = (val - 60) * sc * 1.6 * g
+            c.drawRect(rect(x, base - h, bw, h), paint(hexc(col)))
+            text(c, ("~" if key == "bar_exp" else "") + f"${val:.1f}B" if key != "guide" else "$130B", x + bw / 2, base - h - 20, 44, hexc(col if col != GREY else MUTE), FR[800], "c")
+            text(c, lab, x + bw / 2, base + 46, 32, hexc(INK), IN[600], "c")
+        c.drawLine(110, base, W - 110, base, paint(hexc(INK), stroke=5))
+        c.restore()
+    # ---- lesson ----
+    if t > 22.5:
+        a = ease_out((t - EV["lesson_title"]) / 0.45) * (1 - sstep(29.35, 29.7, t)); alpha_layer(c, a)
+        text(c, "Key-person risk", W / 2, 430, 74, hexc(INK), FR[800], "c")
+        text(c, "is not business risk.", W / 2, 515, 66, hexc(RED), FRI[700], "c")
+        cols = (("col_left", 100, "THE BUSINESS", GREEN, ["Revenue +103% y/y", "Beat estimates", "Q4 guide: $130B"], "✓"),
+                ("col_right", 560, "STILL OPEN", RED, ["Permanent CEO", "Who runs strategy", "Q4 guide: no China"], "?"))
+        for key, x, hd, col, items, mark in cols:
+            k = ease_out((t - EV[key]) / 0.45)
+            if k <= 0: continue
+            alpha_layer(c, k); y = 620 + (1 - k) * 30
+            c.drawRect(rect(x, y, 420, 560), paint(hexc("#FFFFFF"))); c.drawRect(rect(x, y, 420, 560), paint(hexc(INK), stroke=4, cap_round=False))
+            c.drawRect(rect(x, y, 420, 84), paint(hexc(col))); text(c, hd, x + 210, y + 54, 30, hexc("#FFFFFF"), IN[700], "c", track=3)
+            for i, it in enumerate(items):
+                yy = y + 190 + i * 140
+                c.drawCircle(x + 52, yy - 14, 24, paint(hexc(col)))
+                text(c, mark, x + 52, yy - 2, 30, hexc("#FFFFFF"), IN[700], "c")
+                words = it.split(": ") if ": " in it else [it]
+                if len(words) == 2: text(c, words[0] + ":", x + 92, yy - 22, 32, hexc(INK), IN[600]); text(c, words[1], x + 92, yy + 20, 32, hexc(INK), IN[600])
+                elif tw(it, 32, IN[600]) > 300:
+                    p = it.split(" "); m = len(p) // 2
+                    text(c, " ".join(p[:m]), x + 92, yy - 22, 32, hexc(INK), IN[600]); text(c, " ".join(p[m:]), x + 92, yy + 20, 32, hexc(INK), IN[600])
+                else: text(c, it, x + 92, yy, 32, hexc(INK), IN[600])
+            c.restore()
+        k = ease_out((t - EV["held"]) / 0.45)
+        if k > 0:
+            alpha_layer(c, k)
+            text(c, "The numbers held.", W / 2, 1300, 52, hexc(GREEN), FR[800], "c")
+            text(c, "Who leads next is the real test.", W / 2, 1370, 40, hexc(INK), FR[700], "c"); c.restore()
+        c.restore()
 
 def scene_end(c, t):
     a = ease_out((t - EV["end_logo"]) / 0.6)
     alpha_layer(c, a); logo(c, W / 2, 900, 118, line=True, tagline=True); c.restore()
-    b = ease_out((t - 28.7) / 0.5); alpha_layer(c, b)
+    b = ease_out((t - (EV["end_logo"] + 0.5)) / 0.5); alpha_layer(c, b)
     pw = tw("Follow " + HANDLE, 44, IN[700]) + 90
     c.drawRRect(rrect(W / 2 - pw / 2, 1110 + (1 - b) * 20, pw, 96, 48), paint(hexc(GREEN)))
     text(c, "Follow " + HANDLE, W / 2, 1172 + (1 - b) * 20, 44, hexc("#FFFFFF"), IN[700], "c")
-    text(c, "Save this for the next Fed day.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
+    text(c, "Save this for the next headline panic.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
     text(c, "NOT FINANCIAL ADVICE", W / 2, 1390, 24, hexc(SOFT), IN[600], "c", track=4); c.restore()
 
-SCENES = [scene_hook, scene_timeline, scene_odds, scene_seesaw, scene_bars, scene_duration, scene_end]
-SOURCES = ["", "Sources: Federal Reserve, BLS, CNN, CNBC, Schwab", "Sources: CME FedWatch via CNBC, Kalshi · mid-Nov 2026",
-           "", "Illustrative math: $100 ÷ (1 + r)¹⁰", "Illustrative math: $100 a year, discounted at 3% vs 5%", ""]
+SOURCES = ["", "Sources: Nvidia 8-K (SEC), CNBC, TechCrunch, Al Jazeera", "Sources: Nvidia Q3 FY2027 results, CNBC, Investing.com, IndMoney",
+           "Sources: Nvidia, CNN, CNBC", ""]
 
 class Renderer:
     def __init__(self, scale):
         self.scale = scale; self.surf = skia.Surface(int(W * scale), int(H * scale))
-        keys = [(0, 0.0)]
-        for i, b in enumerate(BOUNDS[1:], 1): keys += [(b - 0.22, (i - 1) * H), (b + 0.28, i * H)]
-        keys.append((DURATION, (len(BOUNDS) - 1) * H)); self.camy = monotone(keys)
     def draw(self, t):
         c = self.surf.getCanvas(); c.save(); c.scale(self.scale, self.scale); background(c)
-        cy = self.camy(t); si = int(np.searchsorted(BOUNDS, t, side="right") - 1)
-        for i, fn in enumerate(SCENES):
-            off = i * H - cy
-            if -H < off < H: c.save(); c.translate(0, off); fn(c, t); c.restore()
-        # fixed header + source footer (screen space; inside Reels safe area)
-        ha = 1 - sstep(27.6, 28.0, t)
+        si = int(np.searchsorted(BOUNDS, t, side="right") - 1)
+        if t < BOUNDS[-1] + 0.3: scene_split(c, t)
+        if t > BOUNDS[-1]: scene_end(c, t)
+        ha = 1 - sstep(29.2, 29.6, t)
         if ha > 0:
             alpha_layer(c, ha); logo(c, 100, 285, 40, center=False)
-            tg = "FED WATCH"; w = tw(tg, 24, IN[700]) + 3 * 8 + 40
-            c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))
+            tg = "EARNINGS"; w = tw(tg, 24, IN[700]) + 3 * 7 + 40
+            c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(INK)))
             text(c, tg, W - 100 - w / 2, 284, 24, hexc("#FFFFFF"), IN[700], "c", track=3); c.restore()
         src = SOURCES[min(si, len(SOURCES) - 1)]
         if src:
-            sa = sstep(BOUNDS[si] + 0.3, BOUNDS[si] + 0.7, t) * (1 - sstep(BOUNDS[si + 1] - 0.3, BOUNDS[si + 1], t) if si + 1 < len(BOUNDS) else 1)
+            sa = sstep(BOUNDS[si] + 0.3, BOUNDS[si] + 0.7, t) * (1 - sstep(BOUNDS[si + 1] - 0.3, BOUNDS[si + 1], t))
             alpha_layer(c, sa); text(c, src, W / 2, 1535, 24, hexc(SOFT), IN[500], "c"); c.restore()
         c.restore(); return self.surf.makeImageSnapshot().toarray()
     def frame(self, t, fps):
-        dt = 1 / fps; sp = abs(self.camy(t + dt / 2) - self.camy(t - dt / 2))
-        n = 1 if sp < 6 else int(min(12, 3 + sp / 8))
+        dt = 1 / fps; sp = abs(DIV(t + dt / 2) - DIV(t - dt / 2))
+        n = 1 if sp < 6 else int(min(10, 3 + sp / 8))
         if n == 1: return self.draw(t)
         acc = sum(self.draw(t + dt * (k / n - 0.5)).astype(np.float32) for k in range(n)); return (acc / n).astype(np.uint8)
 

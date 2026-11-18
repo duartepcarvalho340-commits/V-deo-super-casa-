@@ -2,15 +2,15 @@
 import json, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 PHRASES = [  # (gap before phrase in s, text) -> placed back to back
-    (0.35, "Wall Street is betting the Fed hikes again in December."),
-    (0.35, "In September, it hiked for the first time since 2023."),
-    (0.35, "Then October inflation came in hot."),
-    (0.35, "Markets now price about ninety percent odds of a hike on December ninth."),
-    (0.45, "Why do stocks care? Higher rates shrink what future profits are worth today."),
-    (0.40, "A hundred dollars, ten years out, is worth seventy-four today at three percent. At five percent? Sixty-one."),
-    (0.40, "That's why long-duration growth stocks feel it first."),
+    (0.30, "Nvidia lost its CEO. Five days later, it posted a record quarter."),
+    (0.40, "On November twelfth, Jensen Huang stepped down. CFO Colette Kress took over."),
+    (0.30, "The stock fell over four percent that day."),
+    (0.40, "Her first earnings: one hundred fifteen point eight billion in revenue, up one hundred three percent."),
+    (0.30, "Wall Street expected about one hundred nine. The next-quarter guide: one hundred thirty."),
+    (0.40, "The lesson: key-person risk is not the same as business risk."),
+    (0.30, "The numbers held. The open question is who leads next."),
 ]
-VOICE, SPEED, DUR = "af_heart", 1.1, 30.0
+VOICE, SPEED, DUR = "af_heart", 1.15, 32.0
 if __name__ == "__main__":
     k = Kokoro("assets/voice/kokoro-v1.0.onnx", "assets/voice/voices-v1.0.bin")
     sr = 24000; track = np.zeros(int(DUR * sr), np.float32); timing = []; prev = 0
