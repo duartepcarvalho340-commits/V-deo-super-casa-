@@ -14,6 +14,24 @@
   "time": "23h Lisboa · 18h Nova Iorque",
   "format": "Reel",
   "title": "The Fed is about to hike. Again.",
+  "status": "Published",
+  "url": ""
+ },
+ {
+  "folder": "2026-11-19-reel",
+  "date": "Qui 19 nov 2026",
+  "time": "17h15 Lisboa · 12h15 Nova Iorque",
+  "format": "Reel",
+  "title": "The biggest IPO in history. Here's the receipt.",
+  "status": "Scheduled",
+  "url": ""
+ },
+ {
+  "folder": "2026-11-19-geo",
+  "date": "Qui 19 nov 2026",
+  "time": "23h Lisboa · 18h Nova Iorque",
+  "format": "Carrossel",
+  "title": "Trump, Xi and Putin in one room. A first.",
   "status": "Scheduled",
   "url": ""
  }
