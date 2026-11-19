@@ -1,0 +1,1 @@
+Carousel: ticket card hook, deal stat table, growth bars, P/S math box, two-loss comparison, 4-step checklist
