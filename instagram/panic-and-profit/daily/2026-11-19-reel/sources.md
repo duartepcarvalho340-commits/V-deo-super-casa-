@@ -15,3 +15,6 @@
 | ~46x price-to-sales | Illustrative arithmetic: $1.5T / ($16.3B × 2) |
 
 Note: the author of this draft (Claude) is made by Anthropic — reviewed for neutrality; no buy/sell view.
+
+| ANT opened at $111.50 (~11:50 a.m. ET), +34.3% vs $83; ~$2T market value at the open | CNN https://www.cnn.com/2026/11/19/business/live-news/anthropic-ipo · Yahoo Finance live https://finance.yahoo.com/technology/live/anthropic-ipo-live-company-said-to-price-stock-at-83-begin-trading-thursday-212656452.html · NBC News https://www.nbcnews.com/business/markets/live-blog/anthropic-ipo-live-updates-rcna610159 · CNBC https://www.cnbc.com/2026/11/19/anthropic-ipo-ant-live-updates.html |
+| Updated math at $111.50: ~62x sales, ~517x best-quarter profits, ~29x growth needed | Arithmetic: 46 × 111.5/83 ≈ 62; $2.0T / $3.9B ≈ 517; $2.0T / 17.7 ≈ $114B ≈ 29x $3.9B |

@@ -6,7 +6,7 @@ Usage: python3 code/render.py --scale 1 --fps 60 --out exports/reel.mp4
 import argparse, math, os, subprocess, sys
 import numpy as np, skia
 sys.path.insert(0, os.path.dirname(__file__))
-from timing import FPS, DURATION, HANDLE, P, PE, END, FT, CLOSE, FT_IDX
+from timing import FPS, DURATION, HANDLE, P, PE, END, FT, CLOSE, FT_IDX, LIVE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FD = f"{ROOT}/assets/fonts"
@@ -106,7 +106,7 @@ def rows():
          (P[7] + 5.0, "kv", ("S&P 500 FORWARD P/E", "~18x", GREEN, "FactSet, Nov 2026"))]
     if FT:
         px, pc = FT.split("|"); col = GREEN if pc.strip().startswith("+") else RED
-        r.append((P[FT_IDX] + 0.4, "kv", ("FIRST TRADE", f"${px}", col, f"{pc} vs the $83 IPO price")))
+        r.append((P[FT_IDX] + 0.4, "kv", ("FIRST TRADE", f"${px}", col, f"{pc} vs the $83 IPO price, 11:50 a.m. ET")))
     else:
         r.append((P[FT_IDX] + 0.4, "kv", ("FIRST TRADE", "TODAY", INK, "Nasdaq · ticker ANT")))
     import json as _j, os as _o
@@ -206,6 +206,68 @@ def plain(c, t):
         c.restore()
     c.restore()
 
+OPEN_PX, OPEN_PC = 111.50, "+34.3%"
+def live(c, t):
+    """After the receipt: a live quote board with the opening price and the math re-done at $111.50."""
+    t0 = P[FT_IDX] + 1.6; t1 = PE[LIVE + 3] + 0.4
+    if t < t0 or t > t1 + 0.45: return
+    a = ease_out((t - t0) / 0.45) * (1 - sstep(t1, t1 + 0.45, t))
+    c.drawRect(rect(0, 330, W, 1250), paint(hexc(BG, .97 * a)))
+    alpha_layer(c, a)
+    # header: live dot + ticker
+    blink = 0.55 + 0.45 * math.sin(t * 6)
+    c.drawCircle(130, 470, 12, paint(hexc(RED, blink)))
+    text(c, "LIVE · NASDAQ: ANT", 156, 481, 30, hexc(INK), IN[700], track=4)
+    text(c, "OPENED 11:50 A.M. ET", W - 110, 481, 26, hexc(MUTE), IN[700], "r", track=3)
+    k = ease_io((t - t0) / 1.6)
+    text(c, f"${lerp(83, OPEN_PX, k):.2f}", 110, 680, 170, hexc(INK), FR[800])
+    if k > 0.95:
+        c.drawRRect(rrect(110, 712, 250, 70, 35), paint(hexc(GREEN))); text(c, OPEN_PC, 235, 760, 36, hexc("#FFFFFF"), IN[700], "c")
+    # mini chart: IPO price line and the move up
+    cx0, cx1, cy83, cyop = 400, 970, 790, 700
+    for xx in range(cx0, cx1, 22): c.drawLine(xx, cy83, xx + 10, cy83, paint(hexc(SOFT), stroke=3, cap_round=False))
+    text(c, "$83 IPO", cx1, cy83 + 36, 24, hexc(MUTE), IN[600], "r")
+    pts = [(cx0, cy83), (cx0 + 120, cy83 - 6), (cx0 + 200, cyop + 30), (cx0 + 330, cyop + 8), (cx0 + 450, cyop - 6), (cx1, cyop)]
+    n = int(len(pts) * 40 * k); path = skia.Path(); path.moveTo(*pts[0]); done = 0
+    for (x0_, y0_), (x1_, y1_) in zip(pts, pts[1:]):
+        for s_ in range(1, 41):
+            done += 1
+            if done > n: break
+            path.lineTo(lerp(x0_, x1_, s_ / 40), lerp(y0_, y1_, s_ / 40))
+    c.drawPath(path, paint(hexc(GREEN), stroke=7))
+    # market value line
+    b = ease_out((t - P[LIVE]) / 0.45)
+    if b > 0:
+        alpha_layer(c, b); text(c, "Market value at the open: ~$2.0T", 110, 880, 40, hexc(INK), FR[700]); c.restore()
+    # the math, updated
+    rows = (("VALUATION", "~$1.5T", "~$2.0T", INK, P[LIVE] + 0.4),
+            ("PRICE / SALES", "~46x", "~62x", RED, P[LIVE + 1] + 0.6),
+            ("P/E, BEST QUARTER x4", "~385x", "~517x", RED, P[LIVE + 2] + 0.8))
+    hb = ease_out((t - (P[LIVE] + 0.2)) / 0.4)
+    if hb > 0:
+        alpha_layer(c, hb)
+        c.drawRect(rect(110, 930, 860, 380), paint(hexc("#FFFFFF"))); c.drawRect(rect(110, 930, 860, 380), paint(hexc(INK), stroke=4, cap_round=False))
+        text(c, "UPDATED MATH", 150, 985, 26, hexc(GREEN), IN[700], track=4)
+        text(c, "AT $83", 690, 985, 22, hexc(SOFT), IN[700], "r", track=2); text(c, "AT $111.50", 930, 985, 22, hexc(INK), IN[700], "r", track=2)
+        c.restore()
+    for i, (lbl, old, new, col, tr) in enumerate(rows):
+        e = ease_out((t - tr) / 0.4)
+        if e <= 0: continue
+        y = 1060 + i * 82; alpha_layer(c, e)
+        text(c, lbl, 150, y + 10, 28, hexc(INK), IN[700], track=2)
+        w_old = text(c, old, 690, y + 12, 40, hexc(SOFT), FR[700], "r")
+        c.drawLine(690 - w_old, y - 2, 690, y - 2, paint(hexc(SOFT), stroke=3))
+        text(c, new, 930, y + 14, 52, hexc(col), FR[800], "r")
+        c.restore()
+    f = ease_out((t - P[LIVE + 3]) / 0.45)
+    if f > 0:
+        alpha_layer(c, f)
+        c.drawRRect(rrect(110, 1335, 860, 150, 16), paint(hexc(INK)))
+        text(c, "FAIR PRICE NOW?", W / 2, 1385, 26, hexc("#FFFFFF", .7), IN[700], "c", track=5)
+        text(c, "Only if profits grow ~29x", W / 2, 1455, 52, hexc("#FFFFFF"), FR[800], "c")
+        c.restore()
+    c.restore()
+
 def question(c, t):
     t0 = P[-1] - 0.1
     if t < t0: return
@@ -213,7 +275,7 @@ def question(c, t):
     c.drawRect(rect(0, 330, W, 1250), paint(hexc(BG, .93 * a)))
     alpha_layer(c, a); dy = (1 - a) * 30
     text(c, "YOUR CALL", W / 2, 700 + dy, 30, hexc(RED), IN[700], "c", track=6)
-    text(c, "Is $83 a share", W / 2, 840 + dy, 92, hexc(INK), FR[800], "c")
+    text(c, "Is $111.50 a share", W / 2, 840 + dy, 88, hexc(INK), FR[800], "c")
     text(c, "too much?", W / 2, 950 + dy, 92, hexc(RED), FRI[800], "c")
     b = ease_out((t - (t0 + 1.3)) / 0.45)
     alpha_layer(c, b)
@@ -233,7 +295,7 @@ def scene_end(c, t):
     text(c, "Save this for the next big IPO.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
     text(c, "NOT FINANCIAL ADVICE · NOT AFFILIATED WITH ANTHROPIC", W / 2, 1390, 22, hexc(SOFT), IN[600], "c", track=3); c.restore()
 
-SRC_TXT = "Sources: CNBC, Yahoo Finance, CBC, Anthropic S-1, FactSet · P/S and P/E are illustrative math"
+SRC_TXT = "Sources: CNN, Yahoo Finance, NBC, CNBC, Anthropic S-1, FactSet · P/S and P/E are illustrative math"
 
 class Renderer:
     def __init__(self, scale):
@@ -242,7 +304,7 @@ class Renderer:
         c = self.surf.getCanvas(); c.save(); c.scale(self.scale, self.scale); background(c)
         fade = 1 - sstep(END - 0.1, END + 0.25, t)
         if fade > 0:
-            alpha_layer(c, fade); receipt(c, t); plain(c, t); stamp(c, t); question(c, t)
+            alpha_layer(c, fade); receipt(c, t); plain(c, t); live(c, t); stamp(c, t); question(c, t)
             logo(c, 100, 285, 40, center=False)
             tg = "IPO DAY"; w = tw(tg, 24, IN[700]) + 3 * 6 + 40
             c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))

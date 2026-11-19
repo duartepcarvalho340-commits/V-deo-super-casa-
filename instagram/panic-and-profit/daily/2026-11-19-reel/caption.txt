@@ -1,6 +1,6 @@
 The biggest IPO in history. Here's the receipt.
 
-Anthropic (Nasdaq: ANT) priced at $83, above its $70–78 range, raising ~$81.3B at a ~$1.5T valuation. Trading starts today.
+Anthropic (Nasdaq: ANT) priced at $83, above its $70–78 range, raising ~$81.3B at a ~$1.5T valuation. It opened at $111.50 (+34% vs $83) at about 11:50 a.m. ET, a market value near $2T.
 
 The numbers behind the headline:
 • H1 revenue: $1.16B to $16.3B (~14x)
@@ -8,11 +8,13 @@ The numbers behind the headline:
 • H1 net loss: $80.7B, but ~$72.4B is a non-cash revaluation. Operating loss: $693M.
 • P/E: officially none (it lost money). Using its best quarter (Q2 operating profit $974M × 4), $83 a share is ~385x profits. The S&P 500 trades near 18x.
 
-In plain English: at today's profits, it would take ~385 years to earn back the price. To look like a normal stock, profits would need to grow 20x+.
+In plain English: at today's profits, it would take ~385 years to earn back the $83 price. To look like a normal stock, profits would need to grow 20x+.
+
+Updated to the $111.50 open: ~62x sales and ~517x best-quarter profits. Profits would need to grow ~29x.
 
 Day one is the headline. The numbers are the story.
 
-Your call: is $83 a share too much? What is Anthropic really worth? Tell us in the comments. 👇
+Your call: is $111.50 a share too much? What is Anthropic really worth? Tell us in the comments. 👇
 
 Follow @panic.and.profit for markets, macro and geopolitics without the noise. Save this for the next big IPO.
 
