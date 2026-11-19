@@ -106,6 +106,10 @@ def rows():
         r.append((P[6] + 0.4, "kv", ("FIRST TRADE", f"${px}", col, f"{pc} vs the $83 IPO price")))
     else:
         r.append((P[6] + 0.4, "kv", ("FIRST TRADE", "TODAY", INK, "Nasdaq · ticker ANT")))
+    import json as _j, os as _o
+    for k, e in enumerate(_j.loads(_o.environ.get("EXTRA", "[]"))):   # extra rows, one per extra voice line
+        col = {"green": GREEN, "red": RED}.get(e.get("color", ""), INK)
+        r.append((P[7 + k] + 0.4, "kv", (e["label"], e["value"], col, e.get("sub", ""))))
     return r
 ROWS = rows()
 HEAD_H = 230
@@ -159,7 +163,7 @@ def receipt(c, t):
     c.drawRect(rect(RX - 10, SLOT_Y - 6, RW + 20, 10), paint(hexc("#3A3A3A")))
 
 def stamp(c, t):
-    t0 = P[7] + 0.15
+    t0 = P[-1] + 0.15
     if t < t0: return
     k = clamp((t - t0) / 0.28); s = lerp(2.4, 1.0, ease_out(k)); a = clamp(k * 1.6)
     c.save(); c.translate(W / 2, 1050); c.rotate(-8); c.scale(s, s)

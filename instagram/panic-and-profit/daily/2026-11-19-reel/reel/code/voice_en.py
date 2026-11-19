@@ -11,9 +11,11 @@ PHRASES = [  # (gap before phrase in s, text) -> placed back to back
     (0.30, "But the price is roughly forty-six times sales. You're paying for years of growth."),
     (0.35, "And the eighty billion dollar loss? Mostly a non-cash revaluation."),
     (0.35, OPEN_LINE),
-    (0.35, "Day one is the headline. The numbers are the story."),
 ]
-VOICE, SPEED, DUR = "af_heart", 1.15, 34.0
+import json as _j
+for _e in _j.loads(os.environ.get("EXTRA", "[]")): PHRASES.append((0.35, _e["line"]))
+PHRASES.append((0.35, "Day one is the headline. The numbers are the story."))
+VOICE, SPEED, DUR = "af_heart", 1.15, 48.0
 if __name__ == "__main__":
     k = Kokoro("assets/voice/kokoro-v1.0.onnx", "assets/voice/voices-v1.0.bin")
     sr = 24000; track = np.zeros(int(DUR * sr), np.float32); timing = []; prev = 0
