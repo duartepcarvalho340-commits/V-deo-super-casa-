@@ -6,7 +6,7 @@ Usage: python3 code/render.py --scale 1 --fps 60 --out exports/reel.mp4
 import argparse, math, os, subprocess, sys
 import numpy as np, skia
 sys.path.insert(0, os.path.dirname(__file__))
-from timing import FPS, DURATION, HANDLE, P, PE, END, AMD_CLOSE, SOX_CLOSE, NDX_CLOSE
+from timing import FPS, DURATION, HANDLE, P, PE, END, AMD_CLOSE, SOX_CLOSE, NDX_CLOSE, _T
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FD = f"{ROOT}/assets/fonts"
@@ -127,10 +127,10 @@ def ticker(c, t, t0):
     """Exhibit D: the market card."""
     k = ease_out((t - t0) / 0.5)
     if k <= 0: return
-    y = 1080; x = lerp(W + 80, 110, clamp(k, 0, 1.05))
+    y = 1050; x = lerp(W + 80, 110, clamp(k, 0, 1.05))
     c.save(); c.translate(x, y)
-    c.drawRect(rect(10, 12, 860, 400, ), paint(hexc("#000000", .08), blur=10))
-    c.drawRect(rect(0, 0, 860, 400), paint(hexc("#FFFFFF"))); c.drawRect(rect(0, 0, 12, 400), paint(hexc(RED)))
+    c.drawRect(rect(10, 12, 860, 350), paint(hexc("#000000", .08), blur=10))
+    c.drawRect(rect(0, 0, 860, 350), paint(hexc("#FFFFFF"))); c.drawRect(rect(0, 0, 12, 350), paint(hexc(RED)))
     text(c, "EXHIBIT D · THE MARKET", 50, 62, 26, hexc(RED), IN[700], track=4)
     rows = [("AMD", AMD_CLOSE or "down up to ~9%", "close" if AMD_CLOSE else "intraday")]
     if SOX_CLOSE: rows.append(("CHIP INDEX (SOX)", SOX_CLOSE, "close"))
@@ -138,7 +138,7 @@ def ticker(c, t, t0):
     for i, (n, v, s) in enumerate(rows):
         e = ease_out((t - (t0 + 0.4 + i * 0.5)) / 0.4)
         if e <= 0: continue
-        alpha_layer(c, e); yy = 140 + i * 90
+        alpha_layer(c, e); yy = 130 + i * 78
         text(c, n, 50, yy, 34, hexc(INK), IN[700], track=2); text(c, s, 50, yy + 34, 24, hexc(SOFT), IN[500])
         text(c, v, 810, yy + 14, 58 if len(v) < 9 else 40, hexc(RED if v.startswith(("-", "−", "down")) else GREEN), FR[800], "r")
         c.restore()
@@ -150,15 +150,11 @@ def verdict(c, t):
     a = ease_out((t - t0) / 0.45)
     c.drawRect(rect(0, 330, W, 1250), paint(hexc(BG, .95 * a)))
     alpha_layer(c, a); dy = (1 - a) * 30
-    text(c, "THE VERDICT IS YOURS", W / 2, 700 + dy, 30, hexc(RED), IN[700], "c", track=6)
-    text(c, "Buying the dip", W / 2, 840 + dy, 96, hexc(INK), FR[800], "c")
-    text(c, "or catching a", W / 2, 950 + dy, 80, hexc(MUTE), FR[700], "c")
-    text(c, "falling knife?", W / 2, 1060 + dy, 96, hexc(RED), FRI[800], "c")
-    b = ease_out((t - (t0 + 1.4)) / 0.4); alpha_layer(c, b)
-    pw = tw("Tell us in the comments", 38, IN[700]) + 80
-    c.drawRRect(rrect(W / 2 - pw / 2, 1160, pw, 84, 42), paint(hexc(INK)))
-    text(c, "Tell us in the comments", W / 2, 1215, 38, hexc("#FFFFFF"), IN[700], "c")
-    c.restore(); c.restore()
+    text(c, "THE VERDICT IS YOURS", W / 2, 620 + dy, 30, hexc(RED), IN[700], "c", track=6)
+    text(c, "Buying the dip", W / 2, 760 + dy, 96, hexc(INK), FR[800], "c")
+    text(c, "or catching a", W / 2, 870 + dy, 80, hexc(MUTE), FR[700], "c")
+    text(c, "falling knife?", W / 2, 980 + dy, 96, hexc(RED), FRI[800], "c")
+    c.restore()
 
 def lesson(c, t):
     t0 = P[6] - 0.1; t1 = PE[6] + 0.3
@@ -187,6 +183,78 @@ def scene_end(c, t):
     text(c, "Save this for the next short report.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
     text(c, "NOT FINANCIAL ADVICE", W / 2, 1390, 24, hexc(SOFT), IN[600], "c", track=4); c.restore()
 
+# ---- word-by-word captions (timings spread by word length inside each phrase) ----
+WORDS = []
+for ph in _T:
+    ws = ph["text"].split(); L = sum(len(w) + 1 for w in ws); t = ph["t0"]; dur = ph["t1"] - ph["t0"] - 0.15
+    for w in ws:
+        d = dur * (len(w) + 1) / L; WORDS.append((t, t + d, w, ph["t0"])); t += d
+def captions(c, t):
+    cur = [w for w in WORDS if w[3] <= t and t <= _phrase_end(w[3])]
+    if not cur: return
+    # show a window of up to 5 words around the current one
+    idx = max([i for i, w in enumerate(cur) if w[0] <= t] or [0]); start = (idx // 4) * 4; win = cur[start:start + 4]
+    line = " ".join(w[2] for w in win); fs = 64 if tw(line, 64, IN[700]) < 940 else 52
+    x = W / 2 - tw(line, fs, IN[700]) / 2; y = 1478
+    c.drawRRect(rrect(x - 26, y - fs - 6, tw(line, fs, IN[700]) + 52, fs + 40, 18), paint(hexc(INK, .88)))
+    for i, w in enumerate(win):
+        on = w[0] <= t; ww = tw(w[2] + " ", fs, IN[700])
+        col = "#FFD84D" if (on and (i + start == idx)) else ("#FFFFFF" if on else "#9A9A9A")
+        k = ease_out((t - w[0]) / 0.12) if i + start == idx else 1
+        c.save(); c.translate(x + tw(w[2], fs, IN[700]) / 2, y); c.scale(lerp(1.12, 1, k), lerp(1.12, 1, k)); c.translate(-(x + tw(w[2], fs, IN[700]) / 2), -y)
+        text(c, w[2], x, y, fs, hexc(col), IN[700]); c.restore(); x += ww
+def _phrase_end(t0):
+    for ph in _T:
+        if ph["t0"] == t0: return ph["t1"] + 0.25
+    return t0
+
+def crawl(c, t):
+    s = "BREAKING  ·  SHORT REPORT  ·  AMD  ·  EXPORT CONTROLS  ·  ENTITY LIST  ·  CHIP STOCKS  ·  "
+    c.drawRect(rect(0, 322, W, 52), paint(hexc(RED)))
+    f = skia.Font(IN[700], 26); w = sum(f.measureText(ch) for ch in s) + 2 * (len(s) - 1) + 90; off = -(t * 140) % w
+    c.save(); c.clipRect(rect(0, 322, W, 52))
+    x = off - w
+    while x < W: text(c, s, x, 357, 26, hexc("#FFFFFF"), IN[700], track=2); x += w
+    c.restore()
+
+def hook_chart(c, t):
+    k = ease_io((t - 0.6) / 2.6)
+    if k <= 0: return
+    x0, x1, ytop, ybot = 130, 950, 1180, 1440
+    pts = [(x0, ytop), (x0 + 160, ytop + 12), (x0 + 260, ytop + 70), (x0 + 380, ytop + 150), (x0 + 520, ytop + 200), (x0 + 680, ytop + 235), (x1, ybot - 10)]
+    n = max(2, int(len(pts) * k * 30)); path = skia.Path(); path.moveTo(*pts[0]); cnt = 0
+    for (a_, b_), (c_, d_) in zip(pts, pts[1:]):
+        for s_ in range(1, 31):
+            cnt += 1
+            if cnt > n: break
+            path.lineTo(lerp(a_, c_, s_ / 30), lerp(b_, d_, s_ / 30))
+    c.drawPath(path, paint(hexc(RED), stroke=9))
+    for xx in range(x0, x1, 24): c.drawLine(xx, ytop, xx + 12, ytop, paint(hexc("#B9AE92"), stroke=3, cap_round=False))
+    text(c, "prior close", x1, ytop - 16, 24, hexc("#8A7A58"), IN[600], "r")
+
+def vote(c, t):
+    t0 = P[7] + 1.2
+    if t < t0: return
+    for i, (lab, col, x) in enumerate((("DIP", GREEN, 290), ("KNIFE", RED, 790))):
+        k = back_out((t - (t0 + i * 0.25)) / 0.4)
+        if k <= 0: continue
+        pulse = 1 + 0.04 * math.sin((t - t0) * 7 + i * 1.6)
+        c.save(); c.translate(x, 1170); c.scale(clamp(k, 0, 1.2) * pulse, clamp(k, 0, 1.2) * pulse)
+        c.drawRRect(rrect(-210, -70, 420, 140, 70), paint(hexc(col)))
+        text(c, lab, 0, 22, 66, hexc("#FFFFFF"), FR[800], "c", track=3)
+        c.restore()
+    a = ease_out((t - (t0 + 0.7)) / 0.4); alpha_layer(c, a)
+    text(c, "Comment DIP or KNIFE 👇" if False else "Comment DIP or KNIFE", W / 2, 1330, 46, hexc(INK), IN[700], "c"); c.restore()
+
+def cam(t):
+    """punch-in zoom per phrase + shake on the stamp"""
+    z = 1.0
+    for i, t0 in enumerate(P[:7]):
+        z += 0.035 * ease_out((t - t0) / 0.6) * (1 - ease_out((t - (t0 + 1.2)) / 2.0))
+    sh = 0.0; st = P[2] + 3.35
+    if st < t < st + 0.35: sh = 14 * math.exp(-(t - st) * 12) * math.sin((t - st) * 90)
+    return z, sh
+
 SRC_TXT = "Sources: Hunterbrook, Investing.com, TradingKey, Wccftech, OfficeChai · allegations are unproven"
 
 class Renderer:
@@ -196,15 +264,18 @@ class Renderer:
         c = self.surf.getCanvas(); c.save(); c.scale(self.scale, self.scale); background(c)
         fade = 1 - sstep(END - 0.1, END + 0.25, t)
         if fade > 0:
-            alpha_layer(c, fade); folder(c, t)
+            alpha_layer(c, fade)
+            z, sh = cam(t); c.save(); c.translate(W / 2 + sh, 980); c.scale(z, z); c.translate(-W / 2, -980)
+            folder(c, t)
             # hook on the folder (scene 0)
             hk = ease_out((t - 0.3) / 0.45) * (1 - sstep(P[1] - 0.3, P[1] + 0.1, t))
             if hk > 0:
                 alpha_layer(c, hk)
                 text(c, "AMD", 130, 760, 200, hexc(INK), FR[800])
-                text(c, "down up to ~9%", 130, 870, 72, hexc(RED), FRI[800])
+                kk = ease_io((t - 0.6) / 2.6); text(c, f"down up to ~{9 * kk:.0f}%" if kk < 0.99 else "down up to ~9%", 130, 870, 72, hexc(RED), FRI[800])
                 text(c, "in one morning.", 130, 950, 60, hexc(INK), FR[700])
                 text(c, "The trigger: a short seller.", 130, 1080, 44, hexc(MUTE), IN[600])
+                hook_chart(c, t)
                 c.restore()
             kA = ease_out((t - (P[1] - 0.1)) / 0.55); kB = ease_out((t - (P[2] - 0.1)) / 0.55)
             kC = ease_out((t - (P[3] - 0.1)) / 0.55)
@@ -220,12 +291,14 @@ class Renderer:
                 text(c, "Export risk  →  future sales  →  price", W / 2, 735, 46, hexc("#FFFFFF"), IN[700], "c")
                 c.restore()
             ticker(c, t, P[5] - 0.1)
-            lesson(c, t); verdict(c, t)
+            c.restore()
+            lesson(c, t); verdict(c, t); vote(c, t)
+            crawl(c, t); captions(c, t)
             logo(c, 100, 285, 40, center=False)
             tg = "SHORT REPORT"; w = tw(tg, 24, IN[700]) + 3 * 11 + 40
             c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))
             text(c, tg, W - 100 - w / 2, 284, 24, hexc("#FFFFFF"), IN[700], "c", track=3)
-            sa = sstep(4.5, 5.0, t); alpha_layer(c, sa); text(c, SRC_TXT, W / 2, 1600, 22, hexc(SOFT), IN[500], "c"); c.restore()
+            sa = sstep(4.5, 5.0, t); alpha_layer(c, sa); text(c, SRC_TXT, W / 2, 1565, 22, hexc(SOFT), IN[500], "c"); c.restore()
             c.restore()
         if t > END: scene_end(c, t)
         c.restore(); return self.surf.makeImageSnapshot().toarray()

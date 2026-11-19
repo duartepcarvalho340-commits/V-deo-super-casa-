@@ -11,7 +11,7 @@ PHRASES = [  # (gap before phrase in s, text) -> placed back to back
     (0.40, "So why the drop? Export risk hits what investors pay for: future sales."),
     (0.35, MARKET_LINE),
     (0.40, "The lesson: a short report is a claim, not a verdict. Watch for the company's answer, and for regulators."),
-    (0.45, "Your call: buying the dip, or catching a falling knife? Tell us in the comments."),
+    (0.45, "Your call: buying the dip, or catching a falling knife? Comment dip, or knife."),
 ]
 VOICE, SPEED, DUR = "af_heart", 1.12, 60.0
 if __name__ == "__main__":
