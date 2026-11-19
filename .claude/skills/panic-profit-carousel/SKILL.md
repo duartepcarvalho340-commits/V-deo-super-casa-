@@ -32,3 +32,9 @@ verde `#1B7F4B` = subidas, cinzento `#8A8A8A` = "&".
 
 ## Pergunta final + primeiro comentário (regra do utilizador)
 Todos os posts terminam com uma pergunta curta e neutra ao público ("Your call: ...?"): última cena do Reel / último slide de conteúdo do carrossel, repetida na legenda e **sempre** definida como `firstCommentText` no Metricool (ex.: "Your call: is $111.50 a share too much? What is Anthropic really worth? 👇"). O primeiro comentário só pode ser definido antes de o post sair. Explicações "em português simples" de métricas (ex.: P/E = anos de lucro para recuperar o preço) são bem-vindas.
+
+## Story 5 minutos depois (regra do utilizador)
+Cada post novo (Reel ou carrossel) leva um **Story** 1080×1920 publicado **5 minutos depois** do post. Reel: frame mais forte (ex.: a capa) + faixa vermelha "NEW REEL ▶ WATCH IT ON OUR PROFILE" + a pergunta final. Carrossel: slide 1 em cartão + "NEW POST ▶ SWIPE IT ON OUR PROFILE" + a pergunta final. Texto fora dos 250 px de cima e de baixo (zonas da interface). Metricool: `instagramData {"type":"STORY"}`, sem texto. Autocolantes (sondagem, link) não são possíveis por API: lembrar o utilizador de os pôr à mão ou de partilhar o post no story.
+
+## URLs públicas sem cache
+O raw.githubusercontent.com guarda cache ~5 min por caminho. Para ficheiros atualizados, usar sempre o URL fixo ao commit: `https://raw.githubusercontent.com/duartepcarvalho340-commits/V-deo-super-casa-/<sha do commit>/<caminho>` e confirmar com curl o tamanho igual ao ficheiro local.
