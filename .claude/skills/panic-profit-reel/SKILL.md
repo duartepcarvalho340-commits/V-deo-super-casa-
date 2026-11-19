@@ -77,3 +77,4 @@ O raw.githubusercontent.com guarda cache ~5 min por caminho. Para ficheiros atua
 
 ## Interatividade (pedido do utilizador)
 Todos os Reels levam: legendas palavra a palavra (caixa escura, palavra atual a amarelo; tempos distribuídos pelo comprimento das palavras de cada frase do voice_timing.json); zooms de câmara a cada frase + tremor nos impactos; pelo menos um elemento animado com dados (gráfico/contador); faixa de notícias quando fizer sentido; e um final de "votação" com dois botões a pulsar (ex.: DIP / KNIFE) + "Comment X or Y", repetido no primeiro comentário. Exemplo de referência: `instagram/panic-and-profit/daily/2026-11-19-ai-selloff/reel/code/render.py`.
+- Cabeçalho: o logótipo (baseline y=285, linha até ~y=325) e a etiqueta ocupam y 250–330; qualquer faixa/elemento abaixo começa em y ≥ 340 (ex.: faixa de notícias em y 342–388). Verificar sempre um recorte do topo antes do render final.
