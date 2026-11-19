@@ -132,7 +132,7 @@ def ticker(c, t, t0):
     c.drawRect(rect(10, 12, 860, 350), paint(hexc("#000000", .08), blur=10))
     c.drawRect(rect(0, 0, 860, 350), paint(hexc("#FFFFFF"))); c.drawRect(rect(0, 0, 12, 350), paint(hexc(RED)))
     text(c, "EXHIBIT D · THE MARKET", 50, 62, 26, hexc(RED), IN[700], track=4)
-    rows = [("AMD", AMD_CLOSE or "down up to ~9%", "close" if AMD_CLOSE else "intraday")]
+    rows = [("AMD", AMD_CLOSE or "down up to ~9%", "close, after falling up to ~9%" if AMD_CLOSE else "intraday")]
     if SOX_CLOSE: rows.append(("CHIP INDEX (SOX)", SOX_CLOSE, "close"))
     if NDX_CLOSE: rows.append(("NASDAQ", NDX_CLOSE, "close"))
     for i, (n, v, s) in enumerate(rows):
@@ -255,7 +255,7 @@ def cam(t):
     if st < t < st + 0.35: sh = 14 * math.exp(-(t - st) * 12) * math.sin((t - st) * 90)
     return z, sh
 
-SRC_TXT = "Sources: Hunterbrook, Investing.com, TradingKey, Wccftech, OfficeChai · allegations are unproven"
+SRC_TXT = "Sources: Reuters, CNBC, Bloomberg, Yahoo Finance, Hunterbrook · allegations are unproven"
 
 class Renderer:
     def __init__(self, scale):
@@ -282,7 +282,7 @@ class Renderer:
             memo(c, kA, 600, 330, -2.5, "EXHIBIT A · WHO", "Hunterbrook", ["Published a report today and", "disclosed a bet against AMD stock."], INK, dim=sstep(P[2], P[2] + 0.5, t))
             memo(c, kB, 700, 400, 1.8, "EXHIBIT B · THE CLAIM", "A blacklisted buyer?", ["Alleges Chinese server maker IEIT,", "on the US Entity List since 2025,", "kept shipping newer AMD firmware."], RED, dim=sstep(P[3], P[3] + 0.5, t))
             stamp(c, t, P[2] + 3.2, 790, 1020, "ALLEGED", RED)
-            memo(c, kC, 820, 380, -1.5, "EXHIBIT C · WHAT IT DOESN'T PROVE", "No violation shown", ["The report says it does not prove", "AMD broke export rules.", "AMD has not responded."], GREEN, dim=sstep(P[4], P[4] + 0.5, t))
+            memo(c, kC, 820, 380, -1.5, "EXHIBIT C · THE RESPONSE", "AMD denies it", ["Says the claims misrepresent its business", "and that it complies with US export law.", "The report doesn't claim proof of a violation."], GREEN, dim=sstep(P[4], P[4] + 0.5, t))
             # why: export risk -> future sales
             wk = ease_out((t - (P[4] + 0.2)) / 0.45) * (1 - sstep(P[5] - 0.2, P[5] + 0.2, t))
             if wk > 0:

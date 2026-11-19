@@ -7,7 +7,7 @@ PHRASES = [  # (gap before phrase in s, text) -> placed back to back
     (0.30, "AMD lost up to nine percent in a single morning. The trigger? A short seller."),
     (0.40, "Hunterbrook, which is betting against the stock, published a report today."),
     (0.35, "It alleges that a Chinese server maker, blacklisted by the US since 2025, kept shipping updates with newer AMD firmware."),
-    (0.40, "AMD has not responded. And the report itself says it does not prove AMD broke any export rules."),
+    (0.40, "AMD denies it, saying the claims misrepresent its business and that it follows US export law. The report itself does not claim proof of a violation."),
     (0.40, "So why the drop? Export risk hits what investors pay for: future sales."),
     (0.35, MARKET_LINE),
     (0.40, "The lesson: a short report is a claim, not a verdict. Watch for the company's answer, and for regulators."),
