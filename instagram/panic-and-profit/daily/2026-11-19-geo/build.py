@@ -101,7 +101,7 @@ def step(n,t,d):
 <div><div class="sans" style="font-size:14px;font-weight:600;color:{INK};">{t}</div><div class="sans" style="font-size:12px;color:#8A8580;line-height:1.45;margin-top:2px;">{d}</div></div></div>'''
 b6=f'''{tag("YOUR WATCHLIST", P)}
 {H2("What to track next")}
-{step("01","The joint statement","The Kremlin said one was being drafted. US officials played down a nuclear deal.")}
+{step("01","The joint statement: out","A 4-point declaration on nuclear stability. No major breakthroughs.")}
 {step("02","Jan 10, 2027","The truce deadline. Extension or cliff?")}
 {step("03","Chip export rules","Any change hits semis first.")}
 {step("04","Oil prices","The fastest link from geopolitics to inflation.")}'''

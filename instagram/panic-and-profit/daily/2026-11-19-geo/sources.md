@@ -12,3 +12,5 @@
 | Nvidia Q4 guide assumes no China data-center compute revenue | Nvidia Q3 FY2027 release via StockTitan https://www.stocktitan.net/news/NVDA/nvidia-announces-financial-results-for-third-quarter-fiscal-fpx9dw5egxqa.html · TradingKey |
 
 Outcome of the trilateral not yet reported at draft time (07:00 Lisbon) — update slide 6/caption before export if a statement is published.
+
+| Outcome: 4-point joint declaration (nuclear stability, "a nuclear war cannot be won"); no major breakthroughs; Ukraine not addressed | Al Jazeera https://www.aljazeera.com/news/2026/11/19/groundbreaking-trump-xi-putin-summit-five-key-takeaways · CNN https://www.cnn.com/2026/11/17/politics/live-news/trump-visit-china-philippines · CFR https://www.cfr.org/articles/six-experts-on-what-trump-xi-and-putins-first-trilateral-means · Jerusalem Post https://www.jpost.com/international/article-915519 |
