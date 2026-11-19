@@ -74,3 +74,6 @@ Cada post novo (Reel ou carrossel) leva um **Story** 1080×1920 publicado **5 mi
 
 ## URLs públicas sem cache
 O raw.githubusercontent.com guarda cache ~5 min por caminho. Para ficheiros atualizados, usar sempre o URL fixo ao commit: `https://raw.githubusercontent.com/duartepcarvalho340-commits/V-deo-super-casa-/<sha do commit>/<caminho>` e confirmar com curl o tamanho igual ao ficheiro local.
+
+## Interatividade (pedido do utilizador)
+Todos os Reels levam: legendas palavra a palavra (caixa escura, palavra atual a amarelo; tempos distribuídos pelo comprimento das palavras de cada frase do voice_timing.json); zooms de câmara a cada frase + tremor nos impactos; pelo menos um elemento animado com dados (gráfico/contador); faixa de notícias quando fizer sentido; e um final de "votação" com dois botões a pulsar (ex.: DIP / KNIFE) + "Comment X or Y", repetido no primeiro comentário. Exemplo de referência: `instagram/panic-and-profit/daily/2026-11-19-ai-selloff/reel/code/render.py`.
