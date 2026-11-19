@@ -29,3 +29,6 @@ verde `#1B7F4B` = subidas, cinzento `#8A8A8A` = "&".
    (curl → 200), Metricool `createScheduledPost` (blogId 8179959, Europe/Lisbon, providers instagram, instagramData
    `{"type":"POST"}`, media = 7 URLs em ordem, text = caption, autoPublish true). Hora: a pedida; "publica já" → +10 min;
    senão 17:00 Lisboa (12:00 ET). Confirmar com hora de Lisboa e Nova Iorque e plannerUrl.
+
+## Pergunta final + primeiro comentário (regra do utilizador)
+Todos os posts terminam com uma pergunta curta e neutra ao público ("Your call: ...?"): última cena do Reel / último slide de conteúdo do carrossel, repetida na legenda e **sempre** definida como `firstCommentText` no Metricool (ex.: "Your call: is $111.50 a share too much? What is Anthropic really worth? 👇"). O primeiro comentário só pode ser definido antes de o post sair. Explicações "em português simples" de métricas (ex.: P/E = anos de lucro para recuperar o preço) são bem-vindas.

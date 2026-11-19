@@ -65,3 +65,6 @@ linha do tempo que faz zoom, ecrã dividido "panic vs profit", papel que se dobr
 
 ## Licenças
 Fraunces e Inter (SIL OFL 1.1); Kokoro v1.0 (Apache-2.0); música e efeitos sintetizados no código (originais).
+
+## Pergunta final + primeiro comentário (regra do utilizador)
+Todos os posts terminam com uma pergunta curta e neutra ao público ("Your call: ...?"): última cena do Reel / último slide de conteúdo do carrossel, repetida na legenda e **sempre** definida como `firstCommentText` no Metricool (ex.: "Your call: is $111.50 a share too much? What is Anthropic really worth? 👇"). O primeiro comentário só pode ser definido antes de o post sair. Explicações "em português simples" de métricas (ex.: P/E = anos de lucro para recuperar o preço) são bem-vindas.
