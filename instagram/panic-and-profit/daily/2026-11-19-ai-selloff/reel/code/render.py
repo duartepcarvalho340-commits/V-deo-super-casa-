@@ -210,11 +210,11 @@ def _phrase_end(t0):
 
 def crawl(c, t):
     s = "BREAKING  ·  SHORT REPORT  ·  AMD  ·  EXPORT CONTROLS  ·  ENTITY LIST  ·  CHIP STOCKS  ·  "
-    c.drawRect(rect(0, 322, W, 52), paint(hexc(RED)))
+    c.drawRect(rect(0, 342, W, 46), paint(hexc(RED)))
     f = skia.Font(IN[700], 26); w = sum(f.measureText(ch) for ch in s) + 2 * (len(s) - 1) + 90; off = -(t * 140) % w
-    c.save(); c.clipRect(rect(0, 322, W, 52))
+    c.save(); c.clipRect(rect(0, 342, W, 46))
     x = off - w
-    while x < W: text(c, s, x, 357, 26, hexc("#FFFFFF"), IN[700], track=2); x += w
+    while x < W: text(c, s, x, 374, 26, hexc("#FFFFFF"), IN[700], track=2); x += w
     c.restore()
 
 def hook_chart(c, t):
