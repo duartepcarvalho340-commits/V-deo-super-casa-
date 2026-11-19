@@ -6,7 +6,7 @@ Usage: python3 code/render.py --scale 1 --fps 60 --out exports/reel.mp4
 import argparse, math, os, subprocess, sys
 import numpy as np, skia
 sys.path.insert(0, os.path.dirname(__file__))
-from timing import FPS, DURATION, HANDLE, P, PE, END, FT
+from timing import FPS, DURATION, HANDLE, P, PE, END, FT, CLOSE
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FD = f"{ROOT}/assets/fonts"
@@ -163,7 +163,7 @@ def receipt(c, t):
     c.drawRect(rect(RX - 10, SLOT_Y - 6, RW + 20, 10), paint(hexc("#3A3A3A")))
 
 def stamp(c, t):
-    t0 = P[-1] + 0.15
+    t0 = P[CLOSE] + 0.15
     if t < t0: return
     k = clamp((t - t0) / 0.28); s = lerp(2.4, 1.0, ease_out(k)); a = clamp(k * 1.6)
     c.save(); c.translate(W / 2, 1050); c.rotate(-8); c.scale(s, s)
@@ -173,6 +173,23 @@ def stamp(c, t):
     c.drawRRect(rrect(-422, -132, 844, 264, 12), paint(hexc(RED), stroke=3))
     text(c, "DAY ONE = HEADLINE", 0, -20, 56, hexc(RED), FR[800], "c")
     text(c, "NUMBERS = THE STORY", 0, 70, 56, hexc(GREEN), FR[800], "c")
+    c.restore(); c.restore()
+
+def question(c, t):
+    t0 = P[-1] - 0.1
+    if t < t0: return
+    a = ease_out((t - t0) / 0.45)
+    c.drawRect(rect(0, 330, W, 1250), paint(hexc(BG, .93 * a)))
+    alpha_layer(c, a); dy = (1 - a) * 30
+    text(c, "YOUR CALL", W / 2, 700 + dy, 30, hexc(RED), IN[700], "c", track=6)
+    text(c, "Is $83 a share", W / 2, 840 + dy, 92, hexc(INK), FR[800], "c")
+    text(c, "too much?", W / 2, 950 + dy, 92, hexc(RED), FRI[800], "c")
+    b = ease_out((t - (t0 + 1.3)) / 0.45)
+    alpha_layer(c, b)
+    text(c, "What's Anthropic really worth?", W / 2, 1090 + dy, 50, hexc(INK), FR[700], "c")
+    pw = tw("Tell us in the comments", 38, IN[700]) + 80
+    c.drawRRect(rrect(W / 2 - pw / 2, 1170, pw, 84, 42), paint(hexc(INK)))
+    text(c, "Tell us in the comments", W / 2, 1225, 38, hexc("#FFFFFF"), IN[700], "c")
     c.restore(); c.restore()
 
 def scene_end(c, t):
@@ -194,7 +211,7 @@ class Renderer:
         c = self.surf.getCanvas(); c.save(); c.scale(self.scale, self.scale); background(c)
         fade = 1 - sstep(END - 0.1, END + 0.25, t)
         if fade > 0:
-            alpha_layer(c, fade); receipt(c, t); stamp(c, t)
+            alpha_layer(c, fade); receipt(c, t); stamp(c, t); question(c, t)
             logo(c, 100, 285, 40, center=False)
             tg = "IPO DAY"; w = tw(tg, 24, IN[700]) + 3 * 6 + 40
             c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))

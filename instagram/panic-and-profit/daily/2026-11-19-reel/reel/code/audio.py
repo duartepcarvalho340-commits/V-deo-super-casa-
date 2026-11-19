@@ -4,7 +4,7 @@ import os, sys
 import numpy as np, soundfile as sf
 from scipy.signal import butter, sosfilt, fftconvolve, resample_poly
 sys.path.insert(0, os.path.dirname(__file__))
-from timing import DURATION, P, END
+from timing import DURATION, P, END, CLOSE
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SR = 48000; N = int(DURATION * SR); T = np.arange(N) / SR; rng = np.random.default_rng(7)
 midi = lambda m: 440 * 2 ** ((m - 69) / 12)
@@ -69,7 +69,8 @@ def printer(n=0.35):
     k = int(n * SR); x = bp(rng.standard_normal(k), 1500, 6000) * (0.5 + 0.5 * np.sign(np.sin(2 * np.pi * 38 * np.arange(k) / SR)))
     return x * np.minimum(1, np.arange(k) / SR / .02) * np.minimum(1, (k - np.arange(k)) / SR / .05)
 for t0, kind, _ in _r.ROWS: place(sfx, printer(.45 if kind != "kv" else .3), t0, .18); place(sfx, blip(1800, .015), t0 + .3, .15)
-place(sfx, whoosh(.25, 5000, 800), P[-1] + .02, .3); place(sfx, thud(), P[-1] + .18, 1.0); place(sfx, thud(), P[-1] + .2, .5)
+place(sfx, whoosh(.25, 5000, 800), P[CLOSE] + .02, .3); place(sfx, thud(), P[CLOSE] + .18, 1.0); place(sfx, thud(), P[CLOSE] + .2, .5)
+place(sfx, whoosh(.5, 600, 3000), P[-1] - .15, .18); place(sfx, blip(880, .08), P[-1] + 1.2, .25)
 place(sfx, whoosh(.6, 400, 4500), END - .1, .2)
 place(sfx, blip(midi(72), .5) + .5 * blip(midi(79), .4), END + .2, .2)
 sfx = reverb(sfx, .9, .1)

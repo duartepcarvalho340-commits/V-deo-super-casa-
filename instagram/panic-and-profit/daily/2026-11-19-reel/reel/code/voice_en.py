@@ -15,6 +15,7 @@ PHRASES = [  # (gap before phrase in s, text) -> placed back to back
 import json as _j
 for _e in _j.loads(os.environ.get("EXTRA", "[]")): PHRASES.append((0.35, _e["line"]))
 PHRASES.append((0.35, "Day one is the headline. The numbers are the story."))
+PHRASES.append((0.45, "So, is eighty-three dollars a share too much? What is Anthropic really worth? Tell us in the comments."))
 VOICE, SPEED, DUR = "af_heart", 1.15, 48.0
 if __name__ == "__main__":
     k = Kokoro("assets/voice/kokoro-v1.0.onnx", "assets/voice/voices-v1.0.bin")
