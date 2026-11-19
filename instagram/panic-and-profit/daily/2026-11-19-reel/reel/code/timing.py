@@ -3,6 +3,8 @@ import json, os
 FPS = 60
 _T = json.load(open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "audio/voice_timing.json")))
 P = [p["t0"] for p in _T]; PE = [p["t1"] for p in _T]
+N_PE = 4             # P/E explainer phrases (indices 6..9)
+FT_IDX = 6 + N_PE    # opening-price phrase
 CLOSE = len(P) - 2   # "Day one is the headline..." ; last phrase = closing question
 END = PE[-1] + 0.6
 DURATION = round(END + 2.1, 2)

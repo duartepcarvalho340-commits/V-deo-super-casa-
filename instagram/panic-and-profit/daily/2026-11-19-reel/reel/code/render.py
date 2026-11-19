@@ -6,7 +6,7 @@ Usage: python3 code/render.py --scale 1 --fps 60 --out exports/reel.mp4
 import argparse, math, os, subprocess, sys
 import numpy as np, skia
 sys.path.insert(0, os.path.dirname(__file__))
-from timing import FPS, DURATION, HANDLE, P, PE, END, FT, CLOSE
+from timing import FPS, DURATION, HANDLE, P, PE, END, FT, CLOSE, FT_IDX
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FD = f"{ROOT}/assets/fonts"
@@ -100,16 +100,19 @@ def rows():
          (P[3] + 0.5, "kv", ("REVENUE, H1", "$1.16B to $16.3B", GREEN, "2025 vs 2026, ~14x")),
          (P[4] + 0.9, "kv", ("PRICE / SALES", "~46x", RED, "valuation ÷ annualized H1 revenue")),
          (P[5] + 0.7, "kv", ("NET LOSS, H1 2026", "$80.7B", RED, "~$72.4B non-cash revaluation")),
-         (P[5] + 2.4, "kv", ("OPERATING LOSS", "$693M", INK, "the core business, H1 2026"))]
+         (P[5] + 2.4, "kv", ("OPERATING LOSS", "$693M", INK, "the core business, H1 2026")),
+         (P[6] + 1.4, "kv", ("P/E (OFFICIAL)", "N/A", MUTE, "net loss = no P/E ratio")),
+         (P[7] + 2.2, "kv", ("P/E, BEST QUARTER x4", "~385x", RED, "$1.5T ÷ ($974M Q2 profit × 4)")),
+         (P[7] + 5.0, "kv", ("S&P 500 FORWARD P/E", "~18x", GREEN, "FactSet, Nov 2026"))]
     if FT:
         px, pc = FT.split("|"); col = GREEN if pc.strip().startswith("+") else RED
-        r.append((P[6] + 0.4, "kv", ("FIRST TRADE", f"${px}", col, f"{pc} vs the $83 IPO price")))
+        r.append((P[FT_IDX] + 0.4, "kv", ("FIRST TRADE", f"${px}", col, f"{pc} vs the $83 IPO price")))
     else:
-        r.append((P[6] + 0.4, "kv", ("FIRST TRADE", "TODAY", INK, "Nasdaq · ticker ANT")))
+        r.append((P[FT_IDX] + 0.4, "kv", ("FIRST TRADE", "TODAY", INK, "Nasdaq · ticker ANT")))
     import json as _j, os as _o
     for k, e in enumerate(_j.loads(_o.environ.get("EXTRA", "[]"))):   # extra rows, one per extra voice line
         col = {"green": GREEN, "red": RED}.get(e.get("color", ""), INK)
-        r.append((P[7 + k] + 0.4, "kv", (e["label"], e["value"], col, e.get("sub", ""))))
+        r.append((P[FT_IDX + 1 + k] + 0.4, "kv", (e["label"], e["value"], col, e.get("sub", ""))))
     return r
 ROWS = rows()
 HEAD_H = 230
@@ -175,6 +178,34 @@ def stamp(c, t):
     text(c, "NUMBERS = THE STORY", 0, 70, 56, hexc(GREEN), FR[800], "c")
     c.restore(); c.restore()
 
+def plain(c, t):
+    """'In plain English' card over the receipt: years of profit to earn back the price."""
+    t0, t1 = P[8] - 0.15, PE[9] + 0.35
+    if t < t0 or t > t1 + 0.4: return
+    a = ease_out((t - t0) / 0.4) * (1 - sstep(t1, t1 + 0.4, t))
+    c.drawRect(rect(0, 330, W, 1250), paint(hexc(BG, .95 * a)))
+    alpha_layer(c, a)
+    text(c, "IN PLAIN ENGLISH", W / 2, 520, 30, hexc(GREEN), IN[700], "c", track=6)
+    text(c, "Years of today's profit", W / 2, 620, 62, hexc(INK), FR[800], "c")
+    text(c, "to earn back the price", W / 2, 695, 62, hexc(INK), FR[800], "c")
+    k = ease_io((t - (t0 + 0.5)) / 1.6); x0, wmax = 110, 860
+    for i, (lab, yrs, col) in enumerate((("ANT at $83", 385, RED), ("S&P 500", 18, GREEN))):
+        y = 800 + i * 200
+        text(c, lab, x0, y, 34, hexc(INK), IN[700])
+        wv = max(14, wmax * yrs / 385 * k)
+        c.drawRRect(rrect(x0, y + 22, wv, 74, 8), paint(hexc(col)))
+        lbl = f"~{int(round(yrs * k))} yrs"
+        if wv > 260: text(c, lbl, x0 + wv - 24, y + 74, 44, hexc("#FFFFFF"), FR[800], "r")
+        else: text(c, lbl, x0 + wv + 20, y + 74, 44, hexc(col), FR[800])
+    b = ease_out((t - P[9]) / 0.45)
+    if b > 0:
+        alpha_layer(c, b)
+        c.drawRRect(rrect(110, 1230, 860, 170, 16), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(110, 1230, 860, 170, 16), paint(hexc(INK), stroke=4))
+        text(c, "FAIR PRICE?", W / 2, 1282, 26, hexc(MUTE), IN[700], "c", track=5)
+        text(c, "Only if profits grow 20x+", W / 2, 1360, 54, hexc(INK), FR[800], "c")
+        c.restore()
+    c.restore()
+
 def question(c, t):
     t0 = P[-1] - 0.1
     if t < t0: return
@@ -202,7 +233,7 @@ def scene_end(c, t):
     text(c, "Save this for the next big IPO.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
     text(c, "NOT FINANCIAL ADVICE · NOT AFFILIATED WITH ANTHROPIC", W / 2, 1390, 22, hexc(SOFT), IN[600], "c", track=3); c.restore()
 
-SRC_TXT = "Sources: CNBC, Yahoo Finance, CBC, Anthropic S-1 · P/S is illustrative math"
+SRC_TXT = "Sources: CNBC, Yahoo Finance, CBC, Anthropic S-1, FactSet · P/S and P/E are illustrative math"
 
 class Renderer:
     def __init__(self, scale):
@@ -211,7 +242,7 @@ class Renderer:
         c = self.surf.getCanvas(); c.save(); c.scale(self.scale, self.scale); background(c)
         fade = 1 - sstep(END - 0.1, END + 0.25, t)
         if fade > 0:
-            alpha_layer(c, fade); receipt(c, t); stamp(c, t); question(c, t)
+            alpha_layer(c, fade); receipt(c, t); plain(c, t); stamp(c, t); question(c, t)
             logo(c, 100, 285, 40, center=False)
             tg = "IPO DAY"; w = tw(tg, 24, IN[700]) + 3 * 6 + 40
             c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))

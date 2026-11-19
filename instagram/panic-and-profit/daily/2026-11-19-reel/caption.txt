@@ -6,6 +6,9 @@ The numbers behind the headline:
 • H1 revenue: $1.16B to $16.3B (~14x)
 • Price-to-sales: ~46x annualized revenue
 • H1 net loss: $80.7B, but ~$72.4B is a non-cash revaluation. Operating loss: $693M.
+• P/E: officially none (it lost money). Using its best quarter (Q2 operating profit $974M × 4), $83 a share is ~385x profits. The S&P 500 trades near 18x.
+
+In plain English: at today's profits, it would take ~385 years to earn back the price. To look like a normal stock, profits would need to grow 20x+.
 
 Day one is the headline. The numbers are the story.
 

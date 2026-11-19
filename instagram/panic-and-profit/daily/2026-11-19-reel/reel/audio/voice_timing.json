@@ -30,18 +30,38 @@
   "text": "And the eighty billion dollar loss? Mostly a non-cash revaluation."
  },
  {
-  "t0": 21.91,
-  "t1": 23.83,
+  "t0": 22.01,
+  "t1": 26.155,
+  "text": "What about the P/E ratio? Officially, there isn't one. It lost money."
+ },
+ {
+  "t0": 26.51,
+  "t1": 34.464,
+  "text": "Using its best quarter, at eighty-three dollars you pay about three hundred eighty-five times profits. The S&P 500? About eighteen."
+ },
+ {
+  "t0": 34.86,
+  "t1": 40.675,
+  "text": "In plain English: at today's profits, it would take about three hundred eighty-five years to earn back the price."
+ },
+ {
+  "t0": 41.03,
+  "t1": 44.896,
+  "text": "To look like a normal stock, profits would need to grow more than twenty times."
+ },
+ {
+  "t0": 45.35,
+  "t1": 47.27,
   "text": "Shares start trading on the Nasdaq today."
  },
  {
-  "t0": 24.18,
-  "t1": 26.868,
+  "t0": 47.62,
+  "t1": 50.308,
   "text": "Day one is the headline. The numbers are the story."
  },
  {
-  "t0": 27.32,
-  "t1": 32.484,
+  "t0": 50.76,
+  "t1": 55.924,
   "text": "So, is eighty-three dollars a share too much? What is Anthropic really worth? Tell us in the comments."
  }
 ]
