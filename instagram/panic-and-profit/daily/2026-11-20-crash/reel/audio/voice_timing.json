@@ -1,0 +1,47 @@
+[
+ {
+  "t0": 0.3,
+  "t1": 4.658,
+  "text": "Wall Street just had a brutal day. The Dow lost more than eleven hundred points."
+ },
+ {
+  "t0": 5.06,
+  "t1": 11.051,
+  "text": "The S&P 500 fell two percent. Its sixth straight loss, and now eight percent below its record."
+ },
+ {
+  "t0": 11.45,
+  "t1": 12.718,
+  "text": "Why? Think dominoes."
+ },
+ {
+  "t0": 13.07,
+  "t1": 19.197,
+  "text": "Domino one: rates. Markets expect the Fed to hike again in December, and higher rates hit stock values."
+ },
+ {
+  "t0": 19.55,
+  "t1": 24.798,
+  "text": "Domino two: AI doubts. Nvidia lost its CEO, and a short seller hit AMD."
+ },
+ {
+  "t0": 25.15,
+  "t1": 32.791,
+  "text": "Domino three: even the biggest IPO ever couldn't fix the mood. Anthropic opened up thirty-four percent, and closed up seventeen."
+ },
+ {
+  "t0": 33.19,
+  "t1": 44.106,
+  "text": "Now, perspective. Since 1980, the S&P 500 has dropped about fourteen percent at some point in an average year. And still finished higher in roughly three out of four years."
+ },
+ {
+  "t0": 44.51,
+  "t1": 47.263,
+  "text": "Eight percent off the top hurts. It is not unusual."
+ },
+ {
+  "t0": 47.71,
+  "t1": 51.028,
+  "text": "Your call: is this panic, or profit? Comment PANIC or PROFIT."
+ }
+]

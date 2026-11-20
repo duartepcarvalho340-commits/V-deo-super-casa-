@@ -1,0 +1,10 @@
+# Sources — Reel 2026-11-20 morning (Nov 19 selloff, dominoes)
+
+| Fact | Sources |
+|---|---|
+| Dow -1,101.11 (-2.2%) to 49,097.06; S&P 500 -2.0% to 7,175.83, 6th straight loss, -8.2% from record; Nasdaq -2.3% to 23,879.20 | AP via ABC News https://abcnews.com/Business/wireStory/major-us-stock-indexes-fared-thursday-11192026-138303454 · AP via Washington Post https://www.washingtonpost.com/business/2026/11/19/wall-street-stocks-dow-nasdaq/6aaf39d0-e463-11f1-a99e-b3e3805c6b8b_story.html · Motley Fool https://www.fool.com/coverage/stock-market-today/2026/11/19/stock-market-today-nov-19-dow-plunges-1-100-points-as-the-s-and-p-500-suffers-its-6th-straight-day-of-losses/ |
+| First Dow close below 50,000 since June | CNBC https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html · Yahoo Finance https://finance.yahoo.com/markets/live/stock-market-today-thursday-november-19-dow-sp-500-nasdaq-anthropic-ipo-090910916.html |
+| Anthropic opened +34% ($111.50), closed +17% ($97.17) | Fortune https://fortune.com/2026/11/19/anthropic-ipo-first-day-trading-nasdaq-record-valuation/ · Forbes https://www.forbes.com/sites/fionariley/2026/11/19/anthropic-ipo-live-shares-pop-34-to-open-at-11150/ · Bloomberg https://www.bloomberg.com/news/live-blog/2026-11-19/anthropic-trading-debut-live-updates · CNN https://www.cnn.com/2026/11/19/business/live-news/anthropic-ipo |
+| Fed hike expected Dec 9 | See daily/2026-11-18-fed/sources.md (CME FedWatch via CNBC, Kalshi, CNN) |
+| Nvidia CEO exit; AMD short report (alleged) and AMD denial | See daily/2026-11-18/sources.md and daily/2026-11-19-ai-selloff/sources.md |
+| Avg intra-year S&P 500 drop ~14% since 1980; positive in ~3 of 4 years (33 of 44) | J.P. Morgan Guide to the Markets (intra-year declines) https://nbfwm.ca/content/dam/fbngp/microsites/conseil-patrimoine-iannuzzi/pdf/intra-year-declines-2023-jp-morgan.pdf · J.P. Morgan https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/theres-been-a-stock-market-sell-off-now-what |
