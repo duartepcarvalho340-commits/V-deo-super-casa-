@@ -38,3 +38,6 @@ Cada post novo (Reel ou carrossel) leva um **Story** 1080×1920 publicado **5 mi
 
 ## URLs públicas sem cache
 O raw.githubusercontent.com guarda cache ~5 min por caminho. Para ficheiros atualizados, usar sempre o URL fixo ao commit: `https://raw.githubusercontent.com/duartepcarvalho340-commits/V-deo-super-casa-/<sha do commit>/<caminho>` e confirmar com curl o tamanho igual ao ficheiro local.
+
+## Investimento a LONGO PRAZO (regra do utilizador)
+A Panic & Profit é uma página de investimento a longo prazo. NUNCA usar linguagem de trading/curto prazo: "trade", "the AI trade", "trader(s)", "trading" (no sentido especulativo), "buy the dip", "dip", "swing", "scalp", "entry/exit", "price target" para timing, etc. Preferir: investors, long-term, fundamentals, valuation, "a bump on a long road", "stay invested", "time in the market". Perguntas finais com opções de longo prazo (ex.: BUBBLE / BUMP). Antes de exportar, procurar no guião, ecrã e legenda por trad|dip e reescrever.
