@@ -196,7 +196,7 @@ def board(c, t):
         t0 = starts[i]
         if t < t0: continue
         y = y0 + 240 + i * 190
-        flap_text(c, tk, x0 + 40, y, 64, INK, t, t0)
+        flap_text(c, tk, x0 + 40, y, 64, INK, t, t0, cell=56)
         flap_text(c, comp, x0 + 230, y, 64, INK, t, t0 + 0.4)
         e = ease_out((t - (t0 + 1.0)) / 0.4)
         if e > 0:
