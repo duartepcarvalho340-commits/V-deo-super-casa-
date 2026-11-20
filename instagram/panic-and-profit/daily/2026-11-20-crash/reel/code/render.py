@@ -171,7 +171,7 @@ def scene_hook(c, t):
     if a <= 0: return
     alpha_layer(c, a)
     k = ease_io((t - 0.3) / 2.2)
-    text(c, "THE DOW", W / 2, 560, 34, hexc(MUTE), IN[700], "c", track=8)
+    text(c, "YESTERDAY · THU, NOV 19 · THE DOW", W / 2, 560, 30, hexc(MUTE), IN[700], "c", track=5)
     text(c, f"-{int(1101 * k):,}", W / 2, 790, 230, hexc(RED), FR[800], "c")
     text(c, "points in one day", W / 2, 880, 50, hexc(INK), FR[700], "c")
     # falling line
@@ -192,6 +192,7 @@ def scene_indexes(c, t):
     a = overlay(c, t, P[1] - 0.2, PE[1] + 0.2)
     if a <= 0: return
     alpha_layer(c, a)
+    text(c, "YESTERDAY'S CLOSE · THU, NOV 19", W / 2, 455, 30, hexc(MUTE), IN[700], "c", track=5)
     for i, (nm, v) in enumerate((("DOW", "-2.2%"), ("S&P 500", "-2.0%"), ("NASDAQ", "-2.3%"))):
         k = back_out((t - (P[1] + i * 0.35)) / 0.4)
         if t < P[1] + i * 0.35: continue
@@ -286,11 +287,11 @@ def vote(c, t):
     a = ease_out((t - t0) / 0.45)
     c.drawRect(rect(0, 400, W, 1100), paint(hexc(BG, .97 * a)))
     alpha_layer(c, a)
-    text(c, "YOUR CALL", W / 2, 640, 30, hexc(RED), IN[700], "c", track=6)
-    text(c, "Is the AI bubble", W / 2, 780, 96, hexc(INK), FR[800], "c")
-    text(c, "popping?", W / 2, 900, 110, hexc(RED), FRI[800], "c")
-    text(c, "or a bump on a long road?", W / 2, 985, 48, hexc(MUTE), FR[700], "c")
-    for i, (lab, col, x) in enumerate((("BUBBLE", RED, 290), ("BUMP", GREEN, 790))):
+    text(c, "YOUR CALL · TODAY, FRI NOV 20", W / 2, 640, 30, hexc(RED), IN[700], "c", track=5)
+    text(c, "Is the AI bubble popping?", W / 2, 740, 62, hexc(INK), FR[800], "c")
+    text(c, "Today's open:", W / 2, 860, 96, hexc(INK), FR[800], "c")
+    text(c, "red or green?", W / 2, 975, 104, hexc(RED), FRI[800], "c")
+    for i, (lab, col, x) in enumerate((("RED", RED, 290), ("GREEN", GREEN, 790))):
         k = back_out((t - (t0 + 1.0 + i * 0.25)) / 0.4)
         if k <= 0: continue
         pulse = 1 + 0.04 * math.sin((t - t0) * 7 + i * 1.6)
@@ -298,7 +299,7 @@ def vote(c, t):
         c.drawRRect(rrect(-220, -70, 440, 140, 70), paint(hexc(col))); text(c, lab, 0, 22, 66, hexc("#FFFFFF"), FR[800], "c", track=3)
         c.restore()
     b = ease_out((t - (t0 + 1.8)) / 0.4); alpha_layer(c, b)
-    text(c, "Comment BUBBLE or BUMP", W / 2, 1265, 46, hexc(INK), IN[700], "c"); c.restore()
+    text(c, "Comment RED or GREEN", W / 2, 1265, 46, hexc(INK), IN[700], "c"); c.restore()
     c.restore()
 
 def scene_end(c, t):
