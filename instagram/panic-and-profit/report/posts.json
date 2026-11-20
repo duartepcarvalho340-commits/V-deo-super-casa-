@@ -1,47 +1,56 @@
 [
- {
-  "folder": "2026-11-18",
-  "date": "Qua 18 nov 2026",
-  "time": "17h Lisboa · 12h Nova Iorque",
-  "format": "Reel",
-  "title": "CEO out. Record quarter.",
-  "status": "Published",
-  "url": "https://www.instagram.com/reel/Df5AszXirgx/"
- },
- {
-  "folder": "2026-11-18-fed",
-  "date": "Qua 18 nov 2026",
-  "time": "23h Lisboa · 18h Nova Iorque",
-  "format": "Reel",
-  "title": "The Fed is about to hike. Again.",
-  "status": "Published",
-  "url": ""
- },
- {
-  "folder": "2026-11-19-reel",
-  "date": "Qui 19 nov 2026",
-  "time": "17h15 Lisboa · 12h15 Nova Iorque",
-  "format": "Reel",
-  "title": "The biggest IPO in history. Here's the receipt.",
-  "status": "Published",
-  "url": "https://www.instagram.com/reel/Df7mEkdD6wy/"
- },
- {
-  "folder": "2026-11-19-geo",
-  "date": "Qui 19 nov 2026",
-  "time": "23h Lisboa · 18h Nova Iorque",
-  "format": "Carrossel",
-  "title": "Trump, Xi and Putin in one room. A first.",
-  "status": "Published",
-  "url": "https://www.instagram.com/p/Df8OK8hiFXx/"
- },
- {
-  "folder": "2026-11-19-ai-selloff",
-  "date": "Sex 20 nov 2026",
-  "time": "03h Lisboa · 22h Nova Iorque (19 nov)",
-  "format": "Reel",
-  "title": "AMD, a short seller and a falling knife",
-  "status": "Published",
-  "url": "https://www.instagram.com/reel/Df8pKVmArve/"
- }
+  {
+    "folder": "2026-11-18",
+    "date": "Qua 18 nov 2026",
+    "time": "17h Lisboa · 12h Nova Iorque",
+    "format": "Reel",
+    "title": "CEO out. Record quarter.",
+    "status": "Published",
+    "url": "https://www.instagram.com/reel/Df5AszXirgx/"
+  },
+  {
+    "folder": "2026-11-18-fed",
+    "date": "Qua 18 nov 2026",
+    "time": "23h Lisboa · 18h Nova Iorque",
+    "format": "Reel",
+    "title": "The Fed is about to hike. Again.",
+    "status": "Published",
+    "url": ""
+  },
+  {
+    "folder": "2026-11-19-reel",
+    "date": "Qui 19 nov 2026",
+    "time": "17h15 Lisboa · 12h15 Nova Iorque",
+    "format": "Reel",
+    "title": "The biggest IPO in history. Here's the receipt.",
+    "status": "Published",
+    "url": "https://www.instagram.com/reel/Df7mEkdD6wy/"
+  },
+  {
+    "folder": "2026-11-19-geo",
+    "date": "Qui 19 nov 2026",
+    "time": "23h Lisboa · 18h Nova Iorque",
+    "format": "Carrossel",
+    "title": "Trump, Xi and Putin in one room. A first.",
+    "status": "Published",
+    "url": "https://www.instagram.com/p/Df8OK8hiFXx/"
+  },
+  {
+    "folder": "2026-11-19-ai-selloff",
+    "date": "Sex 20 nov 2026",
+    "time": "03h Lisboa · 22h Nova Iorque (19 nov)",
+    "format": "Reel",
+    "title": "AMD, a short seller and a falling knife",
+    "status": "Published",
+    "url": "https://www.instagram.com/reel/Df8pKVmArve/"
+  },
+  {
+    "folder": "2026-11-20-crash",
+    "date": "Sex 20 nov 2026",
+    "time": "14h Lisboa · 9h Nova Iorque (+ Story 14h05)",
+    "format": "Reel",
+    "title": "The AI dominoes: yesterday's selloff, today's open",
+    "status": "Scheduled",
+    "url": "https://app.metricool.com/planner/calendar?blogId=8179959&openWithPostUuid=1098946690564115227"
+  }
 ]
