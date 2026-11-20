@@ -277,14 +277,16 @@ def scene_answer(c, t):
         w = tw(word, 150, FR[800]) + 90
         c.drawRRect(rrect(-w / 2, -110, w, 190, 24), paint(hexc(col), stroke=10))
         text(c, word, 0, 50, 150, hexc(col), FR[800], "c"); c.restore()
-    rows = [("S&P 500 · TODAY", NUM["sp_day"], wtime("today", 6) - 1.4), ("S&P 500 · THIS WEEK", NUM["sp_week"], wtime("week.", 6) - 1.3)]
-    for i, (lab, v, tt) in enumerate(rows):
+    rows = [("S&P 500 · LOSING STREAK", "7 DAYS", wtime("seventh", 6) - 0.1, "Longest since 2020"),
+            ("S&P 500 · FROM RECORD", "<-10%", wtime("correction", 6) - 0.1, "Officially a correction")]
+    for i, (lab, v, tt, sub) in enumerate(rows):
         e = back_out((t - tt) / 0.4)
         if t < tt: continue
         y = 1020 + i * 150; s = clamp(e, 0, 1.12)
         c.save(); c.translate(W / 2, y); c.scale(s, s)
-        c.drawRRect(rrect(-400, -62, 800, 124, 62), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(-400, -62, 800, 124, 62), paint(hexc(sigcol(v)), stroke=5))
-        text(c, lab, -350, 14, 36, hexc(INK), IN[700], track=2); tri(c, 100, 0, 30, v > 0, hexc(sigcol(v))); text(c, fmt(v), 350, 22, 62, hexc(sigcol(v)), FR[800], "r")
+        c.drawRRect(rrect(-400, -62, 800, 124, 62), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(-400, -62, 800, 124, 62), paint(hexc(RED), stroke=5))
+        text(c, lab, -350, 0, 30, hexc(INK), IN[700], track=2); text(c, sub, -350, 38, 24, hexc(MUTE), IN[500])
+        text(c, v, 350, 22, 62, hexc(RED), FR[800], "r")
         c.restore()
     if NUM.get("draft"):
         text(c, "DRAFT · US NUMBERS FILLED AFTER THE CLOSE", W / 2, 1345, 24, hexc(GREY), IN[700], "c", track=3)

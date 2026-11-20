@@ -10,10 +10,9 @@ def pct(x):
     if d: s += f" point {w[d]}"
     return s + " percent"
 def us_line():
-    col = "green" if N["sp_day"] > 0 else "red"
-    vd = "rose" if N["sp_day"] > 0 else "fell"; vw = "gained" if N["sp_week"] > 0 else "lost"
-    return (f"Back in New York, this morning we asked: red or green? The answer: {col}. "
-            f"The S&P 500 {vd} {pct(N['sp_day'])} today, and {vw} {pct(N['sp_week'])} this week.")
+    return ("Back in New York, this morning we asked: red or green? The answer: red. "
+            "The S&P 500 fell for a seventh straight day, its longest losing streak since 2020, "
+            "and slid into a correction, more than ten percent below its record.")
 PHRASES = [
     (0.30, "Taiwan's stock market just had its worst week since 1991."),
     (0.40, "While America slept, yesterday's AI selloff hit Asia. And it hit harder."),
