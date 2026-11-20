@@ -197,10 +197,10 @@ def scene_indexes(c, t):
         if t < P[1] + i * 0.35: continue
         y = 560 + i * 170; s = clamp(k, 0, 1.15)
         c.save(); c.translate(W / 2, y); c.scale(s, s)
-        c.drawRRect(rrect(-400, -70, 800, 140, 70), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(-400, -70, 800, 140, 70), paint(hexc(INK), stroke=4))
+        c.drawRRect(rrect(-400, -70, 800, 140, 70), paint(hexc("#FFF1F3" if nm == "NASDAQ" else "#FFFFFF"))); c.drawRRect(rrect(-400, -70, 800, 140, 70), paint(hexc(RED if nm == "NASDAQ" else INK), stroke=6 if nm == "NASDAQ" else 4))
         text(c, nm, -350, 18, 50, hexc(INK), FR[800]); tri(c, 100, 0, 34, False, hexc(RED)); text(c, v, 350, 22, 66, hexc(RED), FR[800], "r")
         c.restore()
-    for i, (lab, tt) in enumerate((("6TH STRAIGHT LOSS", P[1] + 2.2), ("-8.2% FROM RECORD", P[1] + 3.6))):
+    for i, (lab, tt) in enumerate((("S&P: 6TH STRAIGHT LOSS", P[1] + 1.6), ("NASDAQ FELL MOST", P[1] + 3.6))):
         k = back_out((t - tt) / 0.4)
         if t < tt: continue
         s = clamp(k, 0, 1.2); x = 300 + i * 480
@@ -209,7 +209,7 @@ def scene_indexes(c, t):
         c.drawRRect(rrect(-w / 2, -40, w, 80, 40), paint(hexc(RED))); text(c, lab, 0, 12, 32, hexc("#FFFFFF"), IN[700], "c", track=3); c.restore()
     c.restore()
 
-TILES = [("FED", 190), ("AI", 410), ("IPO", 630), ("S&P", 870)]
+TILES = [("AI", 190), ("IPO", 410), ("FED", 630), ("S&P", 870)]
 FLOOR = 1300; TW, TH = 120, 330
 def fall_times():
     f1 = P[4] - 0.55; f2 = P[5] - 0.55; f3 = PE[5] - 1.6; f4 = f3 + 0.45
@@ -221,7 +221,7 @@ def scene_dominoes(c, t):
     a = overlay(c, t, P[2] - 0.2, PE[5] + 0.6)
     if a <= 0: return
     alpha_layer(c, a)
-    text(c, "THINK DOMINOES", W / 2, 560, 34, hexc(RED), IN[700], "c", track=8)
+    text(c, "THE AI DOMINOES", W / 2, 560, 34, hexc(RED), IN[700], "c", track=8)
     c.drawLine(80, FLOOR, W - 80, FLOOR, paint(hexc(INK), stroke=6))
     active = 0 if t < P[4] else (1 if t < P[5] else 2)
     for i, (lab, cx) in enumerate(TILES):
@@ -236,9 +236,9 @@ def scene_dominoes(c, t):
         c.save(); c.translate(cx, FLOOR - 40); text(c, lab, 0, 0, 34 if len(lab) > 3 else 40, hexc("#FFFFFF" if i == 3 else INK), IN[700], "c"); c.restore()
         c.restore()
     # detail card for the active domino
-    cards = [(P[3], "DOMINO 1 · RATES", ["Markets expect another", "Fed hike on Dec 9"]),
-             (P[4], "DOMINO 2 · AI DOUBTS", ["Nvidia CEO exit +", "AMD short report (alleged)"]),
-             (P[5], "DOMINO 3 · IPO FADE", ["Anthropic: +34% at the open", "+17% at the close ($97.17)"])]
+    cards = [(P[3], "DOMINO 1 · AI LEADERSHIP", ["Nvidia CEO exit +", "AMD short report (alleged)"]),
+             (P[4], "DOMINO 2 · THE AI IPO TEST", ["Anthropic: +34% at the open,", "+17% at the close ($97.17)"]),
+             (P[5], "DOMINO 3 · RATES", ["Another Fed hike expected:", "priciest growth stocks hit first"])]
     for j, (tt, hd, lines) in enumerate(cards):
         nxt = cards[j + 1][0] if j + 1 < len(cards) else PE[5] + 0.5
         e = ease_out((t - (tt - 0.1)) / 0.35) * (1 - sstep(nxt - 0.3, nxt, t))
@@ -287,9 +287,9 @@ def vote(c, t):
     c.drawRect(rect(0, 400, W, 1100), paint(hexc(BG, .97 * a)))
     alpha_layer(c, a)
     text(c, "YOUR CALL", W / 2, 640, 30, hexc(RED), IN[700], "c", track=6)
-    text(c, "Is this panic", W / 2, 780, 100, hexc(INK), FR[800], "c")
-    text(c, "or profit?", W / 2, 900, 100, hexc(GREEN), FRI[800], "c")
-    for i, (lab, col, x) in enumerate((("PANIC", RED, 290), ("PROFIT", GREEN, 790))):
+    text(c, "Is the AI bubble", W / 2, 780, 96, hexc(INK), FR[800], "c")
+    text(c, "popping?", W / 2, 900, 110, hexc(RED), FRI[800], "c")
+    for i, (lab, col, x) in enumerate((("BUBBLE", RED, 290), ("DIP", GREEN, 790))):
         k = back_out((t - (t0 + 1.0 + i * 0.25)) / 0.4)
         if k <= 0: continue
         pulse = 1 + 0.04 * math.sin((t - t0) * 7 + i * 1.6)
@@ -297,7 +297,7 @@ def vote(c, t):
         c.drawRRect(rrect(-220, -70, 440, 140, 70), paint(hexc(col))); text(c, lab, 0, 22, 66, hexc("#FFFFFF"), FR[800], "c", track=3)
         c.restore()
     b = ease_out((t - (t0 + 1.8)) / 0.4); alpha_layer(c, b)
-    text(c, "Comment PANIC or PROFIT", W / 2, 1240, 46, hexc(INK), IN[700], "c"); c.restore()
+    text(c, "Comment BUBBLE or DIP", W / 2, 1240, 46, hexc(INK), IN[700], "c"); c.restore()
     c.restore()
 
 def scene_end(c, t):
@@ -310,7 +310,7 @@ def scene_end(c, t):
     text(c, "Save this for the next red day.", W / 2, 1280, 34, hexc(MUTE), IN[500], "c")
     text(c, "NOT FINANCIAL ADVICE", W / 2, 1390, 24, hexc(SOFT), IN[600], "c", track=4); c.restore()
 
-SRC_TXT = "Sources: AP (ABC, Washington Post), CNBC, Fortune, Forbes, J.P. Morgan Guide to the Markets"
+SRC_TXT = "Sources: AP, CNBC, NBC, Fortune, Forbes, Bloomberg, J.P. Morgan"
 
 class Renderer:
     def __init__(self, scale):
@@ -330,7 +330,7 @@ class Renderer:
             c.restore()
             vote(c, t)
             logo(c, 100, 285, 40, center=False)
-            tg = "SELLOFF"; w = tw(tg, 24, IN[700]) + 3 * 6 + 40
+            tg = "AI SELLOFF"; w = tw(tg, 24, IN[700]) + 3 * 9 + 40
             c.drawRRect(rrect(W - 100 - w, 250, w, 50, 25), paint(hexc(RED)))
             text(c, tg, W - 100 - w / 2, 284, 24, hexc("#FFFFFF"), IN[700], "c", track=3)
             captions(c, t)

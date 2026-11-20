@@ -3,14 +3,14 @@ import json, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 PHRASES = [  # (gap before phrase in s, text) -> placed back to back
     (0.30, "Wall Street just had a brutal day. The Dow lost more than eleven hundred points."),
-    (0.40, "The S&P 500 fell two percent. Its sixth straight loss, and now eight percent below its record."),
-    (0.40, "Why? Think dominoes."),
-    (0.35, "Domino one: rates. Markets expect the Fed to hike again in December, and higher rates hit stock values."),
-    (0.35, "Domino two: AI doubts. Nvidia lost its CEO, and a short seller hit AMD."),
-    (0.35, "Domino three: even the biggest IPO ever couldn't fix the mood. Anthropic opened up thirty-four percent, and closed up seventeen."),
+    (0.40, "The S&P 500 fell two percent, its sixth straight loss. And the tech-heavy Nasdaq, home of the AI giants, fell even more."),
+    (0.40, "Why? Follow the AI dominoes."),
+    (0.35, "Domino one: AI leadership. Nvidia, the face of the boom, lost its CEO, and a short seller hit AMD."),
+    (0.35, "Domino two: the AI IPO test. Anthropic opened up thirty-four percent, then gave back half. It could not revive the AI trade."),
+    (0.35, "Domino three: rates. Markets expect another Fed hike, and higher rates hit the priciest growth stocks first."),
     (0.40, "Now, perspective. Since 1980, the S&P 500 has dropped about fourteen percent at some point in an average year. And still finished higher in roughly three out of four years."),
     (0.40, "Eight percent off the top hurts. It is not unusual."),
-    (0.45, "Your call: is this panic, or profit? Comment PANIC or PROFIT."),
+    (0.45, "Your call: is this the AI bubble popping, or just a dip? Comment BUBBLE or DIP."),
 ]
 VOICE, SPEED, DUR = "af_heart", 1.15, 80.0
 if __name__ == "__main__":

@@ -8,3 +8,5 @@
 | Fed hike expected Dec 9 | See daily/2026-11-18-fed/sources.md (CME FedWatch via CNBC, Kalshi, CNN) |
 | Nvidia CEO exit; AMD short report (alleged) and AMD denial | See daily/2026-11-18/sources.md and daily/2026-11-19-ai-selloff/sources.md |
 | Avg intra-year S&P 500 drop ~14% since 1980; positive in ~3 of 4 years (33 of 44) | J.P. Morgan Guide to the Markets (intra-year declines) https://nbfwm.ca/content/dam/fbngp/microsites/conseil-patrimoine-iannuzzi/pdf/intra-year-declines-2023-jp-morgan.pdf · J.P. Morgan https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/theres-been-a-stock-market-sell-off-now-what |
+
+| Selloff framed around AI: worries the AI boom may be over; Anthropic IPO failed to revive the AI trade; Nasdaq fell most | AP via ABC/Washington Post (above) · CNBC https://www.cnbc.com/2026/11/19/stock-market-today-live-updates.html · NBC News https://nbcnews.com/business/markets/live-blog/anthropic-ipo-live-updates-rcna610159 |
