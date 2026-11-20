@@ -1,0 +1,7 @@
+# Sources (Reel 2026-11-20, Asia AI-chip selloff)
+- Taiex -6.23% to 36,033.29; TSMC -4.76% to NT$2,000: Digitimes https://www.digitimes.com/news/a20261120VL220/taiwan-nvidia-tsmc-design-ai-server.html ; 24/7 Wall St. https://247wallst.com/investing/2026/11/20/taiwan-stock-market-falls-6-2-to-cap-its-worst-week-since-1991-as-kospi-closes-down-5-2-and-nikkei-225-drops-5-1-in-ai-chip-selloff/
+- Worst week since 1991, >17% weekly loss: Bloomberg https://www.bloomberg.com/news/articles/2026-11-20/taiwan-stocks-taiex-twse-1991-ai-chips-tsmc-hon-hai-foxconn ; 24/7 Wall St. (-17.5%); Startup Fortune https://startupfortune.com/taiwan-stocks-head-for-their-worst-week-since-1991-as-the-ai-chip-rout-deepens/
+- Kospi -5.21% (4,869.96), Nikkei -5.06% (56,436.65): CNBC live https://cnbc.com/2026/11/19/stock-market-today-live-updates.html ; 24/7 Wall St.
+- Samsung -6.86%, SK Hynix -6.09%: TradingKey https://www.tradingkey.com/analysis/stocks/more/262314684-japan-korea-stocks-skhy-kospi-nikkei-samsung-skhynix-softbank-kioxia-anthropic-ant-krx-tradingkey ; 24/7 Wall St. (~6%) https://247wallst.com/investing/2026/11/19/south-koreas-stock-market-sinks-4-6-as-kospi-heavyweights-sk-hynix-and-samsung-fall-6-after-wall-streets-ai-selloff/
+- TSMC >40% of Taiex: Taiwan News (May & Oct 2026); TSMC customers Nvidia/AMD/Apple: company disclosures / widely reported.
+- US close Fri Nov 20: TO FILL after 16:00 ET (AP + CNBC/Reuters).
