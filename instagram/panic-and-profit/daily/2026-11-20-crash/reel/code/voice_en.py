@@ -6,11 +6,11 @@ PHRASES = [  # (gap before phrase in s, text) -> placed back to back
     (0.40, "The S&P 500 fell two percent, its sixth straight loss. And the tech-heavy Nasdaq, home of the AI giants, fell even more."),
     (0.40, "Why? Follow the AI dominoes."),
     (0.35, "Domino one: AI leadership. Nvidia, the face of the boom, lost its CEO, and a short seller hit AMD."),
-    (0.35, "Domino two: the AI IPO test. Anthropic opened up thirty-four percent, then gave back half. It could not revive the AI trade."),
+    (0.35, "Domino two: the AI IPO test. Anthropic opened up thirty-four percent, then gave back half. It could not revive confidence in AI."),
     (0.35, "Domino three: rates. Markets expect another Fed hike, and higher rates hit the priciest growth stocks first."),
     (0.40, "Now, perspective. Since 1980, the S&P 500 has dropped about fourteen percent at some point in an average year. And still finished higher in roughly three out of four years."),
     (0.40, "Eight percent off the top hurts. It is not unusual."),
-    (0.45, "Your call: is this the AI bubble popping, or just a dip? Comment BUBBLE or DIP."),
+    (0.45, "Your call: is the AI bubble popping, or is this just a bump on a long road? Comment BUBBLE or BUMP."),
 ]
 VOICE, SPEED, DUR = "af_heart", 1.15, 80.0
 if __name__ == "__main__":

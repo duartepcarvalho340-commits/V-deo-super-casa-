@@ -289,15 +289,16 @@ def vote(c, t):
     text(c, "YOUR CALL", W / 2, 640, 30, hexc(RED), IN[700], "c", track=6)
     text(c, "Is the AI bubble", W / 2, 780, 96, hexc(INK), FR[800], "c")
     text(c, "popping?", W / 2, 900, 110, hexc(RED), FRI[800], "c")
-    for i, (lab, col, x) in enumerate((("BUBBLE", RED, 290), ("DIP", GREEN, 790))):
+    text(c, "or a bump on a long road?", W / 2, 985, 48, hexc(MUTE), FR[700], "c")
+    for i, (lab, col, x) in enumerate((("BUBBLE", RED, 290), ("BUMP", GREEN, 790))):
         k = back_out((t - (t0 + 1.0 + i * 0.25)) / 0.4)
         if k <= 0: continue
         pulse = 1 + 0.04 * math.sin((t - t0) * 7 + i * 1.6)
-        c.save(); c.translate(x, 1080); c.scale(clamp(k, 0, 1.2) * pulse, clamp(k, 0, 1.2) * pulse)
+        c.save(); c.translate(x, 1110); c.scale(clamp(k, 0, 1.2) * pulse, clamp(k, 0, 1.2) * pulse)
         c.drawRRect(rrect(-220, -70, 440, 140, 70), paint(hexc(col))); text(c, lab, 0, 22, 66, hexc("#FFFFFF"), FR[800], "c", track=3)
         c.restore()
     b = ease_out((t - (t0 + 1.8)) / 0.4); alpha_layer(c, b)
-    text(c, "Comment BUBBLE or DIP", W / 2, 1240, 46, hexc(INK), IN[700], "c"); c.restore()
+    text(c, "Comment BUBBLE or BUMP", W / 2, 1265, 46, hexc(INK), IN[700], "c"); c.restore()
     c.restore()
 
 def scene_end(c, t):
