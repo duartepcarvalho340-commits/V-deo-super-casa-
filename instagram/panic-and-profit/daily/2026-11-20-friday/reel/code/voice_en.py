@@ -2,8 +2,8 @@
 import json, os, numpy as np, soundfile as sf
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PHRASES = [
-    (0.30, "Wall Street just had the worst day of this selloff. The Nasdaq crashed more than five percent."),
-    (0.40, "The S&P 500 fell three point seven percent, its seventh straight loss, and more than eight percent this week alone."),
+    (0.30, "Yesterday, Wall Street had the worst day of this selloff. The Nasdaq crashed more than five percent."),
+    (0.40, "The S&P 500 fell three point seven percent, its seventh straight loss. Over the whole week, it lost more than eight percent."),
     (0.35, "Three blows hit at once."),
     (0.35, "Blow one: Reuters reported that the SEC is examining Nvidia's accounting. Nvidia fell fourteen percent. AMD and Broadcom, down twelve or more."),
     (0.35, "Blow two: President Trump threatened a tremendous tax on companies that build AI data centers overseas."),

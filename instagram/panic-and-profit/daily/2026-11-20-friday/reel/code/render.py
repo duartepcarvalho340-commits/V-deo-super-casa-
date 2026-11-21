@@ -127,7 +127,7 @@ def crawl(c, t):
     alpha_layer(c, a)
     s = "BREAKING  ·  NASDAQ -5.3%  ·  S&P 500 -3.7%  ·  DOW -950  ·  NVIDIA -14%  ·  AMD -13%  ·  BROADCOM -12%  ·  SEC PROBE REPORT  ·  "
     c.drawRect(rect(0, 342, W, 46), paint(hexc(RED)))
-    f = skia.Font(IN[700], 26); w = sum(f.measureText(ch) for ch in s) + 2 * len(s); off = -(t * 140) % w
+    f = skia.Font(IN[700], 26); w = sum(f.measureText(ch) for ch in s) + 2 * (len(s) - 1) + 2; off = -(t * 140) % w
     c.save(); c.clipRect(rect(0, 342, W, 46)); x = off - w
     while x < W: x += text(c, s, x, 374, 26, hexc("#FFFFFF"), IN[700], track=2) + 2
     c.restore(); c.restore()
@@ -136,7 +136,7 @@ def scene_hook(c, t):
     a = 1 - sstep(P[1] - 0.3, P[1] + 0.1, t)
     if a <= 0: return
     alpha_layer(c, a)
-    text(c, "TODAY · FRI, NOV 20 · THE NASDAQ", W / 2, 540, 30, hexc(MUTE), IN[700], "c", track=5)
+    text(c, "YESTERDAY · FRI, NOV 20 · THE NASDAQ", W / 2, 540, 30, hexc(MUTE), IN[700], "c", track=5)
     k = ease_io((t - 0.4) / 2.2)
     text(c, f"-{5.3 * k:.1f}%", W / 2, 800, 250, hexc(RED), FR[800], "c")
     text(c, "in one day", W / 2, 890, 54, hexc(INK), FR[700], "c")
@@ -154,7 +154,7 @@ def scene_indexes(c, t):
     a = overlay(t, P[1] - 0.2, PE[1] + 0.2)
     if a <= 0: return
     alpha_layer(c, a)
-    text(c, "TODAY'S CLOSE · FRI, NOV 20", W / 2, 470, 30, hexc(MUTE), IN[700], "c", track=5)
+    text(c, "FRIDAY'S CLOSE · NOV 20", W / 2, 470, 30, hexc(MUTE), IN[700], "c", track=5)
     rows = (("NASDAQ", "-5.3%"), ("S&P 500", "-3.7%"), ("DOW", "-950 pts"))
     for i, (nm, v) in enumerate(rows):
         tt = P[1] + i * 0.35
@@ -165,7 +165,7 @@ def scene_indexes(c, t):
         c.drawRRect(rrect(-400, -66, 800, 132, 66), paint(hexc("#FFF1F3" if hot else "#FFFFFF"))); c.drawRRect(rrect(-400, -66, 800, 132, 66), paint(hexc(RED if hot else INK), stroke=6 if hot else 4))
         text(c, nm, -350, 18, 50, hexc(INK), FR[800]); tri(c, 60, 0, 32, False, hexc(RED)); text(c, v, 350, 22, 62, hexc(RED), FR[800], "r")
         c.restore()
-    for i, (lab, tt) in enumerate((("7TH STRAIGHT LOSS", wtime("seventh", 1)), ("-8.6% THIS WEEK", wtime("eight", 1)))):
+    for i, (lab, tt) in enumerate((("7TH STRAIGHT LOSS", wtime("seventh", 1)), ("-8.6% THE WEEK", wtime("eight", 1)))):
         if t < tt: continue
         s = clamp(back_out((t - tt) / 0.4), 0, 1.2); x = 300 + i * 480
         c.save(); c.translate(x, 1100); c.rotate(-4 + 8 * i); c.scale(s, s)

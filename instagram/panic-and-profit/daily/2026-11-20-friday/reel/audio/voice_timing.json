@@ -1,47 +1,47 @@
 [
  {
   "t0": 0.3,
-  "t1": 5.094,
-  "text": "Wall Street just had the worst day of this selloff. The Nasdaq crashed more than five percent."
+  "t1": 5.593,
+  "text": "Yesterday, Wall Street had the worst day of this selloff. The Nasdaq crashed more than five percent."
  },
  {
-  "t0": 5.49,
-  "t1": 12.377,
-  "text": "The S&P 500 fell three point seven percent, its seventh straight loss, and more than eight percent this week alone."
+  "t0": 5.99,
+  "t1": 13.368,
+  "text": "The S&P 500 fell three point seven percent, its seventh straight loss. Over the whole week, it lost more than eight percent."
  },
  {
-  "t0": 12.73,
-  "t1": 13.977,
+  "t0": 13.72,
+  "t1": 14.967,
   "text": "Three blows hit at once."
  },
  {
-  "t0": 14.33,
-  "t1": 23.891,
+  "t0": 15.32,
+  "t1": 24.881,
   "text": "Blow one: Reuters reported that the SEC is examining Nvidia's accounting. Nvidia fell fourteen percent. AMD and Broadcom, down twelve or more."
  },
  {
-  "t0": 24.24,
-  "t1": 30.124,
+  "t0": 25.23,
+  "t1": 31.114,
   "text": "Blow two: President Trump threatened a tremendous tax on companies that build AI data centers overseas."
  },
  {
-  "t0": 30.47,
-  "t1": 36.889,
+  "t0": 31.46,
+  "t1": 37.879,
   "text": "Blow three: the AI doubts never left. Not Nvidia's earnings, not Anthropic's IPO could stop the selling."
  },
  {
-  "t0": 37.29,
-  "t1": 43.1,
+  "t0": 38.28,
+  "t1": 44.09,
   "text": "Now the Nasdaq is negative for 2026, and the S&P 500 is in a correction."
  },
  {
-  "t0": 43.5,
-  "t1": 50.988,
+  "t0": 44.49,
+  "t1": 51.978,
   "text": "Remember: a report is not a verdict. Nvidia has not been charged with anything. Long-term investors follow the facts, not the fear."
  },
  {
-  "t0": 51.44,
-  "t1": 54.758,
+  "t0": 52.43,
+  "t1": 55.748,
   "text": "Your call: is this panic, or profit? Comment PANIC or PROFIT."
  }
 ]
