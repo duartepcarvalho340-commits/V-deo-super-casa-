@@ -44,13 +44,13 @@ spark=f"""<svg width="348" height="90" viewBox="0 0 348 110" fill="none" style="
 <polyline points="2,70 40,52 80,38 120,20 150,8 180,26 210,44 240,60 270,74 300,88 340,96" stroke="{RED}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <circle cx="150" cy="8" r="4.5" fill="{INK}"/><circle cx="340" cy="96" r="5" fill="{RED}"/>
 <text x="158" y="12" font-family="Inter" font-size="9" font-weight="700" fill="{INK}" letter-spacing="1">OCT 6 RECORD</text>
-<text x="262" y="104" font-family="Inter" font-size="9" font-weight="700" fill="{RED}" letter-spacing="1">$145.98</text></svg>"""
+<text x="262" y="104" font-family="Inter" font-size="9" font-weight="700" fill="{RED}" letter-spacing="1">$125.53</text></svg>"""
 b1=f"""<div style="position:absolute;top:30px;left:36px;">{logo(17,line_w=110,tagline=False)}</div>
 <div style="height:30px"></div>{tag("IS NVIDIA CHEAP NOW?", RED)}
 <h1 class="serif" style="font-size:33px;font-weight:700;line-height:1.05;letter-spacing:-0.6px;color:{INK};">Nvidia is now cheaper than the S&amp;P 500.</h1>
 {spark}
-<div style="display:flex;gap:8px;margin:6px 0 10px;">{chip("~-40% FROM ATH",RED)}{chip("P/E 13.6x vs. S&amp;P ~18x",INK)}</div>
-<p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;">Its earnings just grew 111%. So is this a gift, or a trap? Swipe for both sides →</p>"""
+<div style="display:flex;gap:8px;margin:6px 0 10px;">{chip("~-48% FROM ATH",RED)}{chip("P/E 11.7x vs. S&amp;P ~17x",INK)}</div>
+<p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;">Earnings +111%. Stock -14% in a day on an SEC report. Gift, or trap? Swipe for both sides →</p>"""
 slides.append(slide(0,LBG,b1,True,justify="center"))
 
 # 2 THE DRAWDOWN
@@ -59,13 +59,14 @@ def stat(lbl,val,sub,col=INK):
 <div><div class="sans" style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:#8A8580;">{lbl}</div><div class="sans" style="font-size:11px;color:#6B6B6B;margin-top:2px;line-height:1.35;">{sub}</div></div>
 <div class="serif" style="font-size:22px;font-weight:800;color:{col};white-space:nowrap;">{val}</div></div>"""
 b2=f"""{tag("THE DRAWDOWN", RED)}
-{H2("$2 trillion. Gone in six weeks.")}
-{stat("CLOSE, THU NOV 19","$145.98","New 52-week low. -3.3% on the day",RED)}
-{stat("FROM THE OCT 6 RECORD","~-40%","The largest dollar wipeout in a condensed window on record (Fortune)",RED)}
+{H2("$2.7 trillion gone. 7 straight losing weeks.")}
+{stat("CLOSE, FRI NOV 20","$125.53","-14% on the day. Worst day since Jan 2025",RED)}
+{stat("FROM THE OCT 6 RECORD","~-48%","~$2.7T of market cap erased",RED)}
 {stat("CATALYST 1","CEO exit","Huang out Nov 12; CFO Colette Kress interim CEO, search ongoing")}
-{stat("CATALYST 2","Capex funding","Can hyperscalers keep spending as free cash flow thins?")}
+{stat("CATALYST 2","SEC report","Reuters: SEC examining its accounting. No charges; SEC no comment",RED)}
+{stat("CATALYST 3","Capex funding","Can hyperscalers keep spending as free cash flow thins?")}
 {TEASE("But the numbers tell a different story")}
-{SRC("Sources: Motley Fool, TokenPost, Fortune, CNBC, Nvidia 8-K (SEC), Barclays via BigGo.")}"""
+{SRC("Sources: Yahoo Finance, Global Banking &amp; Finance, Reuters, Bloomberg, CNBC, Nvidia 8-K (SEC), Barclays via BigGo.")}"""
 slides.append(slide(1,LBG,b2,True))
 
 # 3 THE PRINT
@@ -88,10 +89,10 @@ def bar_row(lbl,val,w,col,sub):
 b4=f"""{tag("THE MULTIPLE", P)}
 {H2("Below-market multiple. +111% EPS.")}
 <p class="sans" style="font-size:12px;color:#555;line-height:1.5;margin-bottom:6px;"><b>P/E in plain English:</b> how many years of today's profit it takes to earn back the price you pay.</p>
-{bar_row("NVIDIA · RUN-RATE","13.6x",13.6/20*100,P,"$145.98 / ($2.68 × 4 = $10.72). Street forward: ~12-14x")}
-{bar_row("S&amp;P 500 · FORWARD 12M","17.7-18.3x",18/20*100,INK,"FactSet, Nov 5-13")}
-<div style="display:flex;gap:10px;margin-top:8px;"><div style="flex:1;border:1px solid {LBR};border-radius:10px;padding:10px;background:#fff;"><div class="sans" style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:{P};">IMPLIED PEG</div><div class="serif" style="font-size:20px;font-weight:800;color:{INK};">~0.12</div><div class="sans" style="font-size:9.5px;color:#8A8580;">13.6x / 111% EPS growth</div></div>
-<div style="flex:1;border:1px solid {LBR};border-radius:10px;padding:10px;background:#fff;"><div class="sans" style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:{RED};">EARNINGS YIELD</div><div class="serif" style="font-size:20px;font-weight:800;color:{INK};">~7.3%</div><div class="sans" style="font-size:9.5px;color:#8A8580;">vs. ~5% on 10-year Treasuries</div></div></div>
+{bar_row("NVIDIA · RUN-RATE","11.7x",11.7/20*100,P,"$125.53 / ($2.68 × 4 = $10.72 annualized EPS)")}
+{bar_row("S&amp;P 500 · FORWARD 12M","~17x",16.7/20*100,INK,"FactSet 18.3x (Nov 13), adjusted for this week's -8.6%")}
+<div style="display:flex;gap:10px;margin-top:8px;"><div style="flex:1;border:1px solid {LBR};border-radius:10px;padding:10px;background:#fff;"><div class="sans" style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:{P};">IMPLIED PEG</div><div class="serif" style="font-size:20px;font-weight:800;color:{INK};">~0.11</div><div class="sans" style="font-size:9.5px;color:#8A8580;">11.7x / 111% EPS growth</div></div>
+<div style="flex:1;border:1px solid {LBR};border-radius:10px;padding:10px;background:#fff;"><div class="sans" style="font-size:9px;font-weight:700;letter-spacing:1.5px;color:{RED};">EARNINGS YIELD</div><div class="serif" style="font-size:20px;font-weight:800;color:{INK};">~8.5%</div><div class="sans" style="font-size:9.5px;color:#8A8580;">vs. ~5% on 10-year Treasuries</div></div></div>
 {TEASE("Too good to be true? The bear case")}
 {SRC("Our math from Nvidia's reported EPS. Sources: Benzinga, Crypto Briefing, Motley Fool, FactSet.")}"""
 slides.append(slide(3,LBG,b4,True))
@@ -105,8 +106,8 @@ def case(title,col,items):
 b5=f"""{tag("BULL CASE vs. BEAR CASE", INK)}
 {H2("Cheap multiple, or peak earnings?")}
 <div style="display:flex;gap:8px;">
-{case("CHEAP",P,["Hypergrowth at a value multiple: PEG ~0.1","Guide implies +12% q/q on Rubin ramp","Moat: CUDA + full-stack systems","Below-market P/E with ~75% margins"])}
-{case("TRAP",RED,["Cyclical math: low P/E at <b>peak</b> E is the classic semis trap","GM guide down ~340 bps to 71-72%","Capex funded by thinning FCF; a 2027 cut hits E, not just P","Key-person risk + vendor financing of customers"])}
+{case("CHEAP",P,["Hypergrowth at a value multiple: PEG ~0.11","Guide implies +12% q/q on Rubin ramp","Moat: CUDA + full-stack systems","Below-market P/E with ~75% margins"])}
+{case("TRAP",RED,["Cyclical math: low P/E at <b>peak</b> E is the classic semis trap","GM guide down ~340 bps to 71-72%","<b>SEC reportedly examining the accounting:</b> if the E is in doubt, the P/E means nothing","Capex funded by thinning FCF + key-person risk"])}
 </div>
 <p class="sans" style="font-size:12px;color:#555;line-height:1.5;margin-top:10px;">The debate isn't the P. It's the <b>durability of the E</b>: is FY27 a plateau or a peak?</p>
 {SRC("Sources: Nvidia guidance, Barclays, Fortune, CNBC, Yahoo Finance.")}"""
@@ -120,9 +121,9 @@ def step(n,t,d):
 b6=f"""{tag("📌 SAVE THIS CHECKLIST", P)}
 {H2("4 signals that settle the debate")}
 {step("01","Hyperscaler 2027 capex guides","The demand side of Nvidia's E. Cuts = estimate cuts.")}
-{step("02","Gross-margin trajectory","Holding 71-72% through the Rubin ramp, or eroding?")}
+{step("02","The SEC review","Any formal action, or Nvidia's response. A report is not a verdict.")}
 {step("03","A permanent CEO","Removes the key-person discount, or deepens it.")}
-{step("04","The Q4 print vs. $130B","Beat-and-raise keeps the cheap case alive.")}"""
+{step("04","Q4 print vs. $130B + margins","Beat with 71-72% margins keeps the cheap case alive.")}"""
 slides.append(slide(5,LBG,b6,True))
 
 # 7 VOTE + CTA

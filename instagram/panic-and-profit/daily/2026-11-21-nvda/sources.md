@@ -7,3 +7,9 @@
 - S&P 500 forward P/E 17.7 (Nov 5) / 18.3 (Nov 13): FactSet https://insight.factset.com/lowest-forward-12-month-p/e-ratio-for-the-sp-500-in-more-than-3-years
 - Capex funding concern: Barclays via BigGo https://finance.biggo.com/news/8fb2ed68-9970-43fe-b1ae-7c6c3a55389e ; Yahoo Finance https://finance.yahoo.com/markets/stocks/article/nvidia-stock-valuation-gets-torched-by-tech-stock-rout-110145628.html
 - Own math: 2.68×4=10.72; 145.98/10.72=13.6x; PEG 13.6/111=0.12; earnings yield 1/13.6=7.3%; guide 130/115.8=+12.3% q/q; GM 74.9→71.5 midpoint ≈ -340 bps.
+
+## Update Sat Nov 21 (Friday close)
+- NVDA close Fri Nov 20 $125.53 (-14.01%), worst day since Jan 2025: Yahoo Finance history https://finance.yahoo.com/quote/NVDA/history/ ; Global Banking & Finance https://www.globalbankingandfinance.com/nvidia-nvda-falls-2026-11-20/ ; Forbes ($125.84).
+- SEC examining accounting (Reuters, 2 sources; SEC no comment; Nvidia no immediate response): Daily Star/Reuters https://www.thedailystar.net/news/world/news/nvidias-accounting-focus-us-sec-investigation-sources-say-4329306 ; Bloomberg ; Yahoo Finance https://finance.yahoo.com/markets/article/nvidia-stock-extends-25-trillion-rout-as-sec-probe-reportedly-investigates-its-accounting-194945274.html
+- ~$2.7T lost / 7 straight losing weeks: Yahoo Finance; Dimsum Daily https://www.dimsumdaily.hk/nvidia-extends-us2-7-trillion-stock-rout-as-sec-probes-accounting-practices/ ; Dealroom https://dealroom.co/news/174723-sec-probe-of-nvidia-turns-to-its-accounting-as-shares-fall-14-and-close-/
+- Own math: 125.53/10.72 = 11.7x; PEG 11.7/111 = 0.11; EY 8.5%; -48% vs ~$243 record; S&P fwd P/E ~16.7x = FactSet 18.3x (Nov 13) x (6,910.39/7,561.67).
