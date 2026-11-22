@@ -1,0 +1,42 @@
+[
+ {
+  "t0": 0.3,
+  "t1": 4.901,
+  "text": "Wall Street's fear gauge just hit its highest close since April 2025."
+ },
+ {
+  "t0": 5.3,
+  "t1": 10.048,
+  "text": "On Friday, the VIX closed near thirty-six, after touching forty during the day."
+ },
+ {
+  "t0": 10.4,
+  "t1": 19.236,
+  "text": "What is the VIX? Think of it as the price of crash insurance. When investors panic, they pay up to protect their portfolios, and the VIX jumps."
+ },
+ {
+  "t0": 19.59,
+  "t1": 23.357,
+  "text": "Below twenty is calm. Above thirty is fear. Above forty is panic."
+ },
+ {
+  "t0": 23.76,
+  "t1": 33.186,
+  "text": "Now the twist. Since 1998, when the VIX crossed thirty-five, the S&P 500 was up about twenty-eight percent a year later, on average."
+ },
+ {
+  "t0": 33.54,
+  "t1": 38.179,
+  "text": "Not every time. In 2008, fear spiked and stocks kept falling for months."
+ },
+ {
+  "t0": 38.58,
+  "t1": 44.356,
+  "text": "But fear is usually loudest near the bottom, not the top. That's when panic selling does the most damage."
+ },
+ {
+  "t0": 44.81,
+  "t1": 49.532,
+  "text": "Your call: is this fear a warning, or an opportunity? Comment WARNING or OPPORTUNITY."
+ }
+]

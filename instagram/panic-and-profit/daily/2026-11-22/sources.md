@@ -1,0 +1,6 @@
+# Sources (Reel 2026-11-22, VIX fear gauge)
+- VIX close Fri Nov 20: 35.89 (intraday ~40.03), highest close since Apr 2025: CEO Economy (Cboe data) https://ceoeconomy.com/article/vix-closes-at-2026-high-35-89-wall-street-fear-gauge-nov-2026 ; Tradersunion/Bloomberg (highest since April 2025, ~40 intraday) https://tradersunion.com/news/financial-news/show/4351810-vix-fear-index-hits/ ; daily brief (35.89) https://noctaaa.substack.com/p/daily-brief-saturday-21-november-2026 ; Reuters via Investing.com (7-month high earlier in the day) https://www.investing.com/news/stock-market-news/wall-streets-fear-gauge-touches-sevenmonth-high-as-ai-worries-mount-5041172
+- VIX definition (30-day expected S&P 500 volatility from SPX options): Cboe methodology (primary).
+- After VIX > 35: RBC (since 1998) S&P +28.5% a year later on average — CNBC https://www.cnbc.com/2025/04/29/this-is-what-typically-happens-to-stocks-after-periods-of-high-volatility.html ; Cboe Insights (~28% avg, 1990-2021) https://www.cboe.com/insights/posts/embracing-and-harnessing-volatility-feeling-confident-in-your-strategy/
+- 2008 exception: VIX spiked in fall 2008 while the S&P 500 kept falling until March 2009 (widely documented historical data).
+- Zones (<20 calm, >30 fear, >40 panic): common market convention (used by Cboe commentary and press); presented as a rule of thumb.
