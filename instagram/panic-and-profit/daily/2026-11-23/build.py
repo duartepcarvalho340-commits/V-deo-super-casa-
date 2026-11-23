@@ -42,7 +42,7 @@ def chip(t,c): return f'<span class="sans" style="display:inline-block;font-size
 b1=f"""<div style="position:absolute;top:30px;left:36px;">{logo(17,line_w=110,tagline=False)}</div>
 <div style="height:30px"></div>{tag("THANKSGIVING WEEK · NOV 23-27", RED)}
 <h1 class="serif" style="font-size:34px;font-weight:700;line-height:1.06;letter-spacing:-0.6px;color:{INK};">A short week with a long shadow.</h1>
-<p class="sans" style="font-size:14px;color:{INK};font-weight:600;line-height:1.45;margin:14px 0 12px;">3.5 trading days. One inflation number that could shape the Fed's next move.</p>
+<p class="sans" style="font-size:14px;color:{INK};font-weight:600;line-height:1.45;margin:14px 0 12px;">3.5 market days. One inflation number that could shape the Fed's next move.</p>
 <div style="display:flex;flex-wrap:wrap;gap:0;margin:4px 0 10px;">{chip("PCE · WED 8:30 ET",RED)}{chip("MARKETS SHUT THU",INK)}{chip("FRI CLOSES 1 PM",INK)}</div>
 <p class="sans" style="font-size:13px;color:#6B6B6B;line-height:1.5;">Your day-by-day map, explained in plain English. Swipe →</p>"""
 slides.append(slide(0,LBG,b1,True,justify="center"))
