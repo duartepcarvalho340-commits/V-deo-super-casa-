@@ -1,5 +1,5 @@
 # Sources (Reel 2026-11-23 day 1, published 10 min after the close)
-- Monday Nov 23 close (S&P 500, Nasdaq, Dow, Nvidia): TO FILL at 21:01 Lisbon — AP + CNBC/Reuters/Yahoo (2 sources each).
+- Monday Nov 23 close: S&P 500 7,237.71 (+4.74%), Dow 49,618.88 (+3.06%, +1,471.55), Nasdaq 24,084.52 (+1,466.79, +6.49%), Nvidia ~+31% on Huang's reinstatement; best day since April 2025: Yahoo Finance end-of-day https://finance.yahoo.com/markets/live/stock-market-today-monday-november-23-dow-sp-500-nasdaq-nvidia-reinstates-jensen-huang-141511975.html ; ABC News (1:22 PM: S&P +5.0%, Nasdaq +6.9%, NVDA +32.3%) ; Benzinga ; Beinsure ; 24/7 Wall St. Arithmetic vs Friday closes consistent. Distance from record: our math 1 - 7,237.71/7,818.93 = 7.4% (back above the 7,037 correction line).
 - Record close 7,818.93 (Oct 6): Memesita / Startup Fortune / TradingNews (correction line 7,037 = 0.9 × 7,818.93).
 - Prior: 7 straight S&P losses through Fri Nov 20 (see daily/2026-11-20-friday/sources.md); Nvidia -14% Fri on Reuters SEC report.
 - Dell earnings Tue Nov 24 after close; PCE Wed 8:30 ET: StockTitan, MLQ, Newsquawk (see daily/2026-11-23/sources.md).

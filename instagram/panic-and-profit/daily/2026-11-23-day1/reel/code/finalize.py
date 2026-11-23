@@ -21,7 +21,7 @@ d.text((W / 2, y + ch + 150), "Comment BEHIND or AHEAD", font=q2, fill="#1B7F4B"
 im.save(f"{OUT}/story.jpg", quality=92)
 up = N["sp"] > 0; fr = (1 - N["sp_close"] / RECORD) * 100
 p = lambda v: f"{'+' if v > 0 else '-'}{abs(v):.1f}%"
-verdict = (("A relief rally. But one green day doesn't end a correction." if fr >= 10 else "A relief rally, strong enough to lift the S&P 500 out of correction territory, for now.")
+verdict = (("A relief rally. But one green day doesn't end a correction." if fr >= 10 else "The best day for Wall Street since April 2025, strong enough to lift the S&P 500 out of correction territory, for now. But the SEC review of Nvidia's accounting reported by Reuters is still open.")
            if up else "No relief: the S&P 500 logged its 8th straight loss.")
 cap = f"""Day 1 after Wall Street's brutal week. Does the market still have a pulse? 🫀
 
@@ -29,7 +29,7 @@ Monday's close (Nov 23):
 • S&P 500: {p(N['sp'])}
 • Nasdaq: {p(N['ndq'])}
 • Dow: {'+' if N['dow_pts'] > 0 else '-'}{abs(int(round(N['dow_pts']))):,} points
-• Nvidia: {p(N['nvda'])}, after Friday's -14% on a report of an SEC review of its accounting
+• Nvidia: {p(N['nvda'])}, after its board reinstated Jensen Huang as CEO (Friday: -14%)
 
 {verdict}
 

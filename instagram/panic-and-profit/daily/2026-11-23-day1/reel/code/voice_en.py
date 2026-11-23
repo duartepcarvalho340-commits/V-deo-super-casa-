@@ -22,9 +22,9 @@ def lines():
         "Monday was the first real test after Wall Street's brutal week.",
         f"The S&P 500 {v(N['sp'])} {pct(N['sp'])}. The Nasdaq {v(N['ndq'])} {pct(N['ndq'])}. And the Dow {dow} {abs(int(round(N['dow_pts'])))} points.",
         (("A relief rally. But one green day does not end a correction." if from_rec >= 10 else
-          "A relief rally, strong enough to lift the S&P 500 out of correction territory, for now.") if up else
+          "The best day since April 2025. Strong enough to lift the S&P 500 out of correction territory, for now.") if up else
          "No relief. The S&P 500 just logged its eighth straight loss."),
-        f"Nvidia {v(N['nvda'])} {pct(N['nvda'])}, after last week's report about an SEC review of its accounting.",
+        f"The spark: Nvidia {v(N['nvda'])} {pct(N['nvda'])}, after its board brought back Jensen Huang as CEO.",
         f"Zoom out: the S&P 500 is still about {pct(round(from_rec))} below its October record.",
         "Next up: Dell's earnings tomorrow, and Wednesday's inflation data.",
         "One day is not a trend. Long-term investors watch the direction, not the noise.",

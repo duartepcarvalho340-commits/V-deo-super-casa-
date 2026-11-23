@@ -125,9 +125,8 @@ def sigcol(x): return GREEN if x > 0 else RED
 
 AMBER = "#D99A00"
 RECORD = 7818.93
-N = NUM
-UP = N["sp"] > 0
-FROM_REC = (1 - N["sp_close"] / RECORD) * 100
+UP = NUM["sp"] > 0
+FROM_REC = (1 - NUM["sp_close"] / RECORD) * 100
 def sgn(x, d=1): return f"{'+' if x > 0 else '-'}{abs(x):.{d}f}%"
 def col(x): return GREEN if x > 0 else RED
 
@@ -155,7 +154,7 @@ def scene_monitor(c, t):
     for gx in range(x0, x1, 43): c.drawLine(gx, yc - 150, gx, yc + 150, paint(hexc("#EFEDE7"), stroke=1.5, cap_round=False))
     head_u = clamp((t - 0.3) / max(1.0, P[2] - 0.6))
     beat = 0.15 if t < P[1] else (1.0 if UP else 0.35)
-    lc = INK if t < P[1] else col(N["sp"])
+    lc = INK if t < P[1] else col(NUM["sp"])
     pth = skia.Path(); n = 240
     for i in range(n + 1):
         u = i / n
@@ -165,7 +164,7 @@ def scene_monitor(c, t):
     c.drawPath(pth, paint(hexc(lc), stroke=6))
     hx = lerp(x0, x1, head_u); c.drawCircle(hx, yc - 120 * ecg_y(head_u, beat), 10, paint(hexc(lc)))
     # readings
-    rows = [("S&P 500", sgn(N["sp"]), N["sp"]), ("NASDAQ", sgn(N["ndq"]), N["ndq"]), ("DOW", f"{'+' if N['dow_pts'] > 0 else '-'}{abs(int(round(N['dow_pts']))):,} pts", N["dow_pts"])]
+    rows = [("S&P 500", sgn(NUM["sp"]), NUM["sp"]), ("NASDAQ", sgn(NUM["ndq"]), NUM["ndq"]), ("DOW", f"{'+' if NUM['dow_pts'] > 0 else '-'}{abs(int(round(NUM['dow_pts']))):,} pts", NUM["dow_pts"])]
     for i, (nm, val, x) in enumerate(rows):
         tt = wtime(["500", "Nasdaq", "Dow"][i], 1) - 0.1
         if t < tt: continue
@@ -184,7 +183,7 @@ def scene_monitor(c, t):
         e = ease_out((t - (P[2] + 1.4)) / 0.4)
         if e > 0:
             alpha_layer(c, e)
-            sub = ("But one green day doesn't end a correction" if FROM_REC >= 10 else "Back above the correction line, for now") if UP else "8th straight loss for the S&P 500"
+            sub = ("But one green day doesn't end a correction" if FROM_REC >= 10 else "Best day since April 2025. Out of correction, for now") if UP else "8th straight loss for the S&P 500"
             text(c, sub, W / 2, 1310, 34, hexc(INK), IN[700], "c"); c.restore()
     c.restore()
 
@@ -195,10 +194,10 @@ def scene_nvda(c, t):
     text(c, "THE AI BELLWETHER", W / 2, 490, 30, hexc(MUTE), IN[700], "c", track=6)
     e = back_out((t - P[3]) / 0.45); s = clamp(e, 0, 1.12)
     c.save(); c.translate(W / 2, 680); c.scale(s, s)
-    c.drawRRect(rrect(-400, -120, 800, 240, 30), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(-400, -120, 800, 240, 30), paint(hexc(col(N["nvda"])), stroke=6))
+    c.drawRRect(rrect(-400, -120, 800, 240, 30), paint(hexc("#FFFFFF"))); c.drawRRect(rrect(-400, -120, 800, 240, 30), paint(hexc(col(NUM["nvda"])), stroke=6))
     text(c, "NVIDIA · MONDAY", 0, -50, 30, hexc(MUTE), IN[700], "c", track=4)
-    text(c, sgn(N["nvda"]), 0, 80, 140, hexc(col(N["nvda"])), FR[800], "c"); c.restore()
-    text(c, "after Friday's -14% on an SEC report", W / 2, 860, 32, hexc(MUTE), IN[600], "c")
+    text(c, sgn(NUM["nvda"]), 0, 80, 140, hexc(col(NUM["nvda"])), FR[800], "c"); c.restore()
+    text(c, "after its board reinstated CEO Jensen Huang", W / 2, 860, 32, hexc(MUTE), IN[600], "c")
     # distance from record bar
     if t > P[4] - 0.2:
         f = ease_out((t - (P[4] - 0.2)) / 0.4); alpha_layer(c, f)
