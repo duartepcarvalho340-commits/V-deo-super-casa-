@@ -95,7 +95,16 @@
     "time": "16h13 Lisboa · 11h13 Nova Iorque (+ Story 16h18)",
     "format": "Reel",
     "title": "BREAKING: Nvidia's comeback, Huang reinstated",
-    "status": "Scheduled",
+    "status": "Metricool ERROR (account limit) — manual post",
     "url": "https://app.metricool.com/planner/calendar?blogId=8179959&openWithPostUuid=-7723342472056189864"
+  },
+  {
+    "folder": "2026-11-23-day1",
+    "date": "Seg 23 nov 2026",
+    "time": "21h10 Lisboa · 16h10 Nova Iorque",
+    "format": "Reel",
+    "title": "Day 1 after the crash: relief rally, Nvidia +31%",
+    "status": "Metricool ERROR (account limit) — manual post",
+    "url": ""
   }
 ]
