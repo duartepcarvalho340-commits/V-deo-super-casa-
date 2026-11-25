@@ -15,7 +15,7 @@
     "format": "Reel",
     "title": "The Fed is about to hike. Again.",
     "status": "Published",
-    "url": ""
+    "url": "https://www.instagram.com/reel/Df5pKXsnL8h/"
   },
   {
     "folder": "2026-11-19-reel",
@@ -86,8 +86,8 @@
     "time": "18h Lisboa · 13h Nova Iorque (+ Story 18h05)",
     "format": "Reel",
     "title": "The fear gauge: VIX at its highest since April 2025",
-    "status": "Published (check URL)",
-    "url": "https://app.metricool.com/planner/calendar?blogId=8179959&openWithPostUuid=8674247718183780673"
+    "status": "Published",
+    "url": "https://www.instagram.com/reel/DgDaOh5oUiU/"
   },
   {
     "folder": "2026-11-23-nvda",
@@ -95,8 +95,8 @@
     "time": "16h13 Lisboa · 11h13 Nova Iorque (+ Story 16h18)",
     "format": "Reel",
     "title": "BREAKING: Nvidia's comeback, Huang reinstated",
-    "status": "Metricool ERROR (account limit) — manual post",
-    "url": "https://app.metricool.com/planner/calendar?blogId=8179959&openWithPostUuid=-7723342472056189864"
+    "status": "Não publicado (limite da conta Metricool)",
+    "url": ""
   },
   {
     "folder": "2026-11-23-day1",
@@ -104,7 +104,25 @@
     "time": "21h10 Lisboa · 16h10 Nova Iorque",
     "format": "Reel",
     "title": "Day 1 after the crash: relief rally, Nvidia +31%",
-    "status": "Metricool ERROR (account limit) — manual post",
+    "status": "Não publicado (limite da conta Metricool)",
+    "url": ""
+  },
+  {
+    "folder": "2026-11-24",
+    "date": "Ter 24 nov 2026",
+    "time": "—",
+    "format": "Reel",
+    "title": "Bonds at ~5%: why own stocks? (earnings yield vs Treasuries)",
+    "status": "Pronto, à espera de aprovação",
+    "url": ""
+  },
+  {
+    "folder": "2026-11-25",
+    "date": "Qua 25 nov 2026",
+    "time": "—",
+    "format": "Carrossel",
+    "title": "October PCE came in HOT + Q3 GDP revised to 4.3%",
+    "status": "Pronto, à espera de aprovação",
     "url": ""
   }
 ]

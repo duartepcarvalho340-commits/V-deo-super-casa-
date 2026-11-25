@@ -45,11 +45,11 @@ table.plan{{width:100%;border-collapse:collapse;margin-top:10px}} .plan th,.plan
 </style></head><body>
 <div class="cover"><div class="logo">Panic <i>&amp;</i> Profit</div><div class="tag">MARKETS · MACRO · GEOPOLITICS · @panic.and.profit</div>
 <h1>Relatório de conteúdos</h1><div class="sub">Publicações de quarta, 18 de novembro, a quarta, 25 de novembro de 2026</div>
-<div class="kpi"><div><b>{npub}</b>publicados</div><div><b>{nsch}</b>agendados</div><div><b>{len(plan)}</b>planeados</div></div>
+<div class="kpi"><div><b>{npub}</b>publicados</div><div><b>{len(posts) - npub}</b>por publicar</div><div><b>{len(plan)}</b>dias</div></div>
 <div class="note">Público: investidores dos EUA · conteúdos em inglês americano · publicação via Metricool · não é aconselhamento financeiro.</div></div>
 {"".join(cards)}
-<section class="post"><div class="hd"><h2>Plano até quarta, 25 de novembro</h2></div>
+<section class="post"><div class="hd"><h2>O que saiu em cada dia</h2></div>
 <table class="plan"><tr><th>Dia</th><th>Formato</th><th>Tema</th><th>Estado</th></tr>{rows}</table>
-<div class="note">O formato alterna todos os dias (carrossel / Reel). Cada publicação chega para aprovação às 7h de Lisboa e só sai depois de aprovada; hora por omissão: 17h de Lisboa (12h de Nova Iorque).</div></section>
+<div class="note">Cada publicação leva um Story 5 minutos depois e a pergunta final como primeiro comentário. Desde segunda, 23 de novembro, o Metricool recusa publicações (limite da conta): os posts seguintes estão prontos para publicação manual ou depois de resolvido o limite.</div></section>
 </body></html>'''
 (HERE / "report.html").write_text(doc, encoding="utf-8"); print("html ok")
